@@ -12,26 +12,30 @@ function LuxuryCarousel() {
       desc: "Hand-crafted crystal dome with golden accents — perfect for high ceilings.",
     },
     {
+        // Pendant 
       image:
-        "https://images.unsplash.com/photo-1616627454361-4a81b083da1c?auto=format&fit=crop&w=1600&q=80",
+        "https://imgs.search.brave.com/loTpuLK8KSPGayCmXdinnqEWmOPCBENhwcRKOeyB7II/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudW5zcGxhc2gu/Y29tL3Bob3RvLTE2/MDI4NzYxNTMzMDYt/OWE1OTE3MGQ5ZDhk/P2ZtPWpwZyZ3PTMw/MDAmYXV0bz1mb3Jt/YXQmZml0PWNyb3Am/cT02MCZpeGxpYj1y/Yi00LjAuMyZpeGlk/PU0zd3hNakEzZkRC/OE1IeHpaV0Z5WTJo/OE1URjhmSEJsYm1S/aGJuUWxNakJzYVdk/b2RITjhaVzU4TUh4/OE1IeDhmREE9",
       title: "Aurora Halo Pendant",
       desc: "Brushed brass circular pendant with diffused warm LED — modern and serene.",
     },
     {
+        // Floor Lampp
       image:
-        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=80",
+        "https://img.freepik.com/free-photo/modern-photorealistic-lamp-design_23-2151039026.jpg?t=st=1761657701~exp=1761661301~hmac=5725e7af114f4c380823ee61340c7db5e50c5f00f9ca58b7912b8ed0ed34887c&w=740",
       title: "Velora Cascade Light",
       desc: "Layered glass rings cascading down in harmony — subtle luxury illumination.",
     },
     {
+        // Table Lights
       image:
-        "https://images.unsplash.com/photo-1602216348997-1bfb7c99ac70?auto=format&fit=crop&w=1600&q=80",
+        "https://imgs.search.brave.com/ms43qUjUGDfYzvLKukpCBuRTl3_Eb3xGFHzKHuniJ8Y/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudW5zcGxhc2gu/Y29tL3Bob3RvLTE1/MTc5OTExMDQxMjMt/MWQ1NmE2ZTgxZWQ5/P2l4bGliPXJiLTQu/MS4wJml4aWQ9TTN3/eE1qQTNmREI4TUh4/elpXRnlZMmg4TVRS/OGZIUmhZbXhsSlRJ/d2JHRnRjSHhsYm53/d2ZId3dmSHg4TUE9/PSZmbT1qcGcmcT02/MCZ3PTMwMDA",
       title: "Opulent Orb Chandelier",
       desc: "Spherical crystal design with ambient LED flow for contemporary spaces.",
     },
     {
+        // Wall Lights
       image:
-        "https://images.unsplash.com/photo-1635776061962-3e27cdbd71cb?auto=format&fit=crop&w=1600&q=80",
+        "https://imgs.search.brave.com/a7hr-JKLL9LezKv58qwBQts4Y1JDudKKYIFv54K36vg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NjF6K1ZXTGdNRUwu/anBn",
       title: "Celestia Gold Beam",
       desc: "Matte-gold frame with geometric lighting bars — futuristic yet refined.",
     },

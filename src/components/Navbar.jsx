@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ShoppingCart, Heart, User, Search, Menu, X } from "lucide-react";
+import { Link } from 'react-router-dom'
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,7 +12,7 @@ function Navbar() {
    <h1 className="text-center leading-tight">
   <span
     className="block text-4xl font-serif font-extrabold  text-black-400 tracking-wide"
-    style={{ fontFamily: "'Playfair Display', serif",fontWeight: 900  }}
+    style={{ fontFamily: "'Playfair Display', serif",fontWeight: 800  }}
   >
    Lumiere
   </span>
@@ -24,15 +25,14 @@ function Navbar() {
 </h1>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-6 items-center text-black-400">
-          <button className="hover:text-yellow-500 transition">HOME</button>
-            <button className="hover:text-yellow-500 transition">ABOUT</button>
-          <button className="flex items-center gap-1 hover:text-yellow-500 transition">
-            SALE <span className="text-yellow-500 text-xs">%</span>
-          </button>
-           <button className="hover:text-yellow-500 transition">COLLECTIONS</button>
-        
-          <button className="hover:text-yellow-500 transition">CONTACT US</button>
+        <div className="hidden md:flex  space-x-6 items-center text-black-400">
+          <Link to="/"  className="hover:text-yellow-500 transition">HOME</Link>
+            <Link to='/luxuryabout' className="hover:text-yellow-500 transition">ABOUT</Link>
+              <Link to='/products' className="flex items-center gap-1 hover:text-yellow-500 transition">
+               PRODUCTS 
+                 </Link>
+             <Link to='/collections' className="hover:text-yellow-500 transition">COLLECTIONS</Link>
+          <Link to='/contact' className="hover:text-yellow-500 transition">CONTACT US</Link>
         </div>
 
         {/* Right Icons */}
@@ -46,26 +46,25 @@ function Navbar() {
         {/* Mobile Menu Toggle */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden text-pink-400 focus:outline-none"
+          className="md:hidden text-black-400 focus:outline-none"
         >
+          <div className="flex justify-around mt-3">
+            <Search className="hover:text-white" />
+            <Heart className="hover:text-white" />
+            <User className="hover:text-white" /> 
+            <ShoppingCart className="hover:text-white" />
+          </div>
           {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
       {/* Mobile Dropdown */}
       {isOpen && (
-        <div className="md:hidden bg-black/90 backdrop-blur-lg border-t border-pink-400/30 text-pink-400 flex flex-col space-y-4 py-4 px-6">
-          <button className="hover:text-white transition">Home</button>
-          <button className="hover:text-white transition">Collections</button>
-          <button className="hover:text-white transition">Sales</button>
-          <button className="hover:text-white transition">Contact Us</button>
-
-          <div className="flex justify-around mt-3">
-            <Search className="hover:text-white" />
-            <Heart className="hover:text-white" />
-            <User className="hover:text-white" />
-            <ShoppingCart className="hover:text-white" />
-          </div>
+        <div className="md:hidden bg-white/90 backdrop-blur-lg border-t border-black-400/30 text-black-400 flex flex-col space-y-4 py-4 px-6">
+         <Link to="/" className="hover:text-yellow-500 transition">HOME</Link>
+          <Link to="/products" className="hover:text-yellow-500 transition">PRODUCTS</Link>
+          <Link to="/collections" className="hover:text-yellow-500 transition">COLLECTIONS</Link>
+          <Link to="/contact" className="hover:text-yellow-500 transition">CONTACT US</Link>
         </div>
       )}
     </nav>
