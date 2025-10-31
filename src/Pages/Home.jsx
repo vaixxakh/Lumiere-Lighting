@@ -1,22 +1,24 @@
 import React from "react";
-import LuxuryCarousel from "../components/shared/features/products/carousel/LuxuryCarousel";
-import LuxuryProducts from "../components/shared/features/products/LuxuryProducts";
-import LuxuryLightShop from "../components/shared/features/products/LuxuryLightShop";
+import Carousel from "../components/products/carousel/Carousel";
+import LuxuryProducts from "../components/products/LuxuryProducts";
+import LuxuryShop from "../components/products/LuxuryShop";
+
 
 const Home = () => {
   return (
     <div>
       {/* Hero / Banner Section */}
-      <LuxuryCarousel /> 
+      <Carousel />  
       {/* Products Section */}
-      <LuxuryProducts />
-      <LuxuryLightShop/>
-
+      <LuxuryProducts /> 
+      {/* Luxury Shop Section */}
+      <LuxuryShop />
       {/* (Optional) You can add more sections later */}
       {/* <Testimonials /> */}
       {/* <Contact /> */}
     </div>
   );
 };
+
 
 export default Home;

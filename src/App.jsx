@@ -1,39 +1,82 @@
 import React from 'react';
-import Navbar from './components/shared/Navbar';
+import Navbar from './components/Navbar';
 import Home from './Pages/Home';
-import Footer from './components/shared/Footer';
+import Footer from './components/Footer';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Products from './Pages/Products';
-import LuxuryLightShop from './components/features/products/LuxuryLightShop';
-import LuxuryProducts from './components/features/products/LuxuryProducts';
-import Auth from './Authentification/Auth';
-import UserDetails from './Pages/UserDetails';
+import LuxuryShop from './components/products/LuxuryShop';
+import LuxuryProducts from './components/products/LuxuryProducts';
+import Login from './Pages/Login';
+import SignUp from './Pages/SignUp';
+import Wishlist from './Pages/Wishlist';
+import Cart from './Pages/Cart';
+import Payment from './Pages/Payment';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-  const user = JSON.parse(localStorage.getItem('user'));
+  const user = JSON.parse(localStorage.getItem('user')) || null;
+  const ProtectedRoute = ({ children }) => {
+  const user = localStorage.getItem('user');
+  
+  if (!user) {
+    alert('Please login to access this feature');
+    return <Navigate to="/login" replace />;
+  }
+  
+  return children;
+};
+
 
   return (
+    
     <div>
-      {/* Show Navbar only when user is logged in */}
-      {user && <Navbar />}
+       <>
+      {/* Your Navbar and Routes here */}
+      <ToastContainer position="top-center" autoClose={1500} />
+    </>
+    
+      <Navbar />
 
       <Routes>
-        {/* Protected routes - require login */}
-        <Route path="/" element={user ? <Home /> : <Navigate to="/auth" />} />
-        <Route path="/products" element={user ? <Products /> : <Navigate to="/auth" />} />
-        <Route path="/userdetails" element={user ? <UserDetails /> : <Navigate to="/auth" />} />
-
         {/* Public routes */}
-        <Route path="/luxuryabout" element={<LuxuryLightShop />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/luxuryabout" element={<LuxuryShop />} />
         <Route path="/collections" element={<LuxuryProducts />} />
-
-        {/* Auth route - redirect to home if already logged in */}
-        <Route path="/auth" element={!user ? <Auth /> : <Navigate to="/" />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route 
+            path="/wishlist" 
+            element={
+              <ProtectedRoute>
+                <Wishlist />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/cart" 
+            element={
+              <ProtectedRoute>
+                <Cart />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/payment" 
+            element={
+              <ProtectedRoute>
+                <Payment />
+              </ProtectedRoute>
+            } 
+          />
+        {/* Protected routes - require login */}
+        <Route path="/products" element={user ? <Products /> : <Navigate to="/login" />} />
       </Routes>
 
       <Footer />
     </div>
   );
 }
+
 
 export default App;
