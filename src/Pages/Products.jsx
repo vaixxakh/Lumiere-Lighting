@@ -2,16 +2,25 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Heart } from 'lucide-react';
 
+
+
 const ProductsPage = () => {
+
   const [products, setProducts] = useState([]);
   const [wishlist, setWishlist] = useState([]);
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/products") // Adjust path if needed
-      .then((response) => setProducts(response.data))
-      .catch((error) => console.error('Error fetching products:', error));
-  }, []);
+  axios.get("http://localhost:3000/products")
+    .then(res => {
+      console.log("Products fetched:", res.data);
+      setProducts(res.data);
+    })
+    .catch(error => {
+      console.error("Error fetching products:", error);
+    });
+}, []);
+
 
   const toggleWishlist = (id) => {
     setWishlist((prev) =>
@@ -80,7 +89,7 @@ const ProductsPage = () => {
                   </button>
                   <button
                     onClick={() => buyNow(product.id)}
-                    className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg transition"
+                    className="flex-1 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 rounded-lg transition"
                   >
                     Buy Now
                   </button>

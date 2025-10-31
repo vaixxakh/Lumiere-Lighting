@@ -1,34 +1,101 @@
-{"products": [
-  {
-    "id": 1,
-    "name": "Crystal Chandelier",
-    "description": "Elegant crystal chandelier with gold finish and warm glow.",
-    "image": "https://i5.walmartimages.com/seo/FINE-MAKER-Luxury-Crystal-Chandelier-Pendant-Light-Gold-Finish-Ceiling-Hanging-Light-Fixture-for-Living-Room-Hallway-Foyer-15-Light-23_265dcead-11fb-43ed-a799-9675b0dd1024.6635ddcea86a563a27195b236c8126de.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF",
-    "price": 7999.99,
-    "reviews": 4.7
-  },
-  {
-    "id": 2,
-    "name": "Modern Pendant Light",
-    "description": "Minimalist design with matte black body and LED lighting.",
-    "image": "https://static.vecteezy.com/system/resources/thumbnails/019/946/978/small/ceiling-light-bulbs-vintage-lamp-bulb-decorative-in-home-photo.jpg",
-    "price": 2999.99,
-    "reviews": 4.5
-  },
-  {
-    "id": 3,
-    "name": "Wall Sconce Lamp",
-    "description": "Soft wall-mounted light with brass finish for classic interiors.",
-    "image": "https://flyachilles.com/cdn/shop/files/brass-vintage-wall-sconce-light-retro-luxury-stairwell-wall-lamp-149163.jpg?v=1721729694&width=1500",
-    "price": 1599.0,
-    "reviews": 4.2
-  },
-  {
-    "id": 4,
-    "name": "Luxury Floor Lamp",
-    "description": "Contemporary tall lamp with marble base and ambient shade.",
-    "image": "https://cdn11.bigcommerce.com/s-0z4jan/images/stencil/1280x1280/products/1372/6901/baroque_floor_lamp_3__13570.1441079846.jpg?c=2",
-    "price": 4999.5,
-    "reviews": 4.6
-  }
-]}
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Crystal Chandelier",
+      "description": "Elegant crystal chandelier with gold finish and warm glow.",
+      "image": "https://i5.walmartimages.com/seo/FINE-MAKER-Luxury-Crystal-Chandelier-Pendant-Light-Gold-Finish-Ceiling-Hanging-Light-Fixture-for-Living-Room-Hallway-Foyer-15-Light-23_265dcead-11fb-43ed-a799-9675b0dd1024.6635ddcea86a563a27195b236c8126de.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF",
+      "price": 7999.99,
+      "reviews": 4.7
+    },
+    {
+      "id": "2",
+      "name": "Modern Pendant Light",
+      "description": "Minimalist design with matte black body and LED lighting.",
+      "image": "https://static.vecteezy.com/system/resources/thumbnails/019/946/978/small/ceiling-light-bulbs-vintage-lamp-bulb-decorative-in-home-photo.jpg",
+      "price": 2999.99,
+      "reviews": 4.5
+    },
+    {
+      "id": "3",
+      "name": "Wall Sconce Lamp",
+      "description": "Soft wall-mounted light with brass finish for classic interiors.",
+      "image": "https://flyachilles.com/cdn/shop/files/brass-vintage-wall-sconce-light-retro-luxury-stairwell-wall-lamp-149163.jpg?v=1721729694&width=1500",
+      "price": 1599,
+      "reviews": 4.2
+    },
+    {
+      "id": "4",
+      "name": "Luxury Floor Lamp",
+      "description": "Contemporary tall lamp with marble base and ambient shade.",
+      "image": "https://cdn11.bigcommerce.com/s-0z4jan/images/stencil/1280x1280/products/1372/6901/baroque_floor_lamp_3__13570.1441079846.jpg?c=2",
+      "price": 4999.5,
+      "reviews": 4.6
+    },
+    {
+      "id": "5",
+      "name": "Luxury Floor Lamp",
+      "description": "Contemporary tall lamp with marble base and ambient shade.",
+      "image": "https://cdn11.bigcommerce.com/s-0z4jan/images/stencil/1280x1280/products/1372/6901/baroque_floor_lamp_3__13570.1441079846.jpg?c=2",
+      "price": 4999.5,
+      "reviews": 4.6
+    },
+    {
+      "id": "6",
+      "name": "Luxury Floor Lamp",
+      "description": "Contemporary tall lamp with marble base and ambient shade.",
+      "image": "https://cdn11.bigcommerce.com/s-0z4jan/images/stencil/1280x1280/products/1372/6901/baroque_floor_lamp_3__13570.1441079846.jpg?c=2",
+      "price": 4999.5,
+      "reviews": 4.6
+    },
+    {
+      "id": "7",
+      "name": "Luxury Floor Lamp",
+      "description": "Contemporary tall lamp with marble base and ambient shade.",
+      "image": "https://cdn11.bigcommerce.com/s-0z4jan/images/stencil/1280x1280/products/1372/6901/baroque_floor_lamp_3__13570.1441079846.jpg?c=2",
+      "price": 4999.5,
+      "reviews": 4.6
+    },
+    {
+      "id": "8",
+      "name": "Luxury Floor Lamp",
+      "description": "Contemporary tall lamp with marble base and ambient shade.",
+      "image": "https://cdn11.bigcommerce.com/s-0z4jan/images/stencil/1280x1280/products/1372/6901/baroque_floor_lamp_3__13570.1441079846.jpg?c=2",
+      "price": 4999.5,
+      "reviews": 4.6
+    },
+    {
+      "id": "9",
+      "name": "Luxury Floor Lamp",
+      "description": "Contemporary tall lamp with marble base and ambient shade.",
+      "image": "https://cdn11.bigcommerce.com/s-0z4jan/images/stencil/1280x1280/products/1372/6901/baroque_floor_lamp_3__13570.1441079846.jpg?c=2",
+      "price": 4999.5,
+      "reviews": 4.6
+    },
+    {
+      "id": "10",
+      "name": "Luxury Floor Lamp",
+      "description": "Contemporary tall lamp with marble base and ambient shade.",
+      "image": "https://cdn11.bigcommerce.com/s-0z4jan/images/stencil/1280x1280/products/1372/6901/baroque_floor_lamp_3__13570.1441079846.jpg?c=2",
+      "price": 4999.5,
+      "reviews": 4.6
+    },
+    {
+      "id": "11",
+      "name": "Luxury Floor Lamp",
+      "description": "Contemporary tall lamp with marble base and ambient shade.",
+      "image": "https://cdn11.bigcommerce.com/s-0z4jan/images/stencil/1280x1280/products/1372/6901/baroque_floor_lamp_3__13570.1441079846.jpg?c=2",
+      "price": 4999.5,
+      "reviews": 4.6
+    },
+    {
+      "id": "12",
+      "name": "Luxury Floor Lamp",
+      "description": "Contemporary tall lamp with marble base and ambient shade.",
+      "image": "https://cdn11.bigcommerce.com/s-0z4jan/images/stencil/1280x1280/products/1372/6901/baroque_floor_lamp_3__13570.1441079846.jpg?c=2",
+      "price": 4999.5,
+      "reviews": 4.6
+    }
+  ],
+  "users": [ ]
+}
