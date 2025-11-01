@@ -1,3 +1,4 @@
+// src/Context/CartContext.jsx
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 const CartContext = createContext();
@@ -21,10 +22,20 @@ export const CartProvider = ({ children }) => {
     }
   });
 
-  // ✅ Single product buy (Buy Now)
+  // ✅ used when user clicks “Buy Now”
   const [singleBuy, setSingleBuy] = useState(null);
 
-  // ✅ Normalize price
+  // ✅ store all orders for order tracking
+  const [orders, setOrders] = useState(() => {
+    try {
+      const saved = localStorage.getItem("orders");
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  // ✅ normalize product price safely
   const normalizePrice = (price) => {
     if (price == null) return 0;
     if (typeof price === "number") return price;
@@ -33,7 +44,7 @@ export const CartProvider = ({ children }) => {
     return Number.isNaN(n) ? 0 : n;
   };
 
-  // 🛒 Add to Cart
+  // ✅ add to cart (increment if exists)
   const addToCart = (product) => {
     setCart((prev) => {
       const price = normalizePrice(product.price);
@@ -49,7 +60,6 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  // ➕ Update Quantity
   const updateQuantity = (id, newQty) => {
     setCart((prev) =>
       newQty <= 0
@@ -60,39 +70,85 @@ export const CartProvider = ({ children }) => {
     );
   };
 
-  // ❌ Remove from Cart
   const removeFromCart = (id) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
 
-  // 💖 Add to Wishlist
   const addToWishlist = (product) => {
     setWishlist((prev) => {
-      const alreadyInWishlist = prev.some((item) => item.id === product.id);
-      if (!alreadyInWishlist) {
-        return [...prev, product];
-      }
+      const already = prev.some((i) => i.id === product.id);
+      if (!already) return [...prev, product];
       return prev;
     });
   };
 
-  // ❌ Remove from Wishlist
   const removeFromWishlist = (id) => {
-    setWishlist((prev) => prev.filter((item) => item.id !== id));
+    setWishlist((prev) => prev.filter((i) => i.id !== id));
   };
 
-  // ✅ Check if in Wishlist
   const isWishlisted = (productId) =>
     wishlist.some((item) => item.id === productId);
 
-  // 🧮 Cart total and count
+  // ✅ create a new order (used in Payment.jsx)
+  const createOrder = ({ items, shipping, paymentMethod, totals }) => {
+    const orderId = `ORD-${Date.now()}-${Math.floor(Math.random() * 9000 + 1000)}`;
+
+    const now = new Date().toISOString();
+    const order = {
+      id: orderId,
+      items: items.map((it) => ({
+        id: it.id,
+        name: it.name,
+        price: normalizePrice(it.price),
+        quantity: it.quantity || 1,
+        image: it.image || null,
+      })),
+      shipping,
+      paymentMethod,
+      totals,
+      statusHistory: [
+        { status: "Order Placed", at: now },
+        { status: "Processing", at: now },
+      ],
+      createdAt: now,
+    };
+
+    setOrders((prev) => {
+      const next = [order, ...prev];
+      localStorage.setItem("orders", JSON.stringify(next));
+      return next;
+    });
+
+    return orderId; // ✅ important for redirect
+  };
+
+  // ✅ fetch an order by ID
+  const getOrderById = (orderId) => orders.find((o) => o.id === orderId);
+
+  // ✅ update status for order tracking (demo)
+  const updateOrderStatus = (orderId, newStatus) => {
+    setOrders((prev) => {
+      const next = prev.map((o) => {
+        if (o.id !== orderId) return o;
+        const now = new Date().toISOString();
+        return {
+          ...o,
+          statusHistory: [...o.statusHistory, { status: newStatus, at: now }],
+        };
+      });
+      localStorage.setItem("orders", JSON.stringify(next));
+      return next;
+    });
+  };
+
+  // ✅ get cart total and item count
   const cartTotal = cart.reduce(
     (sum, item) => sum + normalizePrice(item.price) * (item.quantity || 1),
     0
   );
   const cartCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
 
-  // 💾 Save to localStorage
+  // ✅ persist data to localStorage
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
@@ -100,6 +156,10 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
   }, [wishlist]);
+
+  useEffect(() => {
+    localStorage.setItem("orders", JSON.stringify(orders));
+  }, [orders]);
 
   return (
     <CartContext.Provider
@@ -116,6 +176,11 @@ export const CartProvider = ({ children }) => {
         cartCount,
         singleBuy,
         setSingleBuy,
+        // ✅ newly added order functions
+        orders,
+        createOrder,
+        getOrderById,
+        updateOrderStatus,
       }}
     >
       {children}

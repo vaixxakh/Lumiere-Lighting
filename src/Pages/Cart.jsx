@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../Context/CartContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { Trash2, Plus, Minus } from 'lucide-react';
 
@@ -90,7 +90,7 @@ function Cart() {
                 </div>
                 <div className="flex justify-between mb-2">
                   <span className="text-gray-600">Shipping:</span>
-                  <span className="font-semibold">₹100</span>
+                  <span className="font-semibold">{Math.round(total * 0.1)}</span>
                 </div>
                 <div className="flex justify-between mb-2">
                   <span className="text-gray-600">Tax:</span>
@@ -113,7 +113,7 @@ function Cart() {
               </button>
 
               <Link
-                to="/collections"
+                to="/products"
                 className="block text-center text-yellow-500 hover:text-yellow-600 mt-4 font-semibold"
               >
                 Continue Shopping

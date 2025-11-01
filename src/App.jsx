@@ -13,6 +13,7 @@ import Cart from './Pages/Cart';
 import Payment from './Pages/Payment';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import OrderTrack from "./Pages/OrderTrack";
 
 function App() {
   const user = JSON.parse(localStorage.getItem('user')) || null;
@@ -44,6 +45,8 @@ function App() {
         <Route path="/luxuryabout" element={<LuxuryShop />} />
         <Route path="/collections" element={<LuxuryProducts />} />
         <Route path="/login" element={<Login />} />
+         <Route path="/payment" element={<Payment />} />
+  <Route path="/track/:orderId" element={<OrderTrack />} />
         <Route path="/signup" element={<SignUp />} />
         <Route 
             path="/wishlist" 

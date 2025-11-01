@@ -139,6 +139,191 @@
       "name": "neethu",
       "email": "neethu@gamil.com",
       "password": "neethu@123"
+    },
+    {
+      "id": 1761977549860,
+      "name": "ashitha",
+      "email": "ashitha@gmail.com",
+      "password": "ashitha123"
+    }
+  ],
+  "wishlis": [
+    {}
+  ],
+  "orders": [
+    {
+      "orderId": "ORD-2025001",
+      "userId": 1761902030258,
+      "customerName": "vaishakh",
+      "email": "vaishakhvinodnlr@gmail.com",
+      "orderDate": "2025-10-28T14:30:00Z",
+      "status": "Delivered",
+      "items": [
+        {
+          "productId": "1",
+          "productName": "Crystal Chandelier",
+          "quantity": 1,
+          "price": 17999.99
+        },
+        {
+          "productId": "3",
+          "productName": "Wall Sconce Lamp",
+          "quantity": 2,
+          "price": 15929
+        }
+      ],
+      "shippingAddress": "123 Main Street, Kozhikode, Kerala 673001",
+      "paymentMethod": "Credit Card",
+      "subtotal": 49857.99,
+      "shipping": 100,
+      "tax": 8974.44,
+      "total": 58932.43
+    },
+    {
+      "orderId": "ORD-2025002",
+      "userId": 1761902369982,
+      "customerName": "greeshma",
+      "email": "greeshmaramesh03@gmail.com",
+      "orderDate": "2025-10-29T10:15:00Z",
+      "status": "Shipped",
+      "items": [
+        {
+          "productId": "2",
+          "productName": "Modern Pendant Light",
+          "quantity": 1,
+          "price": 22999.99
+        }
+      ],
+      "shippingAddress": "456 Park Avenue, Kochi, Kerala 682001",
+      "paymentMethod": "Debit Card",
+      "subtotal": 22999.99,
+      "shipping": 100,
+      "tax": 4140,
+      "total": 27239.99
+    },
+    {
+      "orderId": "ORD-2025003",
+      "userId": 1761902695852,
+      "customerName": "rashad",
+      "email": "rashad@gmail.com",
+      "orderDate": "2025-10-30T16:45:00Z",
+      "status": "Processing",
+      "items": [
+        {
+          "productId": "4",
+          "productName": "Luxury Floor Lamp",
+          "quantity": 1,
+          "price": 49099.5
+        },
+        {
+          "productId": "10",
+          "productName": "Luxury Floor Lamp",
+          "quantity": 3,
+          "price": 5899.5
+        }
+      ],
+      "shippingAddress": "789 Beach Road, Thiruvananthapuram, Kerala 695001",
+      "paymentMethod": "UPI",
+      "subtotal": 66798,
+      "shipping": 100,
+      "tax": 12023.64,
+      "total": 78921.64
+    },
+    {
+      "orderId": "ORD-2025004",
+      "userId": 1761905379805,
+      "customerName": "safvan",
+      "email": "safvan@gmail.com",
+      "orderDate": "2025-10-31T09:20:00Z",
+      "status": "Pending",
+      "items": [
+        {
+          "productId": "11",
+          "productName": "Luxury Floor Lamp",
+          "quantity": 2,
+          "price": 9999.5
+        }
+      ],
+      "shippingAddress": "321 Hill View, Kannur, Kerala 670001",
+      "paymentMethod": "Cash on Delivery",
+      "subtotal": 19999,
+      "shipping": 100,
+      "tax": 3599.82,
+      "total": 23698.82
+    },
+    {
+      "orderId": "ORD-2025005",
+      "userId": 1761907495329,
+      "customerName": "ashfak",
+      "email": "ashfak@gmail.com",
+      "orderDate": "2025-11-01T11:00:00Z",
+      "status": "Delivered",
+      "items": [
+        {
+          "productId": "5",
+          "productName": "Luxury Floor Lamp",
+          "quantity": 1,
+          "price": 16999.5
+        },
+        {
+          "productId": "12",
+          "productName": "Luxury Floor Lamp",
+          "quantity": 1,
+          "price": 14999.5
+        }
+      ],
+      "shippingAddress": "555 Lake Side, Thrissur, Kerala 680001",
+      "paymentMethod": "Net Banking",
+      "subtotal": 31999,
+      "shipping": 100,
+      "tax": 5759.82,
+      "total": 37858.82
+    },
+    {
+      "id": "27c5",
+      "orderId": "ORD-1761974062644",
+      "userId": 1761902030258,
+      "customerName": "vaishakh",
+      "email": "vaishakhvinodnlr@gmail.com",
+      "orderDate": "2025-11-01T05:14:22.644Z",
+      "status": "Processing",
+      "items": [
+        {
+          "productId": "1",
+          "productName": "Crystal Chandelier",
+          "quantity": 1,
+          "price": 17999.99
+        }
+      ],
+      "shippingAddress": " asjbhhajk ajnajnas askjbasc  akjnsacjnn , kasarg, 621317",
+      "paymentMethod": "Cash on Delivery",
+      "subtotal": 17999.99,
+      "shipping": 100,
+      "tax": 3240,
+      "total": 21339.99
+    },
+    {
+      "id": "7fd3",
+      "orderId": "ORD-1761974073598",
+      "userId": 1761902030258,
+      "customerName": "vaishakh",
+      "email": "vaishakhvinodnlr@gmail.com",
+      "orderDate": "2025-11-01T05:14:33.598Z",
+      "status": "Processing",
+      "items": [
+        {
+          "productId": "1",
+          "productName": "Crystal Chandelier",
+          "quantity": 1,
+          "price": 17999.99
+        }
+      ],
+      "shippingAddress": " asjbhhajk ajnajnas askjbasc  akjnsacjnn , kasarg, 621317",
+      "paymentMethod": "Cash on Delivery",
+      "subtotal": 17999.99,
+      "shipping": 100,
+      "tax": 3240,
+      "total": 21339.99
     }
   ]
 }

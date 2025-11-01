@@ -98,6 +98,7 @@ function Navbar() {
                   >
                     Logout
                   </button>
+                 
                 ) : (
                   <>
                     <Link

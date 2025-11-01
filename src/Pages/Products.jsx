@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Heart } from "lucide-react";
-import { useCart } from "../context/CartContext";
+import { useCart } from "../Context/CartContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom"; // ✅ FIXED import
 
 const ProductsPage = () => {
-  const { addToWishlist, removeFromWishlist, isWishlisted, addToCart } = useCart();
+  const { addToWishlist, removeFromWishlist, isWishlisted, addToCart, setSingleBuy } = useCart(); // ✅ added setSingleBuy
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate(); // ✅ FIXED navigation hook
 
-  // ✅ Function to handle Add to Cart with Toast
+  // ✅ Add to Cart with Toast
   const handleAddToCart = (product) => {
     addToCart(product);
     toast.success("🛒 Item added to cart!", {
@@ -29,7 +31,13 @@ const ProductsPage = () => {
     });
   };
 
-  // ✅ Fetch products from backend
+  // ✅ Handle Buy Now
+  const handleBuyNow = (product) => {
+    setSingleBuy(product); // store product in context
+    navigate("/payment");  // go to payment page
+  };
+
+  // ✅ Fetch products
   useEffect(() => {
     axios
       .get("http://localhost:3000/products")
@@ -45,7 +53,6 @@ const ProductsPage = () => {
   return (
     <section className="py-27 bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-6">
-
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {products.map((product) => {
             const wishlisted = isWishlisted(product.id);
@@ -55,7 +62,7 @@ const ProductsPage = () => {
                 key={product.id}
                 className="bg-white rounded-2xl shadow-md overflow-hidden relative group"
               >
-                {/*  Wishlist Button */}
+                {/* Wishlist Button */}
                 <button
                   onClick={() =>
                     wishlisted
@@ -74,14 +81,14 @@ const ProductsPage = () => {
                   />
                 </button>
 
-                {/*  Product Image */}
+                {/* Product Image */}
                 <img
                   src={product.image}
                   alt={product.name}
                   className="w-full h-64 object-cover"
                 />
 
-                {/*  Product Info */}
+                {/* Product Info */}
                 <div className="p-6 flex-grow flex flex-col">
                   <h2 className="text-xl font-semibold text-gray-900">
                     {product.name}
@@ -97,7 +104,7 @@ const ProductsPage = () => {
                     <span className="text-gray-500">₹{product.price}</span>
                   </div>
 
-                  {/*  Buttons */}
+                  {/* Buttons */}
                   <div className="mt-6 flex space-x-3">
                     <button
                       onClick={() => handleAddToCart(product)}
@@ -106,7 +113,7 @@ const ProductsPage = () => {
                       Add to Cart
                     </button>
                     <button
-                      onClick={() => alert(`Proceed to buy ${product.name}`)}
+                      onClick={() => handleBuyNow(product)} // ✅ FIXED
                       className="flex-1 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 rounded-lg transition"
                     >
                       Buy Now
