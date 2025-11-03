@@ -48,7 +48,7 @@ const ProductsPage = ({ searchTerm }) => {
     });
 
   return (
-    <section className="py-28 bg-gray-50 min-h-screen">
+    <section className="py-35 bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-6">
         {/* Filter & Sort */}
         <div className="flex flex-wrap justify-between items-center mb-8 gap-4">

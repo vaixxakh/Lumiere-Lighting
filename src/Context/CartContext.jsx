@@ -22,10 +22,8 @@ export const CartProvider = ({ children }) => {
     }
   });
 
-  // ✅ used when user clicks “Buy Now”
   const [singleBuy, setSingleBuy] = useState(null);
 
-  // ✅ store all orders for order tracking
   const [orders, setOrders] = useState(() => {
     try {
       const saved = localStorage.getItem("orders");
@@ -35,7 +33,6 @@ export const CartProvider = ({ children }) => {
     }
   });
 
-  // ✅ normalize product price safely
   const normalizePrice = (price) => {
     if (price == null) return 0;
     if (typeof price === "number") return price;
@@ -44,7 +41,6 @@ export const CartProvider = ({ children }) => {
     return Number.isNaN(n) ? 0 : n;
   };
 
-  // ✅ add to cart (increment if exists)
   const addToCart = (product) => {
     setCart((prev) => {
       const price = normalizePrice(product.price);
@@ -89,10 +85,8 @@ export const CartProvider = ({ children }) => {
   const isWishlisted = (productId) =>
     wishlist.some((item) => item.id === productId);
 
-  // ✅ create a new order (used in Payment.jsx)
   const createOrder = ({ items, shipping, paymentMethod, totals }) => {
     const orderId = `ORD-${Date.now()}-${Math.floor(Math.random() * 9000 + 1000)}`;
-
     const now = new Date().toISOString();
     const order = {
       id: orderId,
@@ -119,13 +113,11 @@ export const CartProvider = ({ children }) => {
       return next;
     });
 
-    return orderId; // ✅ important for redirect
+    return orderId;
   };
 
-  // ✅ fetch an order by ID
   const getOrderById = (orderId) => orders.find((o) => o.id === orderId);
 
-  // ✅ update status for order tracking (demo)
   const updateOrderStatus = (orderId, newStatus) => {
     setOrders((prev) => {
       const next = prev.map((o) => {
@@ -141,14 +133,15 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  // ✅ get cart total and item count
   const cartTotal = cart.reduce(
     (sum, item) => sum + normalizePrice(item.price) * (item.quantity || 1),
     0
   );
   const cartCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
 
-  // ✅ persist data to localStorage
+  // ✅ NEW: wishlist count for navbar
+  const wishlistCount = wishlist.length;
+
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
@@ -174,9 +167,9 @@ export const CartProvider = ({ children }) => {
         isWishlisted,
         cartTotal,
         cartCount,
+        wishlistCount, // ✅ added here for navbar badges
         singleBuy,
         setSingleBuy,
-        // ✅ newly added order functions
         orders,
         createOrder,
         getOrderById,

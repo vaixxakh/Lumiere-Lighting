@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ShoppingCart, Heart, User, Search, Menu, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { useCart } from "../Context/CartContext"; // ✅ Import context
 
 function Navbar({ onSearch }) {
   const [showSearch, setShowSearch] = useState(false);
@@ -10,6 +11,9 @@ function Navbar({ onSearch }) {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const userMenuRef = useRef(null);
+
+  // ✅ Get cart & wishlist count
+  const { cartCount, wishlistCount } = useCart();
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -41,9 +45,15 @@ function Navbar({ onSearch }) {
     navigate("/login");
   };
 
+  // ✅ Navigate to order tracking page
+  const handleOrdersClick = () => {
+    setShowUserMenu(false);
+    navigate("/order-tracking");
+  };
+
   return (
-    <nav className="fixed top-0  px-6 py-2 h-26 left-0  w-full z-50 bg-white shadow-md border-b border-gray-200 ">
-      <div className="max-w-7xl  mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+    <nav className="fixed top-0 h-26 px-6 py-2 left-0 w-full z-50 bg-white shadow-md border-b border-gray-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
         {/* Logo */}
         <h1 className="leading-tight mb-15 ml-5 text-center md:text-left">
           <span
@@ -56,12 +66,12 @@ function Navbar({ onSearch }) {
             className="ml-4 block text-sm sm:text-sl font-sans text-black tracking-[0.05em] uppercase"
             style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
-                  L i g h t i n g
+            L i g h t i n g
           </span>
         </h1>
 
         {/* Desktop Menu */}
-        <div className="hidden   md:flex space-x-6 items-center text-black font-small">
+        <div className="hidden md:flex space-x-6 items-center text-black font-small">
           <Link to="/" className="hover:text-yellow-500 transition">HOME</Link>
           <Link to="/luxuryabout" className="hover:text-yellow-500 transition">ABOUT</Link>
           <Link to="/products" className="hover:text-yellow-500 transition">PRODUCTS</Link>
@@ -70,7 +80,7 @@ function Navbar({ onSearch }) {
         </div>
 
         {/* Right Section */}
-        <div className="hidden md:flex mb-15 ml-5  items-center space-x-5 text-black relative">
+        <div className="hidden md:flex mb-15 ml-5 items-center space-x-6 text-black relative">
           {showSearch ? (
             <X
               onClick={() => setShowSearch(false)}
@@ -85,9 +95,27 @@ function Navbar({ onSearch }) {
             />
           )}
 
-          <Link to="/wishlist"><Heart className="cursor-pointer hover:text-yellow-500 transition" /></Link>
-          <Link to="/cart"><ShoppingCart className="cursor-pointer hover:text-yellow-500 transition" /></Link>
+          {/* ❤️ Wishlist with counter */}
+          <Link to="/wishlist" className="relative">
+            <Heart className="cursor-pointer hover:text-yellow-500 transition" />
+            {wishlistCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-semibold rounded-full px-1.5">
+                {wishlistCount}
+              </span>
+            )}
+          </Link>
 
+          {/* 🛒 Cart with counter */}
+          <Link to="/cart" className="relative">
+            <ShoppingCart className="cursor-pointer hover:text-yellow-500 transition" />
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-yellow-500 text-white text-xs font-semibold rounded-full px-1.5">
+                {cartCount}
+              </span>
+            )}
+          </Link>
+
+          {/* 👤 User Dropdown */}
           <div ref={userMenuRef} className="relative flex items-center gap-2">
             <User
               className="cursor-pointer hover:text-yellow-500 transition"
@@ -99,9 +127,16 @@ function Navbar({ onSearch }) {
               </span>
             )}
             {showUserMenu && (
-              <div className="absolute right-15 mt-45 w-28 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
-                <button className="block w-full text-left px-4 py-2 hover:bg-yellow-500 hover:text-white">Account</button>
-                <button  className="block w-full text-left px-4 py-2 hover:bg-yellow-500 hover:text-white">Orders</button>
+              <div className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                <button className="block w-full text-left px-4 py-2 hover:bg-yellow-500 hover:text-white">
+                  Account
+                </button>
+                <button
+                  onClick={handleOrdersClick}
+                  className="block w-full text-left px-4 py-2 hover:bg-yellow-500 hover:text-white"
+                >
+                  Orders
+                </button>
                 {user ? (
                   <button
                     onClick={handleLogout}
@@ -111,8 +146,20 @@ function Navbar({ onSearch }) {
                   </button>
                 ) : (
                   <>
-                    <Link to="/login" className="block px-4 py-2 hover:bg-yellow-500 hover:text-white" onClick={() => setShowUserMenu(false)}>Login</Link>
-                    <Link to="/signup" className="block px-4 py-2 hover:bg-yellow-500 hover:text-white" onClick={() => setShowUserMenu(false)}>Sign Up</Link>
+                    <Link
+                      to="/login"
+                      className="block px-4 py-2 hover:bg-yellow-500 hover:text-white"
+                      onClick={() => setShowUserMenu(false)}
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      to="/signup"
+                      className="block px-4 py-2 hover:bg-yellow-500 hover:text-white"
+                      onClick={() => setShowUserMenu(false)}
+                    >
+                      Sign Up
+                    </Link>
                   </>
                 )}
               </div>
@@ -122,11 +169,33 @@ function Navbar({ onSearch }) {
 
         {/* Mobile Section */}
         <div className="md:hidden flex items-center gap-3 text-black">
-          <Search onClick={() => setShowSearch(!showSearch)} className="cursor-pointer hover:text-yellow-500 transition" />
-          <Heart className="cursor-pointer hover:text-yellow-500 transition" />
-          <ShoppingCart className="cursor-pointer hover:text-yellow-500 transition" />
-          <User onClick={() => setShowUserMenu(!showUserMenu)} className="cursor-pointer hover:text-yellow-500 transition" />
-          <button onClick={() => setIsOpen(!isOpen)}>{isOpen ? <X size={26} /> : <Menu size={26} />}</button>
+          <Search
+            onClick={() => setShowSearch(!showSearch)}
+            className="cursor-pointer hover:text-yellow-500 transition"
+          />
+          <div className="relative">
+            <Heart className="cursor-pointer hover:text-yellow-500 transition" />
+            {wishlistCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-semibold rounded-full px-1">
+                {wishlistCount}
+              </span>
+            )}
+          </div>
+          <div className="relative">
+            <ShoppingCart className="cursor-pointer hover:text-yellow-500 transition" />
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-yellow-500 text-white text-xs font-semibold rounded-full px-1">
+                {cartCount}
+              </span>
+            )}
+          </div>
+          <User
+            onClick={() => setShowUserMenu(!showUserMenu)}
+            className="cursor-pointer hover:text-yellow-500 transition"
+          />
+          <button onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? <X size={26} /> : <Menu size={26} />}
+          </button>
         </div>
       </div>
 
@@ -144,7 +213,10 @@ function Navbar({ onSearch }) {
               placeholder="Search for lights, chandeliers, lamps..."
               className="flex-grow bg-transparent outline-none text-gray-700 px-2"
             />
-            <button type="submit" className="text-yellow-500 hover:text-yellow-600 transition">
+            <button
+              type="submit"
+              className="text-yellow-500 hover:text-yellow-600 transition"
+            >
               <Search />
             </button>
           </form>

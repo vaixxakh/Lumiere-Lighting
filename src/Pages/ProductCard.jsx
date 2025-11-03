@@ -6,7 +6,7 @@ function ProductCard({ product }) {
   const navigate = useNavigate();
   const { addToCart, setSingleBuy } = useCart();
 
-  // ✅ Handle Buy Now
+  // Handle Buy Now
   const handleBuyNow = () => {
     setSingleBuy(product); // store the single product
     navigate("/payment"); // redirect to payment
