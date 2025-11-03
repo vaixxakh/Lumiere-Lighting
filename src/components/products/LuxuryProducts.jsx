@@ -29,7 +29,7 @@ const products = [
 
 const LuxuryProducts = () => {
   return (
-    <section className="py-16 bg-gray-100" id="products">
+    <section className="py-27  bg-gray-100" id="products">
       <div className="text-center mb-10">
         <h2 className="text-4xl font-bold text-gray-800" >Shop by Categories</h2>
       </div>

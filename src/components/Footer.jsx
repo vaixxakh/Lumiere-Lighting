@@ -27,7 +27,7 @@ function Footer() {
       <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
       <p className="text-gray-400 mb-2">Lumiere Luxe Lighting Pvt Limited
         4th Floor, Coastal Business Centre,
-        MG Road, Ernakulam,</p>
+        MG Road, Ernakulam</p>
       <p className="text-gray-400 mb-2">Email:info@lumiereluxe.in</p>
       <p className="text-gray-400">Phone: +91  484 400 1234</p>
     </div>

@@ -24,13 +24,13 @@ function OrderTrack() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-gray-50 py-27">
       <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-6">Order Tracking</h1>
 
         <div className="mb-6">
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">Order ID:</h2>
-          <p className="text-gray-600">{order.id}</p>
+          <h2 className="text-lg font-semibold text-black-700 mb-2">Order ID:</h2>
+          <p className="text-red-600">{order.id}</p>
         </div>
 
         <div className="mb-6">
@@ -39,7 +39,7 @@ function OrderTrack() {
         </div>
 
         <div className="mb-6">
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">Items:</h2>
+          <h2 className="text-lg font-semibold text-yellow-600 mb-2">Items:</h2>
           <ul className="space-y-2">
             {order.items.map((item) => (
               <li
@@ -47,7 +47,7 @@ function OrderTrack() {
                 className="flex justify-between border-b py-2 text-gray-700"
               >
                 <span>{item.name}</span>
-                <span>₹{item.price}</span>
+                <span className="text-red-600">₹{item.price}</span>
               </li>
             ))}
           </ul>

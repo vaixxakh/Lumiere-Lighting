@@ -3,77 +3,101 @@ import axios from "axios";
 import { Heart } from "lucide-react";
 import { useCart } from "../Context/CartContext";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom"; // ✅ FIXED import
+import { useNavigate } from "react-router-dom";
 
-const ProductsPage = () => {
-  const { addToWishlist, removeFromWishlist, isWishlisted, addToCart, setSingleBuy } = useCart(); // ✅ added setSingleBuy
+const ProductsPage = ({ searchTerm }) => {
+  const { addToWishlist, removeFromWishlist, isWishlisted, addToCart, setSingleBuy } = useCart();
   const [products, setProducts] = useState([]);
-  const navigate = useNavigate(); // ✅ FIXED navigation hook
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [sortOrder, setSortOrder] = useState("none");
+  const navigate = useNavigate();
 
-  // ✅ Add to Cart with Toast
   const handleAddToCart = (product) => {
     addToCart(product);
     toast.success("🛒 Item added to cart!", {
       position: "top-center",
       autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
       theme: "colored",
-      style: {
-        backgroundColor: "#000",
-        color: "#FFD700",
-        fontWeight: "bold",
-        borderRadius: "8px",
-      },
     });
   };
 
-  // ✅ Handle Buy Now
   const handleBuyNow = (product) => {
-    setSingleBuy(product); // store product in context
-    navigate("/payment");  // go to payment page
+    setSingleBuy(product);
+    navigate("/payment");
   };
 
-  // ✅ Fetch products
   useEffect(() => {
     axios
       .get("http://localhost:3000/products")
-      .then((res) => {
-        console.log("Products fetched:", res.data);
-        setProducts(res.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching products:", error);
-      });
+      .then((res) => setProducts(res.data))
+      .catch((err) => console.error("Error fetching products:", err));
   }, []);
 
-  return (
-    <section className="py-27 bg-gray-50 min-h-screen">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-          {products.map((product) => {
-            const wishlisted = isWishlisted(product.id);
+  // ✅ Filter, Sort & Search logic (using prop searchTerm)
+  const filteredProducts = products
+    .filter((p) =>
+      selectedCategory === "All" ? true : p.category === selectedCategory
+    )
+    .filter((p) =>
+      p.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (sortOrder === "lowToHigh") return a.price - b.price;
+      if (sortOrder === "highToLow") return b.price - a.price;
+      return 0;
+    });
 
+  return (
+    <section className="py-28 bg-gray-50 min-h-screen">
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Filter & Sort */}
+        <div className="flex flex-wrap justify-between items-center mb-8 gap-4">
+          <div className="flex space-x-3">
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-md focus:ring-2 focus:ring-yellow-400"
+            >
+              <option value="All">All Categories</option>
+              <option value="Chandeliers">Chandeliers</option>
+              <option value="Pendant">Pendant</option>
+              <option value="Floor Light">Floor Light</option>
+              <option value="Ceiling Light">Ceiling Light</option>
+            </select>
+
+            <select
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value)}
+              className="px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-md focus:ring-2 focus:ring-yellow-400"
+            >
+              <option value="none">Sort by Price</option>
+              <option value="lowToHigh">Low to High</option>
+              <option value="highToLow">High to Low</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Product Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+          {filteredProducts.map((product) => {
+            const wishlisted = isWishlisted(product.id);
             return (
               <div
                 key={product.id}
                 className="bg-white rounded-2xl shadow-md overflow-hidden relative group"
               >
-                {/* Wishlist Button */}
+                {/* Wishlist */}
                 <button
                   onClick={() =>
                     wishlisted
                       ? removeFromWishlist(product.id)
                       : addToWishlist(product)
                   }
-                  className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-md hover:scale-110 transition"
+                  className="absolute top-3 right-3 bg-white/90 rounded-full p-2 shadow-md"
                 >
                   <Heart
                     size={22}
-                    className={`transition ${
+                    className={`${
                       wishlisted
                         ? "text-red-500 fill-red-500"
                         : "text-gray-400 hover:text-yellow-500"
@@ -81,14 +105,12 @@ const ProductsPage = () => {
                   />
                 </button>
 
-                {/* Product Image */}
                 <img
                   src={product.image}
                   alt={product.name}
                   className="w-full h-64 object-cover"
                 />
 
-                {/* Product Info */}
                 <div className="p-6 flex-grow flex flex-col">
                   <h2 className="text-xl font-semibold text-gray-900">
                     {product.name}
@@ -98,13 +120,12 @@ const ProductsPage = () => {
                   </p>
 
                   <div className="mt-3 flex items-center space-x-3">
-                    <span className="text-yellow-400 font-semibold">
+                    <span className="text-green-600 font-semibold">
                       ★ {product.reviews.toFixed(1)}
                     </span>
-                    <span className="text-gray-500">₹{product.price}</span>
+                    <span className="text-red-700">₹{product.price}</span>
                   </div>
 
-                  {/* Buttons */}
                   <div className="mt-6 flex space-x-3">
                     <button
                       onClick={() => handleAddToCart(product)}
@@ -113,7 +134,7 @@ const ProductsPage = () => {
                       Add to Cart
                     </button>
                     <button
-                      onClick={() => handleBuyNow(product)} // ✅ FIXED
+                      onClick={() => handleBuyNow(product)}
                       className="flex-1 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 rounded-lg transition"
                     >
                       Buy Now
@@ -124,6 +145,12 @@ const ProductsPage = () => {
             );
           })}
         </div>
+
+        {filteredProducts.length === 0 && (
+          <p className="text-center text-gray-600 mt-10">
+            No products found for this search, category, or sort option.
+          </p>
+        )}
       </div>
     </section>
   );
