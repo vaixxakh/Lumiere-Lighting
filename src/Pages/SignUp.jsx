@@ -52,7 +52,7 @@ function SignUp() {
       setMessage('🎉 Signup successful! Redirecting...');
 
       setTimeout(() => {
-        navigate('/');
+        navigate('/login');
         window.location.reload();
       }, 1500);
     } catch (error) {

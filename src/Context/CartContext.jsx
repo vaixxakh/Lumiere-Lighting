@@ -4,6 +4,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+  //  CART STATE
   const [cart, setCart] = useState(() => {
     try {
       const saved = localStorage.getItem("cart");
@@ -13,6 +14,7 @@ export const CartProvider = ({ children }) => {
     }
   });
 
+  //  WISHLIST STATE
   const [wishlist, setWishlist] = useState(() => {
     try {
       const saved = localStorage.getItem("wishlist");
@@ -22,8 +24,10 @@ export const CartProvider = ({ children }) => {
     }
   });
 
+  //  SINGLE BUY ITEM (BUY NOW)
   const [singleBuy, setSingleBuy] = useState(null);
 
+  //  ORDERS STATE
   const [orders, setOrders] = useState(() => {
     try {
       const saved = localStorage.getItem("orders");
@@ -33,6 +37,7 @@ export const CartProvider = ({ children }) => {
     }
   });
 
+  //  Normalize price (avoid errors if strings)
   const normalizePrice = (price) => {
     if (price == null) return 0;
     if (typeof price === "number") return price;
@@ -41,10 +46,12 @@ export const CartProvider = ({ children }) => {
     return Number.isNaN(n) ? 0 : n;
   };
 
+  //  ADD TO CART
   const addToCart = (product) => {
     setCart((prev) => {
       const price = normalizePrice(product.price);
       const existing = prev.find((item) => item.id === product.id);
+
       if (existing) {
         return prev.map((item) =>
           item.id === product.id
@@ -56,6 +63,7 @@ export const CartProvider = ({ children }) => {
     });
   };
 
+  //  UPDATE QUANTITY
   const updateQuantity = (id, newQty) => {
     setCart((prev) =>
       newQty <= 0
@@ -66,10 +74,12 @@ export const CartProvider = ({ children }) => {
     );
   };
 
+  //  REMOVE FROM CART
   const removeFromCart = (id) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
 
+  //  ADD TO WISHLIST
   const addToWishlist = (product) => {
     setWishlist((prev) => {
       const already = prev.some((i) => i.id === product.id);
@@ -78,13 +88,16 @@ export const CartProvider = ({ children }) => {
     });
   };
 
+  //  REMOVE FROM WISHLIST
   const removeFromWishlist = (id) => {
     setWishlist((prev) => prev.filter((i) => i.id !== id));
   };
 
+  //  CHECK IF PRODUCT IS WISHLISTED
   const isWishlisted = (productId) =>
     wishlist.some((item) => item.id === productId);
 
+  //  CREATE ORDER
   const createOrder = ({ items, shipping, paymentMethod, totals }) => {
     const orderId = `ORD-${Date.now()}-${Math.floor(Math.random() * 9000 + 1000)}`;
     const now = new Date().toISOString();
@@ -116,8 +129,10 @@ export const CartProvider = ({ children }) => {
     return orderId;
   };
 
+  //  GET ORDER BY ID
   const getOrderById = (orderId) => orders.find((o) => o.id === orderId);
 
+  //  UPDATE ORDER STATUS
   const updateOrderStatus = (orderId, newStatus) => {
     setOrders((prev) => {
       const next = prev.map((o) => {
@@ -133,15 +148,17 @@ export const CartProvider = ({ children }) => {
     });
   };
 
+  //  CART TOTALS
   const cartTotal = cart.reduce(
     (sum, item) => sum + normalizePrice(item.price) * (item.quantity || 1),
     0
   );
   const cartCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
 
-  // ✅ NEW: wishlist count for navbar
+  //  WISHLIST COUNT
   const wishlistCount = wishlist.length;
 
+  //  Sync to LocalStorage
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
@@ -154,6 +171,7 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem("orders", JSON.stringify(orders));
   }, [orders]);
 
+  // PROVIDER VALUE
   return (
     <CartContext.Provider
       value={{
@@ -167,7 +185,7 @@ export const CartProvider = ({ children }) => {
         isWishlisted,
         cartTotal,
         cartCount,
-        wishlistCount, // ✅ added here for navbar badges
+        wishlistCount, // for navbar badges
         singleBuy,
         setSingleBuy,
         orders,

@@ -237,10 +237,22 @@
       "password": "mottachi"
     },
     {
-      "id": 1762172577437,
+      "id": "1762172577437",
       "name": "Mohammed Ihsan ",
       "email": "mdihsan0010@gmail.com",
       "password": "16271627"
+    },
+    {
+      "id": 1762226822872,
+      "name": "faheem",
+      "email": "faheem@gmail.com",
+      "password": "faheem@123"
+    },
+    {
+      "id": 1762226964957,
+      "name": "ajmal",
+      "email": "ajmal@gmail.com",
+      "password": "ajmal@123"
     }
   ],
   "wishlis": [
