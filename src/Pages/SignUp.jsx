@@ -43,7 +43,7 @@ function SignUp() {
         return;
       }
 
-      const newUser = { id: Date.now(), name, email, password };
+      const newUser = { id: Date.now(), name, email, password,isAdmin:false };
       const postRes = await axios.post('http://localhost:3000/users', newUser);
 
       localStorage.setItem('user', JSON.stringify(postRes.data));

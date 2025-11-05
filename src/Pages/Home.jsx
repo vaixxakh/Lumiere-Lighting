@@ -7,15 +7,9 @@ import LuxuryShop from "../components/products/LuxuryShop";
 const Home = () => {
   return (
     <div>
-      {/* Hero / Banner Section */}
       <Carousel />  
-      {/* Products Section */}
       <LuxuryProducts /> 
-      {/* Luxury Shop Section */}
       <LuxuryShop />
-      {/* (Optional) You can add more sections later */}
-      {/* <Testimonials /> */}
-      {/* <Contact /> */}
     </div>
   );
 };

@@ -183,76 +183,36 @@
   ],
   "users": [
     {
-      "id": "1761902030258",
-      "name": "vaishakh",
-      "email": "vaishakhvinodnlr@gmail.com",
-      "password": "Vaishakh@1718"
+      "name": "admin",
+      "isAdmin": true
     },
     {
-      "id": "1761902369982",
-      "name": "greeshma ",
-      "email": "greeshmaramesh03@gmail.com",
-      "password": "ponnuyzz"
+      "id": 1762335515834,
+      "name": "vaishak",
+      "email": "vaishak13@gmail.com",
+      "password": "vaishak123",
+      "isAdmin": false
     },
     {
-      "id": "1761902695852",
-      "name": "rashad",
-      "email": "rashad@gmail.com",
-      "password": "rashaad@123"
+      "id": 1762337196629,
+      "name": "admin",
+      "email": "admin@lumiere.com",
+      "password": "admin@916",
+      "isAdmin": false
     },
     {
-      "id": "1761905379805",
-      "name": "safvan ",
-      "email": "safvan@gmail.com",
-      "password": "safvan@123"
+      "id": 1762352328420,
+      "name": "amaya",
+      "email": "amaya@gmail.com",
+      "password": "amaya@123",
+      "isAdmin": false
     },
     {
-      "id": "1761907495329",
-      "name": "ashfak",
-      "email": "ashfak@gmail.com",
-      "password": "ashi@123"
-    },
-    {
-      "id": "1761911225602",
-      "name": "shemin",
-      "email": "shemin@gamil.com",
-      "password": "shemin123"
-    },
-    {
-      "id": "1761913843252",
-      "name": "neethu",
-      "email": "neethu@gamil.com",
-      "password": "neethu@123"
-    },
-    {
-      "id": "1761977549860",
+      "id": 1762355261656,
       "name": "ashitha",
       "email": "ashitha@gmail.com",
-      "password": "ashitha123"
-    },
-    {
-      "id": "1762020533570",
-      "name": "thrishika ",
-      "email": "thrishika@gmail.com",
-      "password": "mottachi"
-    },
-    {
-      "id": "1762172577437",
-      "name": "Mohammed Ihsan ",
-      "email": "mdihsan0010@gmail.com",
-      "password": "16271627"
-    },
-    {
-      "id": 1762226822872,
-      "name": "faheem",
-      "email": "faheem@gmail.com",
-      "password": "faheem@123"
-    },
-    {
-      "id": 1762226964957,
-      "name": "ajmal",
-      "email": "ajmal@gmail.com",
-      "password": "ajmal@123"
+      "password": "ashitha123",
+      "isAdmin": false
     }
   ],
   "wishlis": [

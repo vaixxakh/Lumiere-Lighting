@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ShoppingCart, Heart, User, Search, Menu, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { useCart } from "../Context/CartContext"; // ✅ Import context
+import { useCart } from "../Context/CartContext"; 
 
 function Navbar({ onSearch }) {
   const [showSearch, setShowSearch] = useState(false);
@@ -12,7 +12,7 @@ function Navbar({ onSearch }) {
   const navigate = useNavigate();
   const userMenuRef = useRef(null);
 
-  // ✅ Get cart & wishlist count
+  // Get cart & wishlist count
   const { cartCount, wishlistCount } = useCart();
 
   useEffect(() => {
@@ -45,7 +45,7 @@ function Navbar({ onSearch }) {
     navigate("/login");
   };
 
-  // ✅ Navigate to order tracking page
+  //  Navigate to order tracking page
   const handleOrdersClick = () => {
     setShowUserMenu(false);
     navigate("/order-tracking");
@@ -95,9 +95,9 @@ function Navbar({ onSearch }) {
             />
           )}
 
-          {/* ❤️ Wishlist with counter */}
+          {/*  Wishlist with counter */}
           <Link to="/wishlist" className="relative">
-            <Heart className="cursor-pointer hover:text-yellow-500 transition" />
+            <Heart className="cursor-pointer hover:text-red-500 transition" />
             {wishlistCount > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-semibold rounded-full px-1.5">
                 {wishlistCount}
@@ -105,7 +105,7 @@ function Navbar({ onSearch }) {
             )}
           </Link>
 
-          {/* 🛒 Cart with counter */}
+          {/*  Cart with counter */}
           <Link to="/cart" className="relative">
             <ShoppingCart className="cursor-pointer hover:text-yellow-500 transition" />
             {cartCount > 0 && (
@@ -115,7 +115,7 @@ function Navbar({ onSearch }) {
             )}
           </Link>
 
-          {/* 👤 User Dropdown */}
+          {/*  User Dropdown */}
           <div ref={userMenuRef} className="relative flex items-center gap-2">
             <User
               className="cursor-pointer hover:text-yellow-500 transition"
@@ -127,20 +127,17 @@ function Navbar({ onSearch }) {
               </span>
             )}
             {showUserMenu && (
-              <div className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
-                <button className="block w-full text-left px-4 py-2 hover:bg-yellow-500 hover:text-white">
+              <div className="absolute right-15 mt-45 w-32 bg-white rounded-lg shadow-lg border border-gray-200 py-4  z-50">
+                <button className="hover:text-yellow-600 font-semibold ml-6">
                   Account
                 </button>
-                <button
-                  onClick={handleOrdersClick}
-                  className="block w-full text-left px-4 py-2 hover:bg-yellow-500 hover:text-white"
-                >
-                  Orders
-                </button>
+                <Link to="/orders" className="hover:text-yellow-600 font-semibold ml-3  px-3">
+                  My Orders
+                  </Link>
                 {user ? (
                   <button
                     onClick={handleLogout}
-                    className="block w-full text-left px-4 py-2 hover:bg-yellow-500 hover:text-white"
+                    className="hover:text-yellow-600 font-semibold ml-3  px-3"
                   >
                     Logout
                   </button>
@@ -199,29 +196,29 @@ function Navbar({ onSearch }) {
         </div>
       </div>
 
-      {/* 🔍 Search Bar */}
+      {/*  Search Bar */}
       {showSearch && (
-        <div className="w-full bg-gray-100 py-3 px-4 flex justify-center">
-          <form
-            onSubmit={handleSearch}
-            className="w-full max-w-md sm:max-w-lg flex items-center bg-white border border-gray-300 rounded-full shadow-sm px-4 py-2"
-          >
-            <input
-              type="text"
-              value={searchItem}
-              onChange={(e) => setSearchItem(e.target.value)}
-              placeholder="Search for lights, chandeliers, lamps..."
-              className="flex-grow bg-transparent outline-none text-gray-700 px-2"
-            />
-            <button
-              type="submit"
-              className="text-yellow-500 hover:text-yellow-600 transition"
-            >
-              <Search />
-            </button>
-          </form>
-        </div>
-      )}
+  <div className="fixed top-7 left-0 w-full flex justify-center z-50">
+    <form
+      onSubmit={handleSearch}
+      className="w-full max-w-md sm:max-w-lg flex items-center bg-white border border-gray-300 rounded-full shadow-md px-4 py-2"
+    >
+      <input
+        type="text"
+        value={searchItem}
+        onChange={(e) => setSearchItem(e.target.value)}
+        placeholder="Search for lights, chandeliers, lamps..."
+        className="flex-grow bg-transparent outline-none text-gray-700 px-2"
+      />
+      <button
+        type="submit"
+        className="text-yellow-500 hover:text-yellow-600 transition"
+      >
+        <Search />
+      </button>
+    </form>
+  </div>
+)}
     </nav>
   );
 }

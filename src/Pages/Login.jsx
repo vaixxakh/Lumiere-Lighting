@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Eye, EyeOff } from 'lucide-react';
 
 function Login() {
   const navigate = useNavigate();
@@ -8,6 +9,7 @@ function Login() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [msgType, setMsgType] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -25,10 +27,15 @@ function Login() {
         localStorage.setItem('user', JSON.stringify(user));
         setMsgType('success');
         setMessage(`Welcome back, ${user.name}! Login Successful!`);
+
         setTimeout(() => {
-          navigate('/');
+          if (user.isAdmin === true) {
+            navigate('/admin'); // ✅ Redirect admin
+          } else {
+            navigate('/'); // ✅ Redirect normal user
+          }
           window.location.reload();
-        }, 1500);
+        }, 1200);
       } else {
         setMsgType('error');
         setMessage('Invalid email or password!');
@@ -68,13 +75,23 @@ function Login() {
             className="border border-gray-300 p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-yellow-400"
           />
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="border border-gray-300 p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-yellow-400"
-          />
+          {/* Password Input with Show/Hide */}
+          <div className="relative">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="border border-gray-300 p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-yellow-400 pr-10"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 transition"
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
 
           <button
             onClick={handleLogin}
@@ -85,7 +102,7 @@ function Login() {
         </div>
 
         <p className="text-center text-sm text-gray-500 mt-5">
-          Don’t have an account?{' '}
+          Don't have an account?{' '}
           <span
             onClick={() => navigate('/signup')}
             className="text-yellow-600 hover:underline cursor-pointer"

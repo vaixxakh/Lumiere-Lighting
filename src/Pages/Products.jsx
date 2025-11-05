@@ -10,6 +10,11 @@ const ProductsPage = ({ searchTerm }) => {
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortOrder, setSortOrder] = useState("none");
+
+  //  Pagination States
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
+
   const navigate = useNavigate();
 
   const handleAddToCart = (product) => {
@@ -33,7 +38,7 @@ const ProductsPage = ({ searchTerm }) => {
       .catch((err) => console.error("Error fetching products:", err));
   }, []);
 
-  // ✅ Filter, Sort & Search logic (using prop searchTerm)
+  //  Filter, Sort & Search logic (using prop searchTerm)
   const filteredProducts = products
     .filter((p) =>
       selectedCategory === "All" ? true : p.category === selectedCategory
@@ -47,6 +52,16 @@ const ProductsPage = ({ searchTerm }) => {
       return 0;
     });
 
+  // Pagination logic
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]);
+
   return (
     <section className="py-35 bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-6">
@@ -55,7 +70,10 @@ const ProductsPage = ({ searchTerm }) => {
           <div className="flex space-x-3">
             <select
               value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
+              onChange={(e) => {
+                setSelectedCategory(e.target.value);
+                setCurrentPage(1);
+              }}
               className="px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-md focus:ring-2 focus:ring-yellow-400"
             >
               <option value="All">All Categories</option>
@@ -67,7 +85,10 @@ const ProductsPage = ({ searchTerm }) => {
 
             <select
               value={sortOrder}
-              onChange={(e) => setSortOrder(e.target.value)}
+              onChange={(e) => {
+                setSortOrder(e.target.value);
+                setCurrentPage(1);
+              }}
               className="px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-md focus:ring-2 focus:ring-yellow-400"
             >
               <option value="none">Sort by Price</option>
@@ -77,9 +98,9 @@ const ProductsPage = ({ searchTerm }) => {
           </div>
         </div>
 
-        {/* Product Grid */}
+        {/*  Product Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-          {filteredProducts.map((product) => {
+          {paginatedProducts.map((product) => {
             const wishlisted = isWishlisted(product.id);
             return (
               <div
@@ -100,7 +121,7 @@ const ProductsPage = ({ searchTerm }) => {
                     className={`${
                       wishlisted
                         ? "text-red-500 fill-red-500"
-                        : "text-gray-400 hover:text-yellow-500"
+                        : "text-gray-400 hover:text-red-500"
                     }`}
                   />
                 </button>
@@ -146,10 +167,46 @@ const ProductsPage = ({ searchTerm }) => {
           })}
         </div>
 
+        {/*  No Products Found */}
         {filteredProducts.length === 0 && (
           <p className="text-center text-gray-600 mt-10">
             No products found for this search, category, or sort option.
           </p>
+        )}
+
+        {/* Pagination Buttons */}
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center mt-10 gap-3">
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+              disabled={currentPage === 1}
+              className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-yellow-400 disabled:opacity-50"
+            >
+              Prev
+            </button>
+
+            {[...Array(totalPages)].map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentPage(i + 1)}
+                className={`px-3 py-1 rounded-lg font-semibold transition ${
+                  currentPage === i + 1
+                    ? "bg-yellow-500 text-white shadow-md"
+                    : "bg-gray-200 hover:bg-yellow-400"
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+              disabled={currentPage === totalPages}
+              className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-yellow-400 disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
         )}
       </div>
     </section>
