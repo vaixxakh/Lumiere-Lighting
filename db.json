@@ -184,34 +184,51 @@
   "users": [
     {
       "name": "admin",
-      "isAdmin": true
+      "isAdmin": true,
+      "id": "b83d",
+      "blocked": false,
+      "blockedAt": "2025-11-06T05:36:42.823Z",
+      "unblockedAt": "2025-11-06T05:36:48.187Z"
     },
     {
-      "id": 1762335515834,
+      "id": "1762335515834",
       "name": "vaishak",
       "email": "vaishak13@gmail.com",
       "password": "vaishak123",
-      "isAdmin": false
+      "isAdmin": false,
+      "blocked": false,
+      "blockedAt": "2025-11-06T07:06:11.862Z",
+      "unblockedAt": "2025-11-06T07:06:18.838Z"
     },
     {
-      "id": 1762337196629,
+      "id": "1762337196629",
       "name": "admin",
       "email": "admin@lumiere.com",
       "password": "admin@916",
       "isAdmin": false
     },
     {
-      "id": 1762352328420,
+      "id": "1762352328420",
       "name": "amaya",
       "email": "amaya@gmail.com",
       "password": "amaya@123",
       "isAdmin": false
     },
     {
-      "id": 1762355261656,
+      "id": "1762355261656",
       "name": "ashitha",
       "email": "ashitha@gmail.com",
       "password": "ashitha123",
+      "isAdmin": false,
+      "blocked": false,
+      "blockedAt": "2025-11-06T07:16:36.989Z",
+      "unblockedAt": "2025-11-06T07:16:47.936Z"
+    },
+    {
+      "id": 1762413272469,
+      "name": "haifa",
+      "email": "haifa@gmail.com",
+      "password": "haifa@123",
       "isAdmin": false
     }
   ],
@@ -227,7 +244,7 @@
       "customerName": "vaishakh",
       "email": "vaishakhvinodnlr@gmail.com",
       "orderDate": "2025-10-28T14:30:00Z",
-      "status": "Delivered",
+      "status": "Processing",
       "items": [
         {
           "productId": "1",
@@ -248,7 +265,8 @@
       "shipping": 100,
       "tax": 8974.44,
       "total": 58932.43,
-      "id": "9ee5"
+      "id": "9ee5",
+      "updatedAt": "2025-11-06T13:40:35.268Z"
     },
     {
       "orderId": "ORD-2025002",
@@ -256,7 +274,7 @@
       "customerName": "greeshma",
       "email": "greeshmaramesh03@gmail.com",
       "orderDate": "2025-10-29T10:15:00Z",
-      "status": "Shipped",
+      "status": "Pending",
       "items": [
         {
           "productId": "2",
@@ -271,7 +289,8 @@
       "shipping": 100,
       "tax": 4140,
       "total": 27239.99,
-      "id": "efae"
+      "id": "efae",
+      "updatedAt": "2025-11-06T13:50:38.625Z"
     },
     {
       "orderId": "ORD-2025003",
@@ -331,7 +350,7 @@
       "customerName": "ashfak",
       "email": "ashfak@gmail.com",
       "orderDate": "2025-11-01T11:00:00Z",
-      "status": "Delivered",
+      "status": "Pending",
       "items": [
         {
           "productId": "5",
@@ -352,7 +371,8 @@
       "shipping": 100,
       "tax": 5759.82,
       "total": 37858.82,
-      "id": "ee76"
+      "id": "ee76",
+      "updatedAt": "2025-11-06T06:35:08.080Z"
     },
     {
       "id": "27c5",
@@ -375,7 +395,8 @@
       "subtotal": 17999.99,
       "shipping": 100,
       "tax": 3240,
-      "total": 21339.99
+      "total": 21339.99,
+      "updatedAt": "2025-11-06T06:45:19.289Z"
     },
     {
       "id": "7fd3",
@@ -398,7 +419,45 @@
       "subtotal": 17999.99,
       "shipping": 100,
       "tax": 3240,
-      "total": 21339.99
+      "total": 21339.99,
+      "updatedAt": "2025-11-06T06:37:07.412Z"
+    },
+    {
+      "id": "ORD-1762440103625-6304",
+      "items": [
+        {
+          "id": "2",
+          "name": "Golden Luxe Chandelier Light",
+          "price": 37800,
+          "quantity": 1,
+          "image": "https://assets.wfcdn.com/im/85633969/resize-h1200-w1200%5Ecompr-r85/2977/297764850/Bartho+13+-+Light+Dimmable+Empire+Chandelier.jpg"
+        }
+      ],
+      "shipping": {
+        "fullName": "haifa",
+        "phone": "1111111111",
+        "addressLine": " asjbhhajk ajnajnas askjbasc  akjnsacjnn ",
+        "city": "Andikundu",
+        "zipCode": "621317"
+      },
+      "paymentMethod": "cod",
+      "totals": {
+        "subtotal": 37800,
+        "shipping": 1890,
+        "tax": 6804,
+        "grandTotal": 46494
+      },
+      "statusHistory": [
+        {
+          "status": "Order Placed",
+          "at": "2025-11-06T14:41:43.625Z"
+        },
+        {
+          "status": "Processing",
+          "at": "2025-11-06T14:41:43.625Z"
+        }
+      ],
+      "createdAt": "2025-11-06T14:41:43.625Z"
     }
   ]
 }

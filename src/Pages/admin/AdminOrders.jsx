@@ -29,25 +29,25 @@ const AdminOrders = () => {
     }
   };
 
+  // PATCH the whole order object to work with JSON Server; use `id` (database PK), not `orderId`
   const changeStatus = async (orderId, status) => {
     setUpdatingId(orderId);
     setError('');
     setSuccessMsg('');
-    
+
     try {
-      await updateOrder(orderId, { status });
-      
-      // Update local state immediately
-      const updatedOrders = orders.map(order => 
-        order.orderId === orderId ? { ...order, status } : order
+      const order = orders.find((o) => o.orderId === orderId); // lookup by orderId
+      if (!order) throw new Error('Order not found');
+      await updateOrder(order.id, { ...order, status }); // USE `order.id` as API PK
+      const updatedOrders = orders.map(o =>
+        o.orderId === orderId ? { ...o, status } : o
       );
       setOrders(updatedOrders);
-      
-      // Update selected order
+
       if (selected && selected.orderId === orderId) {
         setSelected(prev => prev ? { ...prev, status } : null);
       }
-      
+
       setSuccessMsg(`Order status updated to ${status}`);
       setTimeout(() => setSuccessMsg(''), 3000);
     } catch (err) {
@@ -60,9 +60,8 @@ const AdminOrders = () => {
 
   const filteredOrders = orders.filter(o => {
     const matchesSearch = o.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         o.orderId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         o.email.toLowerCase().includes(searchTerm.toLowerCase());
-    
+      o.orderId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      o.email.toLowerCase().includes(searchTerm.toLowerCase());
     if (filterStatus === 'all') return matchesSearch;
     return matchesSearch && o.status === filterStatus;
   });
@@ -83,13 +82,13 @@ const AdminOrders = () => {
   const getStatusColor = (status) => {
     switch (status) {
       case 'Processing':
-        return 'bg-yellow-100 text-yellow-700 border-yellow-300';
+        return 'bg-orange-400 text-orange-100 border-orange-600';
       case 'Shipped':
-        return 'bg-blue-100 text-blue-700 border-blue-300';
+        return 'bg-blue-600 text-blue-100 border-blue-300';
       case 'Delivered':
-        return 'bg-green-100 text-green-700 border-green-300';
+        return 'bg-green-600 text-green-100 border-green-300';
       case 'Pending':
-        return 'bg-gray-100 text-gray-700 border-gray-300';
+        return 'bg-red-500 text-red-100 border-red-600';
       default:
         return 'bg-gray-100 text-gray-700 border-gray-300';
     }
@@ -103,17 +102,17 @@ const AdminOrders = () => {
         return 'from-blue-500 to-blue-600';
       case 'Delivered':
         return 'from-green-500 to-green-600';
+      case 'Pending':
+        return 'from-red-500 to-red-500';
       default:
         return 'from-gray-500 to-gray-600';
     }
   };
 
   const downloadInvoice = (order) => {
-    // Create a simple invoice
     const invoiceContent = `
 LUMIERE - ORDER INVOICE
 ========================
-
 Order ID: ${order.orderId}
 Date: ${new Date(order.orderDate).toLocaleDateString()}
 Status: ${order.status}
@@ -135,8 +134,6 @@ TOTAL: ₹${order.total?.toLocaleString()}
 
 Thank you for your purchase!
     `;
-
-    // Create blob and download
     const blob = new Blob([invoiceContent], { type: 'text/plain' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -163,15 +160,15 @@ Thank you for your purchase!
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-4xl font-bold text-gray-800">Order Management</h1>
-          <p className="text-gray-600 mt-1">Total Orders: <span className="font-bold text-yellow-500">{orders.length}</span></p>
+          <p className="text-gray-600 mt-1">
+            Total Orders: <span className="font-bold text-yellow-500">{orders.length}</span>
+          </p>
         </div>
       </div>
 
-      {/* Success Alert */}
       {successMsg && (
         <div className="bg-green-50 border-l-4 border-green-500 p-4 flex items-start gap-3 rounded-lg animate-pulse">
           <CheckCircle className="text-green-500 mt-0.5" size={20} />
@@ -179,7 +176,6 @@ Thank you for your purchase!
         </div>
       )}
 
-      {/* Error Alert */}
       {error && (
         <div className="bg-red-50 border-l-4 border-red-500 p-4 flex items-start gap-3 rounded-lg">
           <AlertCircle className="text-red-500 mt-0.5" size={20} />
@@ -187,7 +183,6 @@ Thank you for your purchase!
         </div>
       )}
 
-      {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-gradient-to-br from-gray-500 to-gray-600 text-white rounded-xl shadow-lg p-6">
           <p className="text-gray-100 text-sm font-semibold mb-2">Pending</p>
@@ -207,7 +202,6 @@ Thank you for your purchase!
         </div>
       </div>
 
-      {/* Search & Filter */}
       <div className="bg-white rounded-xl shadow-lg p-6 space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input
@@ -231,9 +225,7 @@ Thank you for your purchase!
         </div>
       </div>
 
-      {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Orders List */}
         <div className="lg:col-span-2 bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-6 flex items-center gap-3">
             <ShoppingBag size={28} />
@@ -282,12 +274,9 @@ Thank you for your purchase!
             )}
           </div>
         </div>
-
-        {/* Order Details Sidebar */}
         <div className="lg:col-span-1">
           {selected ? (
             <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
-              {/* Header */}
               <div className={`bg-gradient-to-r ${getStatusBgGradient(selected.status)} text-white p-6`}>
                 <div className="flex items-center gap-2 mb-3">
                   {getStatusIcon(selected.status)}
@@ -296,10 +285,7 @@ Thank you for your purchase!
                 <h3 className="text-2xl font-bold">{selected.orderId}</h3>
                 <p className="text-sm opacity-90 mt-1">{new Date(selected.orderDate).toLocaleDateString()}</p>
               </div>
-
-              {/* Content */}
               <div className="p-6 space-y-4">
-                {/* Customer Info */}
                 <div>
                   <label className="text-xs font-semibold text-gray-600 uppercase block mb-3">Customer Details</label>
                   <div className="bg-gray-50 rounded-lg p-4 space-y-3">
@@ -326,8 +312,6 @@ Thank you for your purchase!
                     </div>
                   </div>
                 </div>
-
-                {/* Order Items */}
                 <div>
                   <label className="text-xs font-semibold text-gray-600 uppercase block mb-3">Items</label>
                   <div className="bg-gray-50 rounded-lg p-4 space-y-2">
@@ -339,8 +323,6 @@ Thank you for your purchase!
                     ))}
                   </div>
                 </div>
-
-                {/* Order Summary */}
                 <div className="bg-yellow-50 border-2 border-yellow-200 rounded-lg p-4">
                   <div className="space-y-2 text-sm mb-3">
                     <div className="flex justify-between text-gray-700">
@@ -361,12 +343,10 @@ Thank you for your purchase!
                     <span className="text-2xl font-bold text-yellow-600">₹{selected.total?.toLocaleString()}</span>
                   </div>
                 </div>
-
-                {/* Status Update Buttons */}
                 <div>
                   <label className="text-xs font-semibold text-gray-600 uppercase block mb-3">Update Status</label>
                   <div className="space-y-2">
-                    {['Processing', 'Shipped', 'Delivered'].map(s => (
+                    {['Pending', 'Processing', 'Shipped', 'Delivered'].map(s => (
                       <button
                         key={s}
                         onClick={() => changeStatus(selected.orderId, s)}
@@ -391,8 +371,6 @@ Thank you for your purchase!
                     ))}
                   </div>
                 </div>
-
-                {/* Action Buttons */}
                 <div className="flex gap-2 pt-4 border-t">
                   <button
                     onClick={() => setShowViewModal(true)}
@@ -419,8 +397,6 @@ Thank you for your purchase!
           )}
         </div>
       </div>
-
-      {/* View Modal */}
       {showViewModal && selected && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl max-w-2xl w-full max-h-96 overflow-y-auto">
@@ -433,7 +409,6 @@ Thank you for your purchase!
                 <X size={24} />
               </button>
             </div>
-
             <div className="p-6 space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -453,14 +428,11 @@ Thank you for your purchase!
                   <p className="font-bold">{new Date(selected.orderDate).toLocaleDateString()}</p>
                 </div>
               </div>
-
               <hr />
-
               <div>
                 <h3 className="font-bold text-lg mb-2">Shipping Address</h3>
                 <p className="text-gray-700">{selected.shippingAddress}</p>
               </div>
-
               <div>
                 <h3 className="font-bold text-lg mb-2">Order Items</h3>
                 <div className="space-y-2">
@@ -472,9 +444,7 @@ Thank you for your purchase!
                   ))}
                 </div>
               </div>
-
               <hr />
-
               <div className="bg-yellow-50 p-4 rounded">
                 <div className="flex justify-between mb-2">
                   <span>Subtotal:</span>
@@ -493,7 +463,6 @@ Thank you for your purchase!
                   <span className="text-yellow-600">₹{selected.total?.toLocaleString()}</span>
                 </div>
               </div>
-
               <button
                 onClick={() => setShowViewModal(false)}
                 className="w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 rounded-lg transition"

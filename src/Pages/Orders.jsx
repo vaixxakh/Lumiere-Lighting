@@ -12,6 +12,13 @@ function Orders() {
 
   useEffect(() => {
     fetchUserOrders();
+    
+    // Auto-refresh every 5 seconds to sync with admin updates
+    const interval = setInterval(() => {
+      fetchUserOrders();
+    }, 5000); // 5 seconds
+
+    return () => clearInterval(interval); // Cleanup on unmount
   }, []);
 
   const fetchUserOrders = async () => {
@@ -25,6 +32,15 @@ function Orders() {
       const res = await axios.get('http://localhost:3000/orders');
       const userOrders = res.data.filter(order => order.email === user.email);
       setOrders(userOrders);
+      
+      // Update selectedOrder if it exists to show latest status
+      if (selectedOrder) {
+        const updatedSelected = userOrders.find(o => o.orderId === selectedOrder.orderId);
+        if (updatedSelected) {
+          setSelectedOrder(updatedSelected);
+        }
+      }
+      
       setLoading(false);
     } catch (error) {
       console.error('Error fetching orders:', error);
@@ -132,7 +148,7 @@ For support, contact: support@lumiere.com
   }
 
   return (
-    <div className="min-h-screen  bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -261,7 +277,7 @@ For support, contact: support@lumiere.com
                       {selectedOrder.items?.map((item, idx) => (
                         <div key={idx} className="flex justify-between text-sm">
                           <span className="text-gray-700">{item.productName}</span>
-                          <span className="font-semibold">₹{(item.price * item.quantity).toLocaleString()}</span>
+                          <span className="font-bold">₹{(item.price * item.quantity).toLocaleString()}</span>
                         </div>
                       ))}
                     </div>
