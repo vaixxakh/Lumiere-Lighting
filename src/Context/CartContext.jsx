@@ -1,10 +1,11 @@
 // src/Context/CartContext.jsx
 import React, { createContext, useContext, useState, useEffect } from "react";
+import axios from "axios"; // ✅ ADD THIS
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  //  CART STATE
+  // CART STATE
   const [cart, setCart] = useState(() => {
     try {
       const saved = localStorage.getItem("cart");
@@ -14,7 +15,7 @@ export const CartProvider = ({ children }) => {
     }
   });
 
-  //  WISHLIST STATE
+  // WISHLIST STATE
   const [wishlist, setWishlist] = useState(() => {
     try {
       const saved = localStorage.getItem("wishlist");
@@ -24,10 +25,10 @@ export const CartProvider = ({ children }) => {
     }
   });
 
-  //  SINGLE BUY ITEM (BUY NOW)
+  // SINGLE BUY ITEM (BUY NOW)
   const [singleBuy, setSingleBuy] = useState(null);
 
-  //  ORDERS STATE
+  // ORDERS STATE
   const [orders, setOrders] = useState(() => {
     try {
       const saved = localStorage.getItem("orders");
@@ -37,7 +38,7 @@ export const CartProvider = ({ children }) => {
     }
   });
 
-  //  Normalize price (avoid errors if strings)
+  // Normalize price (avoid errors if strings)
   const normalizePrice = (price) => {
     if (price == null) return 0;
     if (typeof price === "number") return price;
@@ -46,7 +47,7 @@ export const CartProvider = ({ children }) => {
     return Number.isNaN(n) ? 0 : n;
   };
 
-  //  ADD TO CART
+  // ADD TO CART
   const addToCart = (product) => {
     setCart((prev) => {
       const price = normalizePrice(product.price);
@@ -63,7 +64,7 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  //  UPDATE QUANTITY
+  // UPDATE QUANTITY
   const updateQuantity = (id, newQty) => {
     setCart((prev) =>
       newQty <= 0
@@ -74,12 +75,17 @@ export const CartProvider = ({ children }) => {
     );
   };
 
-  //  REMOVE FROM CART
+  // REMOVE FROM CART
   const removeFromCart = (id) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
 
-  //  ADD TO WISHLIST
+  // CLEAR CART
+  const clearCart = () => {
+    setCart([]);
+  };
+
+  // ADD TO WISHLIST
   const addToWishlist = (product) => {
     setWishlist((prev) => {
       const already = prev.some((i) => i.id === product.id);
@@ -88,30 +94,62 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  //  REMOVE FROM WISHLIST
+  // REMOVE FROM WISHLIST
   const removeFromWishlist = (id) => {
     setWishlist((prev) => prev.filter((i) => i.id !== id));
   };
 
-  //  CHECK IF PRODUCT IS WISHLISTED
+  // CHECK IF PRODUCT IS WISHLISTED
   const isWishlisted = (productId) =>
     wishlist.some((item) => item.id === productId);
 
-  //  CREATE ORDER
+  // MOVE TO CART FROM WISHLIST
+  const moveToCart = (product) => {
+    addToCart(product);
+    removeFromWishlist(product.id);
+  };
+
+  // ✅ SAVE ORDER TO BACKEND
+  const saveOrderToBackend = async (order) => {
+    try {
+      await axios.post("http://localhost:3000/orders", order);
+      console.log("✅ Order saved to backend:", order.orderId);
+    } catch (error) {
+      console.error("⚠️ Error saving to backend (still saved locally):", error);
+    }
+  };
+
+  // CREATE ORDER (✅ UPDATED WITH USER EMAIL)
   const createOrder = ({ items, shipping, paymentMethod, totals }) => {
     const orderId = `ORD-${Date.now()}-${Math.floor(Math.random() * 9000 + 1000)}`;
     const now = new Date().toISOString();
+    
+    // ✅ GET USER EMAIL
+    const user = JSON.parse(localStorage.getItem("user")) || {};
+
     const order = {
       id: orderId,
+      orderId: orderId, // ✅ For compatibility with Orders.jsx
+      email: user.email || "guest@example.com", // ✅ USER EMAIL
+      customerName: shipping.fullName || "Guest", // ✅ CUSTOMER NAME
+      phone: shipping.phone || "N/A", // ✅ PHONE
       items: items.map((it) => ({
         id: it.id,
         name: it.name,
+        productName: it.name, // ✅ For Orders.jsx compatibility
         price: normalizePrice(it.price),
         quantity: it.quantity || 1,
         image: it.image || null,
       })),
       shipping,
+      shippingAddress: `${shipping.addressLine}, ${shipping.city}, ${shipping.zipCode}`, // ✅ FOR ORDERS PAGE
       paymentMethod,
+      subtotal: totals.subtotal, // ✅ For Orders.jsx
+      shipping: totals.shipping, // ✅ For Orders.jsx
+      tax: totals.tax, // ✅ For Orders.jsx
+      total: totals.grandTotal, // ✅ For Orders.jsx
+      status: "Processing", // ✅ DEFAULT STATUS
+      orderDate: now, // ✅ For Orders.jsx
       totals,
       statusHistory: [
         { status: "Order Placed", at: now },
@@ -126,13 +164,19 @@ export const CartProvider = ({ children }) => {
       return next;
     });
 
+    // ✅ SAVE TO BACKEND
+    saveOrderToBackend(order);
+
+    // Clear cart after order
+    clearCart();
+
     return orderId;
   };
 
-  //  GET ORDER BY ID
+  // GET ORDER BY ID
   const getOrderById = (orderId) => orders.find((o) => o.id === orderId);
 
-  //  UPDATE ORDER STATUS
+  // UPDATE ORDER STATUS
   const updateOrderStatus = (orderId, newStatus) => {
     setOrders((prev) => {
       const next = prev.map((o) => {
@@ -140,6 +184,7 @@ export const CartProvider = ({ children }) => {
         const now = new Date().toISOString();
         return {
           ...o,
+          status: newStatus, // ✅ UPDATE STATUS
           statusHistory: [...o.statusHistory, { status: newStatus, at: now }],
         };
       });
@@ -148,17 +193,17 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  //  CART TOTALS
+  // CART TOTALS
   const cartTotal = cart.reduce(
     (sum, item) => sum + normalizePrice(item.price) * (item.quantity || 1),
     0
   );
   const cartCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
 
-  //  WISHLIST COUNT
+  // WISHLIST COUNT
   const wishlistCount = wishlist.length;
 
-  //  Sync to LocalStorage
+  // Sync to LocalStorage
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
@@ -180,12 +225,14 @@ export const CartProvider = ({ children }) => {
         addToCart,
         removeFromCart,
         updateQuantity,
+        clearCart,
         addToWishlist,
         removeFromWishlist,
         isWishlisted,
+        moveToCart,
         cartTotal,
         cartCount,
-        wishlistCount, // for navbar badges
+        wishlistCount,
         singleBuy,
         setSingleBuy,
         orders,

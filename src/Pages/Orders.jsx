@@ -13,64 +13,78 @@ function Orders() {
   useEffect(() => {
     fetchUserOrders();
     
-    // Auto-refresh every 5 seconds to sync with admin updates
     const interval = setInterval(() => {
       fetchUserOrders();
-    }, 5000); // 5 seconds
+    }, 5000);
 
-    return () => clearInterval(interval); // Cleanup on unmount
+    return () => clearInterval(interval);
   }, []);
 
-  const fetchUserOrders = async () => {
-    try {
-      const user = JSON.parse(localStorage.getItem('user'));
-      if (!user) {
-        navigate('/login');
-        return;
-      }
-
-      const res = await axios.get('http://localhost:3000/orders');
-      const userOrders = res.data.filter(order => order.email === user.email);
-      setOrders(userOrders);
-      
-      // Update selectedOrder if it exists to show latest status
-      if (selectedOrder) {
-        const updatedSelected = userOrders.find(o => o.orderId === selectedOrder.orderId);
-        if (updatedSelected) {
-          setSelectedOrder(updatedSelected);
-        }
-      }
-      
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching orders:', error);
-      setLoading(false);
+  // src/pages/Orders.jsx - Update the fetch function
+const fetchUserOrders = async () => {
+  try {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+      navigate('/login');
+      return;
     }
-  };
+
+    // ✅ TRY BACKEND FIRST
+    try {
+      const res = await axios.get('http://localhost:3000/orders');
+      let userOrders = res.data.filter(order => order.email === user.email);
+      
+      // ✅ MERGE WITH LOCAL ORDERS IF EMPTY
+      if (userOrders.length === 0) {
+        userOrders = orders.filter(order => order.email === user.email);
+      }
+      
+      setOrders(userOrders);
+    } catch (backendError) {
+      // ✅ FALLBACK TO LOCAL STORAGE
+      console.log("Using local orders...");
+      const localOrders = orders.filter(order => order.email === user.email);
+      setOrders(localOrders);
+    }
+
+    if (selectedOrder) {
+      const updatedSelected = orders.find(o => o.orderId === selectedOrder.orderId || o.id === selectedOrder.id);
+      if (updatedSelected) {
+        setSelectedOrder(updatedSelected);
+      }
+    }
+
+    setLoading(false);
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    setLoading(false);
+  }
+};
+
 
   const getStatusIcon = (status) => {
     switch (status) {
       case 'Processing':
-        return <Clock size={20} className="text-yellow-500" />;
+        return <Clock size={20} className="text-yellow-400" />;
       case 'Shipped':
-        return <Truck size={20} className="text-blue-500" />;
+        return <Truck size={20} className="text-blue-400" />;
       case 'Delivered':
-        return <CheckCircle size={20} className="text-green-500" />;
+        return <CheckCircle size={20} className="text-green-400" />;
       default:
-        return <Package size={20} className="text-gray-500" />;
+        return <Package size={20} className="text-gray-400" />;
     }
   };
 
   const getStatusColor = (status) => {
     switch (status) {
       case 'Processing':
-        return 'bg-yellow-100 text-yellow-700';
+        return 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30';
       case 'Shipped':
-        return 'bg-blue-100 text-blue-700';
+        return 'bg-blue-500/20 text-blue-300 border border-blue-500/30';
       case 'Delivered':
-        return 'bg-green-100 text-green-700';
+        return 'bg-green-500/20 text-green-300 border border-green-500/30';
       default:
-        return 'bg-gray-100 text-gray-700';
+        return 'bg-gray-500/20 text-gray-300 border border-gray-500/30';
     }
   };
 
@@ -136,43 +150,47 @@ For support, contact: support@lumiere.com
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black">
         <div className="text-center">
           <div className="animate-spin mb-4">
-            <Package className="text-yellow-500 mx-auto" size={48} />
+            <Package className="text-yellow-400 mx-auto" size={48} />
           </div>
-          <p className="text-gray-600 font-semibold">Loading your orders...</p>
+          <p className="text-gray-300 font-semibold">Loading your orders...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="py-20 sm:py-24 md:py-35 bg-gradient-to-br from-gray-900 via-gray-800 to-black min-h-screen px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
           <button
             onClick={() => navigate('/')}
-            className="flex items-center gap-2 text-yellow-600 hover:text-yellow-700 font-semibold mb-4 transition"
+            className="flex items-center gap-2 text-yellow-400 hover:text-yellow-300 font-semibold mb-6 transition"
           >
             <ArrowLeft size={20} />
             Back to Home
           </button>
-          <h1 className="text-4xl mt-15 font-bold text-gray-800">My Orders</h1>
-          <p className="text-gray-600 mt-2">Total Orders: <span className="font-bold text-yellow-500">{orders.length}</span></p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600 mb-2">
+            My Orders
+          </h1>
+          <p className="text-gray-400">
+            Total Orders: <span className="font-bold text-yellow-400">{orders.length}</span>
+          </p>
         </div>
 
         {/* Filter Buttons */}
-        <div className="flex flex-wrap gap-3 mb-8">
+        <div className="flex flex-wrap gap-2 sm:gap-3 mb-8">
           {['all', 'Processing', 'Shipped', 'Delivered'].map(status => (
             <button
               key={status}
               onClick={() => setFilter(status)}
-              className={`px-6 py-2 rounded-lg font-semibold transition ${
+              className={`px-4 sm:px-6 py-2 rounded-lg font-semibold transition text-sm sm:text-base ${
                 filter === status
-                  ? 'bg-yellow-500 text-black shadow-lg'
-                  : 'bg-white text-gray-700 border-2 border-gray-200 hover:border-yellow-400'
+                  ? 'bg-gradient-to-r from-yellow-400 to-yellow-600 text-black shadow-lg shadow-yellow-500/50'
+                  : 'bg-gray-800 text-gray-300 border border-gray-700 hover:border-yellow-500/50'
               }`}
             >
               {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -189,16 +207,16 @@ For support, contact: support@lumiere.com
                 <div
                   key={order.orderId}
                   onClick={() => setSelectedOrder(order)}
-                  className={`bg-white rounded-xl shadow-md hover:shadow-lg p-6 cursor-pointer transition border-l-4 ${
+                  className={`bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-lg hover:shadow-2xl hover:shadow-yellow-500/20 p-6 cursor-pointer transition border-l-4 hover:scale-102 ${
                     selectedOrder?.orderId === order.orderId
-                      ? 'border-yellow-500 bg-yellow-50'
-                      : 'border-gray-200 hover:border-yellow-400'
+                      ? 'border-yellow-400 bg-gradient-to-br from-gray-750 to-gray-850 shadow-yellow-500/30'
+                      : 'border-gray-700 hover:border-yellow-400/50'
                   }`}
                 >
                   <div className="flex justify-between items-start mb-4">
                     <div>
-                      <h3 className="text-lg font-bold text-gray-800">{order.orderId}</h3>
-                      <p className="text-sm text-gray-600 flex items-center gap-1 mt-1">
+                      <h3 className="text-lg font-bold text-white">{order.orderId}</h3>
+                      <p className="text-sm text-gray-400 flex items-center gap-1 mt-1">
                         <Calendar size={14} />
                         {new Date(order.orderDate).toLocaleDateString()}
                       </p>
@@ -211,9 +229,11 @@ For support, contact: support@lumiere.com
                     </div>
                   </div>
 
-                  <div className="space-y-2 mb-4">
-                    <p className="text-sm text-gray-600"><strong>Items:</strong> {order.items?.length || 0} product(s)</p>
-                    <p className="text-lg font-bold text-yellow-600">₹{order.total?.toLocaleString()}</p>
+                  <div className="space-y-2 mb-4 border-b border-gray-700 pb-4">
+                    <p className="text-sm text-gray-400"><strong>Items:</strong> {order.items?.length || 0} product(s)</p>
+                    <p className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">
+                      ₹{order.total?.toLocaleString()}
+                    </p>
                   </div>
 
                   <div className="flex gap-2">
@@ -222,7 +242,7 @@ For support, contact: support@lumiere.com
                         e.stopPropagation();
                         setSelectedOrder(order);
                       }}
-                      className="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-600 py-2 rounded-lg font-semibold transition flex items-center justify-center gap-2"
+                      className="flex-1 bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 py-2 rounded-lg font-semibold transition flex items-center justify-center gap-2 border border-blue-500/30"
                     >
                       <Eye size={16} />
                       View Details
@@ -232,7 +252,7 @@ For support, contact: support@lumiere.com
                         e.stopPropagation();
                         downloadInvoice(order);
                       }}
-                      className="flex-1 bg-green-100 hover:bg-green-200 text-green-600 py-2 rounded-lg font-semibold transition flex items-center justify-center gap-2"
+                      className="flex-1 bg-green-500/20 hover:bg-green-500/30 text-green-300 py-2 rounded-lg font-semibold transition flex items-center justify-center gap-2 border border-green-500/30"
                     >
                       <Download size={16} />
                       Invoice
@@ -245,8 +265,8 @@ For support, contact: support@lumiere.com
             {/* Order Details Sidebar */}
             <div>
               {selectedOrder ? (
-                <div className="bg-white rounded-xl shadow-lg p-6 sticky top-6">
-                  <h2 className="text-2xl font-bold text-gray-800 mb-4">Order Summary</h2>
+                <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-lg p-6 sticky top-6 border border-gray-700">
+                  <h2 className="text-2xl font-bold text-white mb-4">Order Summary</h2>
 
                   {/* Status */}
                   <div className={`p-4 rounded-lg mb-4 ${getStatusColor(selectedOrder.status)}`}>
@@ -258,78 +278,81 @@ For support, contact: support@lumiere.com
                       {selectedOrder.status === 'Processing' && 'Your order is being prepared'}
                       {selectedOrder.status === 'Shipped' && 'Your order is on the way'}
                       {selectedOrder.status === 'Delivered' && 'Order delivered successfully'}
+                      {selectedOrder.status === 'Pending' && 'Your order is awaiting confirmation'}
                     </p>
                   </div>
 
                   {/* Customer Info */}
-                  <div className="border-b pb-4 mb-4">
-                    <h3 className="font-bold text-gray-800 mb-2">Delivery Address</h3>
-                    <div className="flex gap-2 text-sm text-gray-700">
-                      <MapPin size={16} className="flex-shrink-0 mt-0.5" />
+                  <div className="border-b border-gray-700 pb-4 mb-4">
+                    <h3 className="font-bold text-white mb-2">Delivery Address</h3>
+                    <div className="flex gap-2 text-sm text-gray-400">
+                      <MapPin size={16} className="flex-shrink-0 mt-0.5 text-yellow-400" />
                       <p>{selectedOrder.shippingAddress}</p>
                     </div>
                   </div>
 
                   {/* Items */}
-                  <div className="border-b pb-4 mb-4">
-                    <h3 className="font-bold text-gray-800 mb-3">Items</h3>
+                  <div className="border-b border-gray-700 pb-4 mb-4">
+                    <h3 className="font-bold text-white mb-3">Items</h3>
                     <div className="space-y-2">
                       {selectedOrder.items?.map((item, idx) => (
                         <div key={idx} className="flex justify-between text-sm">
-                          <span className="text-gray-700">{item.productName}</span>
-                          <span className="font-bold">₹{(item.price * item.quantity).toLocaleString()}</span>
+                          <span className="text-gray-400">{item.productName}</span>
+                          <span className="font-bold text-gray-300">₹{(item.price * item.quantity).toLocaleString()}</span>
                         </div>
                       ))}
                     </div>
                   </div>
 
                   {/* Price Breakdown */}
-                  <div className="bg-yellow-50 p-4 rounded-lg mb-4">
+                  <div className="bg-gradient-to-r from-yellow-500/10 to-yellow-600/10 p-4 rounded-lg mb-4 border border-yellow-500/20">
                     <div className="space-y-2 text-sm mb-3">
-                      <div className="flex justify-between text-gray-700">
+                      <div className="flex justify-between text-gray-400">
                         <span>Subtotal</span>
                         <span>₹{selectedOrder.subtotal?.toLocaleString()}</span>
                       </div>
-                      <div className="flex justify-between text-gray-700">
+                      <div className="flex justify-between text-gray-400">
                         <span>Shipping</span>
                         <span>₹{selectedOrder.shipping?.toLocaleString()}</span>
                       </div>
-                      <div className="flex justify-between text-gray-700">
-                        <span>Tax</span>
+                      <div className="flex justify-between text-gray-400">
+                        <span>Tax (18%)</span>
                         <span>₹{selectedOrder.tax?.toLocaleString()}</span>
                       </div>
                     </div>
-                    <div className="border-t-2 border-yellow-200 pt-3 flex justify-between items-center">
-                      <span className="font-bold text-gray-800">Total</span>
-                      <span className="text-2xl font-bold text-yellow-600">₹{selectedOrder.total?.toLocaleString()}</span>
+                    <div className="border-t border-yellow-500/30 pt-3 flex justify-between items-center">
+                      <span className="font-bold text-gray-300">Total</span>
+                      <span className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">
+                        ₹{selectedOrder.total?.toLocaleString()}
+                      </span>
                     </div>
                   </div>
 
                   {/* Download Invoice */}
                   <button
                     onClick={() => downloadInvoice(selectedOrder)}
-                    className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded-lg transition flex items-center justify-center gap-2"
+                    className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-3 rounded-lg transition flex items-center justify-center gap-2 shadow-lg hover:shadow-green-500/50"
                   >
                     <Download size={18} />
                     Download Invoice
                   </button>
                 </div>
               ) : (
-                <div className="bg-white rounded-xl shadow-lg p-8 text-center sticky top-6">
-                  <Package size={48} className="mx-auto text-gray-300 mb-4" />
-                  <p className="text-gray-600 font-semibold">Select an order to view details</p>
+                <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-lg p-8 text-center sticky top-6 border border-gray-700">
+                  <Package size={48} className="mx-auto text-gray-600 mb-4" />
+                  <p className="text-gray-400 font-semibold">Select an order to view details</p>
                 </div>
               )}
             </div>
           </div>
         ) : (
-          <div className="bg-white rounded-xl shadow-lg p-12 text-center">
-            <Package size={48} className="mx-auto text-gray-300 mb-4" />
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">No Orders Found</h2>
-            <p className="text-gray-600 mb-6">You haven't placed any orders yet.</p>
+          <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-lg p-12 text-center border border-gray-700">
+            <Package size={48} className="mx-auto text-gray-600 mb-4" />
+            <h2 className="text-2xl font-bold text-white mb-2">No Orders Found</h2>
+            <p className="text-gray-400 mb-6">You haven't placed any orders yet.</p>
             <button
               onClick={() => navigate('/products')}
-              className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-8 rounded-lg transition"
+              className="bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-black font-bold py-3 px-8 rounded-lg transition shadow-lg hover:shadow-yellow-500/50"
             >
               Continue Shopping
             </button>

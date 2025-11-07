@@ -225,7 +225,7 @@
       "unblockedAt": "2025-11-06T07:16:47.936Z"
     },
     {
-      "id": 1762413272469,
+      "id": "1762413272469",
       "name": "haifa",
       "email": "haifa@gmail.com",
       "password": "haifa@123",
@@ -458,6 +458,91 @@
         }
       ],
       "createdAt": "2025-11-06T14:41:43.625Z"
+    },
+    {
+      "id": "ORD-1762508891735-5895",
+      "orderId": "ORD-1762508891735-5895",
+      "email": "ashitha@gmail.com",
+      "customerName": "ashitha ",
+      "phone": "9895379957",
+      "items": [
+        {
+          "id": "7",
+          "name": "Ceramic Round Crystal Chandelier",
+          "productName": "Ceramic Round Crystal Chandelier",
+          "price": 15900,
+          "quantity": 1,
+          "image": "https://assets.wfcdn.com/im/73821331/resize-h1200-w1200%5Ecompr-r85/3329/332954666/Modern+Round+K9+Crystal+Chandelier-1309166280.jpg"
+        }
+      ],
+      "shipping": 100,
+      "shippingAddress": "House No. 12, Rose Villa P.O. Kanhangad, Kasaragod Kerala – 671315, Neeleshwaram, 621317",
+      "paymentMethod": "cod",
+      "subtotal": 15900,
+      "tax": 2862,
+      "total": 18862,
+      "status": "Processing",
+      "orderDate": "2025-11-07T09:48:11.735Z",
+      "totals": {
+        "subtotal": 15900,
+        "shipping": 100,
+        "tax": 2862,
+        "grandTotal": 18862
+      },
+      "statusHistory": [
+        {
+          "status": "Order Placed",
+          "at": "2025-11-07T09:48:11.735Z"
+        },
+        {
+          "status": "Processing",
+          "at": "2025-11-07T09:48:11.735Z"
+        }
+      ],
+      "createdAt": "2025-11-07T09:48:11.735Z"
+    },
+    {
+      "id": "ORD-1762509308444-3218",
+      "orderId": "ORD-1762509308444-3218",
+      "email": "ashitha@gmail.com",
+      "customerName": "ashitha ",
+      "phone": "9895379957",
+      "items": [
+        {
+          "id": "7",
+          "name": "Ceramic Round Crystal Chandelier",
+          "productName": "Ceramic Round Crystal Chandelier",
+          "price": 15900,
+          "quantity": 1,
+          "image": "https://assets.wfcdn.com/im/73821331/resize-h1200-w1200%5Ecompr-r85/3329/332954666/Modern+Round+K9+Crystal+Chandelier-1309166280.jpg"
+        }
+      ],
+      "shipping": 100,
+      "shippingAddress": "House No. 12, Rose Villa P.O. Kanhangad, Kasaragod Kerala – 671315, Neeleshwaram, 621317",
+      "paymentMethod": "cod",
+      "subtotal": 15900,
+      "tax": 2862,
+      "total": 18862,
+      "status": "Delivered",
+      "orderDate": "2025-11-07T09:55:08.444Z",
+      "totals": {
+        "subtotal": 15900,
+        "shipping": 100,
+        "tax": 2862,
+        "grandTotal": 18862
+      },
+      "statusHistory": [
+        {
+          "status": "Order Placed",
+          "at": "2025-11-07T09:55:08.444Z"
+        },
+        {
+          "status": "Processing",
+          "at": "2025-11-07T09:55:08.444Z"
+        }
+      ],
+      "createdAt": "2025-11-07T09:55:08.444Z",
+      "updatedAt": "2025-11-07T09:59:13.926Z"
     }
   ]
 }
