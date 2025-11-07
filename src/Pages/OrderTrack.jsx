@@ -14,21 +14,25 @@ import {
   Download
 } from "lucide-react";
 
+
 function OrderTrack() {
   const { orderId } = useParams();
   const { orders } = useCart();
   const navigate = useNavigate();
   const [orderStatus, setOrderStatus] = useState(0);
 
+
   const order = orders.find((o) => o.id === orderId);
+
 
   // Status timeline
   const statusTimeline = [
-    { status: "Order Placed", icon: Package, color: "text-green-400", bgColor: "bg-green-500/20", borderColor: "border-green-500/30" },
-    { status: "Processing", icon: Clock, color: "text-blue-400", bgColor: "bg-blue-500/20", borderColor: "border-blue-500/30" },
-    { status: "Shipped", icon: Truck, color: "text-yellow-400", bgColor: "bg-yellow-500/20", borderColor: "border-yellow-500/30" },
-    { status: "Delivered", icon: CheckCircle, color: "text-green-400", bgColor: "bg-green-500/20", borderColor: "border-green-500/30" },
+    { status: "Order Placed", icon: Package, color: "text-green-500", bgColor: "bg-green-100", borderColor: "border-green-300" },
+    { status: "Processing", icon: Clock, color: "text-blue-500", bgColor: "bg-blue-100", borderColor: "border-blue-300" },
+    { status: "Shipped", icon: Truck, color: "text-yellow-500", bgColor: "bg-yellow-100", borderColor: "border-yellow-300" },
+    { status: "Delivered", icon: CheckCircle, color: "text-green-500", bgColor: "bg-green-100", borderColor: "border-green-300" },
   ];
+
 
   useEffect(() => {
     // Simulate order status progression
@@ -38,20 +42,21 @@ function OrderTrack() {
     setOrderStatus(Math.max(0, statusIndex));
   }, [order]);
 
+
   if (!order) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex flex-col items-center justify-center px-4">
-        <div className="text-center bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl shadow-2xl p-8 sm:p-12 border border-red-500/30 max-w-md w-full">
-          <AlertCircle size={64} className="mx-auto text-red-400 mb-4" />
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center px-4">
+        <div className="text-center bg-white rounded-lg shadow-md p-8 sm:p-12 border border-red-300 max-w-md w-full">
+          <AlertCircle size={64} className="mx-auto text-red-500 mb-4" />
+          <h1 className="text-2xl sm:text-3xl font-bold text-black mb-3">
             Order Not Found
           </h1>
-          <p className="text-gray-400 mb-8">
+          <p className="text-gray-600 mb-8">
             We couldn't find the order you're looking for. Please check the order ID.
           </p>
           <button
             onClick={() => navigate("/")}
-            className="w-full bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-black font-bold py-3 px-6 rounded-lg transition shadow-lg hover:shadow-yellow-500/50"
+            className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition shadow-md"
           >
             Back to Home
           </button>
@@ -59,6 +64,7 @@ function OrderTrack() {
       </div>
     );
   }
+
 
   const getStatusIcon = (status) => {
     switch (status) {
@@ -75,8 +81,9 @@ function OrderTrack() {
     }
   };
 
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8">
       <style>{`
         @keyframes fadeInUp {
           from {
@@ -113,36 +120,38 @@ function OrderTrack() {
         .animate-checkmark { animation: checkmark 0.5s ease-out; }
       `}</style>
 
+
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8 animate-fade-up">
           <button
             onClick={() => navigate("/")}
-            className="flex items-center gap-2 text-yellow-400 hover:text-yellow-300 font-semibold mb-6 transition text-sm sm:text-base"
+            className="flex items-center gap-2 text-yellow-600 hover:text-yellow-700 font-semibold mb-6 transition text-sm sm:text-base"
           >
             <ArrowLeft size={18} className="sm:w-5 sm:h-5" />
             Back to Home
           </button>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600 mb-2">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-2">
             📦 Order Tracking
           </h1>
-          <p className="text-gray-400 text-sm sm:text-base">
+          <p className="text-gray-600 text-sm sm:text-base">
             Track your order status and estimated delivery date
           </p>
         </div>
 
+
         {/* Order ID Card */}
-        <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg sm:rounded-xl shadow-lg p-4 sm:p-6 border border-gray-700 mb-8 animate-fade-up" style={{ animationDelay: "0.1s" }}>
+        <div className="bg-white rounded-lg sm:rounded-xl shadow-md p-4 sm:p-6 border border-gray-200 mb-8 animate-fade-up" style={{ animationDelay: "0.1s" }}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             <div>
-              <p className="text-gray-400 text-xs sm:text-sm mb-1">Order ID</p>
-              <p className="text-lg sm:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">
+              <p className="text-gray-600 text-xs sm:text-sm mb-1">Order ID</p>
+              <p className="text-lg sm:text-2xl font-bold text-yellow-600">
                 {order.id}
               </p>
             </div>
             <div>
-              <p className="text-gray-400 text-xs sm:text-sm mb-1">Order Date</p>
-              <p className="text-lg sm:text-xl font-bold text-white">
+              <p className="text-gray-600 text-xs sm:text-sm mb-1">Order Date</p>
+              <p className="text-lg sm:text-xl font-bold text-black">
                 {new Date(order.createdAt).toLocaleDateString("en-IN", {
                   year: "numeric",
                   month: "short",
@@ -153,19 +162,22 @@ function OrderTrack() {
           </div>
         </div>
 
+
         {/* Status Timeline */}
-        <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg sm:rounded-xl shadow-lg p-4 sm:p-8 border border-gray-700 mb-8 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-          <h2 className="text-xl sm:text-2xl font-bold text-white mb-8">Order Status</h2>
+        <div className="bg-white rounded-lg sm:rounded-xl shadow-md p-4 sm:p-8 border border-gray-200 mb-8 animate-fade-up" style={{ animationDelay: "0.2s" }}>
+          <h2 className="text-xl sm:text-2xl font-bold text-black mb-8">Order Status</h2>
+
 
           {/* Timeline */}
           <div className="relative">
             {/* Progress line */}
-            <div className="absolute top-6 left-0 w-full h-1 bg-gray-700 rounded-full">
+            <div className="absolute top-6 left-0 w-full h-1 bg-gray-300 rounded-full">
               <div
-                className="h-full bg-gradient-to-r from-yellow-400 to-green-400 rounded-full transition-all duration-1000"
+                className="h-full bg-yellow-400 rounded-full transition-all duration-1000"
                 style={{ width: `${(orderStatus / 3) * 100}%` }}
               />
             </div>
+
 
             {/* Status steps */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 relative z-10">
@@ -174,30 +186,33 @@ function OrderTrack() {
                 const isCompleted = index <= orderStatus;
                 const isActive = index === orderStatus;
 
+
                 return (
                   <div key={index} className="text-center animate-slide-right" style={{ animationDelay: `${index * 0.1}s` }}>
                     {/* Icon */}
                     <div
-                      className={`flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full mx-auto mb-3 transition-all duration-500 ${
-                        isCompleted ? item.bgColor : "bg-gray-700/50"
-                      } ${isCompleted ? item.borderColor : "border border-gray-600"} ${
+                      className={`flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full mx-auto mb-3 transition-all duration-500 border ${
+                        isCompleted ? `${item.bgColor} ${item.borderColor}` : "bg-gray-100 border-gray-300"
+                      } ${
                         isActive ? "animate-pulse-glow" : ""
                       }`}
                     >
                       <IconComponent
                         size={24}
                         className={`${
-                          isCompleted ? item.color : "text-gray-500"
+                          isCompleted ? item.color : "text-gray-400"
                         } ${isActive ? "animate-checkmark" : ""}`}
                       />
                     </div>
 
+
                     {/* Label */}
                     <p className={`text-xs sm:text-sm font-semibold ${
-                      isCompleted ? "text-gray-200" : "text-gray-500"
+                      isCompleted ? "text-gray-800" : "text-gray-500"
                     }`}>
                       {item.status}
                     </p>
+
 
                     {/* Timestamp */}
                     {order.statusHistory && order.statusHistory[index] && (
@@ -211,9 +226,10 @@ function OrderTrack() {
             </div>
           </div>
 
+
           {/* Status message */}
-          <div className="mt-8 pt-6 border-t border-gray-700">
-            <p className="text-sm sm:text-base text-gray-400 text-center">
+          <div className="mt-8 pt-6 border-t border-gray-300">
+            <p className="text-sm sm:text-base text-gray-700 text-center">
               {orderStatus === 0 && "✅ Your order has been placed successfully!"}
               {orderStatus === 1 && "⚙️ We're preparing your order for shipment..."}
               {orderStatus === 2 && "🚚 Your package is on its way to you!"}
@@ -222,32 +238,33 @@ function OrderTrack() {
           </div>
         </div>
 
+
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
           {/* Items & Shipping (Left) */}
           <div className="lg:col-span-2 space-y-6">
             {/* Items Section */}
             <div
-              className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg sm:rounded-xl shadow-lg p-4 sm:p-6 border border-gray-700 animate-fade-up"
+              className="bg-white rounded-lg sm:rounded-xl shadow-md p-4 sm:p-6 border border-gray-200 animate-fade-up"
               style={{ animationDelay: "0.3s" }}
             >
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6 flex items-center gap-2">
-                <Package size={22} className="text-yellow-400" />
+              <h3 className="text-lg sm:text-xl font-bold text-black mb-4 sm:mb-6 flex items-center gap-2">
+                <Package size={22} className="text-yellow-600" />
                 Order Items
               </h3>
               <div className="space-y-3 sm:space-y-4">
                 {order.items?.map((item, idx) => (
                   <div
                     key={idx}
-                    className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-3 sm:p-4 rounded-lg border border-gray-700 hover:border-yellow-400/50 transition"
+                    className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-3 sm:p-4 rounded-lg border border-gray-200 hover:border-yellow-400 transition"
                   >
                     <div className="flex-1 mb-2 sm:mb-0">
-                      <p className="font-semibold text-white text-sm sm:text-base">{item.name}</p>
-                      <p className="text-xs sm:text-sm text-gray-400">
-                        Qty: <span className="text-yellow-400">{item.quantity}</span>
+                      <p className="font-semibold text-black text-sm sm:text-base">{item.name}</p>
+                      <p className="text-xs sm:text-sm text-gray-600">
+                        Qty: <span className="text-yellow-600">{item.quantity}</span>
                       </p>
                     </div>
-                    <p className="text-lg sm:text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">
+                    <p className="text-lg sm:text-xl font-bold text-yellow-600">
                       ₹{(item.price * item.quantity).toLocaleString()}
                     </p>
                   </div>
@@ -255,42 +272,43 @@ function OrderTrack() {
               </div>
             </div>
 
+
             {/* Shipping Address */}
             <div
-              className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg sm:rounded-xl shadow-lg p-4 sm:p-6 border border-gray-700 animate-fade-up"
+              className="bg-white rounded-lg sm:rounded-xl shadow-md p-4 sm:p-6 border border-gray-200 animate-fade-up"
               style={{ animationDelay: "0.4s" }}
             >
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6 flex items-center gap-2">
-                <MapPin size={22} className="text-blue-400" />
+              <h3 className="text-lg sm:text-xl font-bold text-black mb-4 sm:mb-6 flex items-center gap-2">
+                <MapPin size={22} className="text-blue-600" />
                 Delivery Address
               </h3>
               <div className="space-y-2 sm:space-y-3">
                 <div className="flex gap-3">
-                  <User size={18} className="text-gray-400 flex-shrink-0 mt-0.5" />
+                  <User size={18} className="text-gray-600 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-xs text-gray-400">Name</p>
-                    <p className="text-white font-semibold text-sm sm:text-base">
+                    <p className="text-xs text-gray-600">Name</p>
+                    <p className="text-black font-semibold text-sm sm:text-base">
                       {order.shipping?.fullName}
                     </p>
                   </div>
                 </div>
                 <div className="flex gap-3">
-                  <Phone size={18} className="text-gray-400 flex-shrink-0 mt-0.5" />
+                  <Phone size={18} className="text-gray-600 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-xs text-gray-400">Phone</p>
-                    <p className="text-white font-semibold text-sm sm:text-base">
+                    <p className="text-xs text-gray-600">Phone</p>
+                    <p className="text-black font-semibold text-sm sm:text-base">
                       {order.shipping?.phone}
                     </p>
                   </div>
                 </div>
                 <div className="flex gap-3">
-                  <MapPin size={18} className="text-gray-400 flex-shrink-0 mt-0.5" />
+                  <MapPin size={18} className="text-gray-600 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-xs text-gray-400">Address</p>
-                    <p className="text-white font-semibold text-sm sm:text-base">
+                    <p className="text-xs text-gray-600">Address</p>
+                    <p className="text-black font-semibold text-sm sm:text-base">
                       {order.shipping?.addressLine}
                     </p>
-                    <p className="text-gray-400 text-xs sm:text-sm">
+                    <p className="text-gray-600 text-xs sm:text-sm">
                       {order.shipping?.city}, {order.shipping?.zipCode}
                     </p>
                   </div>
@@ -299,51 +317,55 @@ function OrderTrack() {
             </div>
           </div>
 
+
           {/* Order Summary (Right) */}
           <div
-            className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg sm:rounded-xl shadow-lg p-4 sm:p-6 border border-gray-700 h-fit animate-fade-up"
+            className="bg-white rounded-lg sm:rounded-xl shadow-md p-4 sm:p-6 border border-gray-200 h-fit animate-fade-up"
             style={{ animationDelay: "0.5s" }}
           >
-            <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">
+            <h3 className="text-lg sm:text-xl font-bold text-black mb-4 sm:mb-6">
               💰 Price Details
             </h3>
 
-            <div className="space-y-3 sm:space-y-4 pb-4 sm:pb-6 border-b border-gray-600 mb-4 sm:mb-6">
-              <div className="flex justify-between text-xs sm:text-sm text-gray-400">
+
+            <div className="space-y-3 sm:space-y-4 pb-4 sm:pb-6 border-b border-gray-300 mb-4 sm:mb-6">
+              <div className="flex justify-between text-xs sm:text-sm text-gray-600">
                 <span>Subtotal</span>
-                <span className="text-white font-semibold">
+                <span className="text-black font-semibold">
                   ₹{order.totals?.subtotal?.toLocaleString()}
                 </span>
               </div>
-              <div className="flex justify-between text-xs sm:text-sm text-gray-400">
+              <div className="flex justify-between text-xs sm:text-sm text-gray-600">
                 <span>Shipping</span>
-                <span className="text-white font-semibold">
+                <span className="text-black font-semibold">
                   ₹{order.totals?.shipping?.toLocaleString()}
                 </span>
               </div>
-              <div className="flex justify-between text-xs sm:text-sm text-gray-400">
+              <div className="flex justify-between text-xs sm:text-sm text-gray-600">
                 <span>Tax (18%)</span>
-                <span className="text-white font-semibold">
+                <span className="text-black font-semibold">
                   ₹{order.totals?.tax?.toLocaleString()}
                 </span>
               </div>
             </div>
 
+
             <div className="mb-6">
               <div className="flex justify-between items-center">
-                <span className="text-sm sm:text-base font-bold text-gray-300">
+                <span className="text-sm sm:text-base font-bold text-gray-700">
                   Total Amount
                 </span>
-                <span className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">
+                <span className="text-2xl sm:text-3xl font-black text-yellow-600">
                   ₹{order.totals?.grandTotal?.toLocaleString()}
                 </span>
               </div>
             </div>
 
+
             {/* Payment Method */}
-            <div className="bg-gray-700/30 rounded-lg p-3 sm:p-4 border border-gray-600">
-              <p className="text-xs text-gray-400 mb-1">Payment Method</p>
-              <p className="text-sm sm:text-base font-semibold text-white capitalize">
+            <div className="bg-gray-50 rounded-lg p-3 sm:p-4 border border-gray-200">
+              <p className="text-xs text-gray-600 mb-1">Payment Method</p>
+              <p className="text-sm sm:text-base font-semibold text-black capitalize">
                 {order.paymentMethod === "cod"
                   ? "💵 Cash on Delivery"
                   : order.paymentMethod === "card"
@@ -356,17 +378,18 @@ function OrderTrack() {
           </div>
         </div>
 
+
         {/* Action Buttons */}
         <div className="mt-8 sm:mt-12 flex flex-col sm:flex-row gap-3 sm:gap-4 animate-fade-up" style={{ animationDelay: "0.6s" }}>
           <button
             onClick={() => navigate("/")}
-            className="flex-1 bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-black font-bold py-3 sm:py-4 px-6 rounded-lg transition shadow-lg hover:shadow-yellow-500/50 text-sm sm:text-base"
+            className="flex-1 bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 sm:py-4 px-6 rounded-lg transition shadow-md text-sm sm:text-base"
           >
             Continue Shopping
           </button>
           <button
             onClick={() => window.print()}
-            className="flex-1 flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 sm:py-4 px-6 rounded-lg transition border border-gray-600 text-sm sm:text-base"
+            className="flex-1 flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-black font-bold py-3 sm:py-4 px-6 rounded-lg transition border border-gray-300 text-sm sm:text-base"
           >
             <Download size={18} />
             Print Invoice
@@ -376,5 +399,6 @@ function OrderTrack() {
     </div>
   );
 }
+
 
 export default OrderTrack;

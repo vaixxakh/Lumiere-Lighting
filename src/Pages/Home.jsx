@@ -5,7 +5,7 @@ import LuxuryShop from "../components/products/LuxuryShop";
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+    <div className="min-h-screen ">
       <Carousel />  
       <LuxuryProducts /> 
       <LuxuryShop />

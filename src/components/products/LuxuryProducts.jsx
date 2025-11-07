@@ -41,9 +41,9 @@ const LuxuryProducts = () => {
   };
 
   return (
-    <section  className="min-h-screen py-6 px-2 bg-gradient-to-br from-gray-900 via-gray-800 to-black" id="products">
+    <section  className="min-h-screen py-6 px-2" id="products">
       <div className="text-center mb-10 sm:mb-12 md:mb-16 px-4">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-yellow-400 mb-3">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black-400 mb-3">
           Shop by Categories
         </h2>
         <div className="w-24 h-1 bg-gradient-to-r from-yellow-400 to-yellow-600 mx-auto rounded-full"></div>

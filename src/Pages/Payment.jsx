@@ -3,6 +3,7 @@ import { useCart } from "../Context/CartContext";
 import { useNavigate } from "react-router-dom";
 import { CheckCircle, Lock, Loader, ArrowLeft, Package } from "lucide-react";
 
+
 function Payment() {
   const navigate = useNavigate();
   const {
@@ -13,9 +14,11 @@ function Payment() {
     setSingleBuy,
   } = useCart();
 
+
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -33,10 +36,12 @@ function Payment() {
     accountNumber: "",
   });
 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
 
   const validateForm = () => {
     if (!formData.fullName.trim()) return alert("Please enter your full name."), false;
@@ -44,6 +49,7 @@ function Payment() {
     if (!formData.addressLine.trim()) return alert("Enter your address."), false;
     if (!formData.city.trim()) return alert("Enter your city."), false;
     if (!/^\d{5,6}$/.test(formData.zipCode.trim())) return alert("Enter valid ZIP code."), false;
+
 
     if (formData.paymentMethod === "card") {
       if (!formData.cardName.trim() || !formData.cardNumber.trim() || !formData.expiryDate.trim() || !formData.cvv.trim())
@@ -57,12 +63,15 @@ function Payment() {
         return alert("Enter your bank name and account number."), false;
     }
 
+
     return true;
   };
+
 
   const itemsToOrder = singleBuy
     ? [{ ...singleBuy, quantity: singleBuy.quantity || 1 }]
     : cart || [];
+
 
   const total = itemsToOrder.reduce(
     (sum, item) => sum + (Number(item.price) || 0) * (item.quantity || 1),
@@ -72,11 +81,14 @@ function Payment() {
   const tax = Math.round(total * 0.18);
   const grandTotal = total + shipping + tax;
 
+
   const handlePayment = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
 
+
     setProcessing(true);
+
 
     const newOrderId = createOrder({
       items: itemsToOrder,
@@ -96,6 +108,7 @@ function Payment() {
       },
     });
 
+
     setTimeout(() => {
       if (!singleBuy) {
         (cart || []).forEach((item) => removeFromCart(item.id));
@@ -103,9 +116,11 @@ function Payment() {
         setSingleBuy(null);
       }
 
+
       setProcessing(false);
       setOrderPlaced(true);
       setSuccessMessage(newOrderId);
+
 
       setTimeout(() => {
         navigate(`/track/${newOrderId}`);
@@ -113,16 +128,17 @@ function Payment() {
     }, 2000);
   };
 
+
   // Empty cart
   if (itemsToOrder.length === 0 && !orderPlaced) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center px-4">
-        <div className="text-center bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-lg p-8 sm:p-12 border border-gray-700">
-          <Package size={64} className="mx-auto text-gray-600 mb-4" />
-          <p className="text-gray-400 text-lg mb-6">Your cart is empty</p>
+      <div className="min-h-screen bg-white flex items-center justify-center px-4">
+        <div className="text-center bg-white rounded-lg shadow-md p-8 sm:p-12 border border-gray-200">
+          <Package size={64} className="mx-auto text-gray-300 mb-4" />
+          <p className="text-gray-600 text-lg mb-6">Your cart is empty</p>
           <button
             onClick={() => navigate("/products")}
-            className="bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-black font-bold py-3 px-8 rounded-lg transition shadow-lg hover:shadow-yellow-500/50"
+            className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-8 rounded-lg transition shadow-md"
           >
             Continue Shopping
           </button>
@@ -131,10 +147,11 @@ function Payment() {
     );
   }
 
+
   // Success screen with animation
   if (orderPlaced) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center px-4 py-12">
+      <div className="min-h-screen bg-white flex items-center justify-center px-4 py-12">
         <style>{`
           @keyframes slideUp {
             from {
@@ -170,6 +187,7 @@ function Payment() {
           .animate-shimmer { animation: shimmer 2s infinite; }
         `}</style>
 
+
         <div className="text-center w-full max-w-md">
           {/* Confetti effect circles */}
           <div className="absolute inset-0 overflow-hidden">
@@ -186,28 +204,30 @@ function Payment() {
             ))}
           </div>
 
-          <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl shadow-2xl p-8 sm:p-12 border border-yellow-500/30 backdrop-blur-sm animate-scale-in relative z-10">
+
+          <div className="bg-white rounded-lg shadow-lg p-8 sm:p-12 border border-gray-200 backdrop-blur-sm animate-scale-in relative z-10">
             <CheckCircle
               size={80}
-              className="mx-auto text-green-400 mb-6 animate-bounce-custom"
+              className="mx-auto text-green-500 mb-6 animate-bounce-custom"
             />
-            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3 animate-slide-up">
+            <h1 className="text-3xl sm:text-4xl font-bold text-black mb-3 animate-slide-up">
               Order Placed Successfully! ✨
             </h1>
-            <p className="text-gray-300 text-base sm:text-lg mb-4">
-              Order ID: <span className="font-bold text-yellow-400">{successMessage}</span>
+            <p className="text-gray-700 text-base sm:text-lg mb-4">
+              Order ID: <span className="font-bold text-yellow-600">{successMessage}</span>
             </p>
-            <p className="text-gray-400 text-sm sm:text-base mb-2 animate-shimmer">
+            <p className="text-gray-600 text-sm sm:text-base mb-2 animate-shimmer">
               Thank you for your purchase!
             </p>
-            <p className="text-gray-400 text-xs sm:text-sm">
+            <p className="text-gray-600 text-xs sm:text-sm">
               Redirecting to track order...
             </p>
 
+
             {/* Loading bar */}
-            <div className="mt-6 w-full bg-gray-700 rounded-full h-2 overflow-hidden">
+            <div className="mt-6 w-full bg-gray-300 rounded-full h-2 overflow-hidden">
               <div
-                className="bg-gradient-to-r from-yellow-400 to-yellow-600 h-full rounded-full"
+                className="bg-yellow-400 h-full rounded-full"
                 style={{
                   animation: "slideRight 3s ease-in-out forwards",
                   "@keyframes slideRight": {
@@ -223,10 +243,11 @@ function Payment() {
     );
   }
 
+
   // Processing animation
   if (processing) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center px-4">
+      <div className="min-h-screen bg-white flex items-center justify-center px-4">
         <style>{`
           @keyframes pulse-scale {
             0%, 100% { transform: scale(1); opacity: 1; }
@@ -235,16 +256,18 @@ function Payment() {
           .animate-pulse-scale { animation: pulse-scale 1.5s infinite; }
         `}</style>
 
+
         <div className="text-center">
           <div className="mb-8">
-            <Lock size={80} className="mx-auto text-yellow-400 animate-pulse-scale" />
+            <Lock size={80} className="mx-auto text-yellow-500 animate-pulse-scale" />
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-black mb-4">
             Processing Payment
           </h2>
-          <p className="text-gray-400 mb-8 text-sm sm:text-base">
+          <p className="text-gray-600 mb-8 text-sm sm:text-base">
             Please wait while we secure your transaction...
           </p>
+
 
           {/* Animated loader */}
           <div className="flex justify-center items-center gap-2 mb-6">
@@ -260,16 +283,17 @@ function Payment() {
             ))}
           </div>
 
+
           {/* Progress indicator */}
           <div className="w-64 sm:w-80 mx-auto">
-            <div className="flex justify-between text-xs text-gray-400 mb-2">
+            <div className="flex justify-between text-xs text-gray-600 mb-2">
               <span>Validating</span>
               <span>Processing</span>
               <span>Confirming</span>
             </div>
-            <div className="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
+            <div className="w-full bg-gray-300 rounded-full h-2 overflow-hidden">
               <div
-                className="bg-gradient-to-r from-yellow-400 to-green-400 h-full rounded-full"
+                className="bg-yellow-400 h-full rounded-full"
                 style={{
                   animation: "slideRight 1.8s ease-in-out infinite",
                 }}
@@ -281,9 +305,10 @@ function Payment() {
     );
   }
 
+
   // Payment form
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8">
       <style>{`
         @keyframes fadeInDown {
           from {
@@ -298,27 +323,29 @@ function Payment() {
         .animate-fade-in-down { animation: fadeInDown 0.6s ease-out; }
         input:focus, select:focus, textarea:focus {
           outline: none;
-          border-color: #fbbf24;
-          box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
+          border-color: #f59e0b;
+          box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
         }
       `}</style>
+
 
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-6 sm:mb-8 animate-fade-in-down">
           <button
             onClick={() => navigate("/cart")}
-            className="flex items-center gap-2 text-yellow-400 hover:text-yellow-300 font-semibold mb-4 transition text-sm sm:text-base"
+            className="flex items-center gap-2 text-yellow-600 hover:text-yellow-700 font-semibold mb-4 transition text-sm sm:text-base"
           >
             <ArrowLeft size={18} className="sm:w-5 sm:h-5" />
             Back to Cart
           </button>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600 mb-2 flex items-center gap-2">
-            <Lock size={32} className="sm:w-10 sm:h-10" />
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-2 flex items-center gap-2">
+            <Lock size={32} className="sm:w-10 sm:h-10 text-yellow-600" />
             Secure Checkout
           </h1>
-          <p className="text-gray-400 text-sm sm:text-base">Your payment is encrypted and secure</p>
+          <p className="text-gray-600 text-sm sm:text-base">Your payment is encrypted and secure</p>
         </div>
+
 
         <form
           onSubmit={handlePayment}
@@ -327,8 +354,8 @@ function Payment() {
           {/* Left Section */}
           <div className="lg:col-span-2 space-y-4 sm:space-y-6">
             {/* Shipping Address */}
-            <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg sm:rounded-xl shadow-lg p-4 sm:p-6 border border-gray-700">
-              <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">
+            <div className="bg-white rounded-lg sm:rounded-xl shadow-md p-4 sm:p-6 border border-gray-200">
+              <h2 className="text-xl sm:text-2xl font-bold text-black mb-4 sm:mb-6">
                 📍 Shipping Address
               </h2>
               <div className="space-y-3 sm:space-y-4">
@@ -337,21 +364,21 @@ function Payment() {
                   value={formData.fullName}
                   onChange={handleChange}
                   placeholder="Full Name"
-                  className="w-full border border-gray-600 bg-gray-700/50 text-white placeholder-gray-400 rounded-lg p-2.5 sm:p-3 transition"
+                  className="w-full border border-gray-300 bg-white text-black placeholder-gray-500 rounded-lg p-2.5 sm:p-3 transition"
                 />
                 <input
                   name="phoneNumber"
                   value={formData.phoneNumber}
                   onChange={handleChange}
                   placeholder="Phone Number (10 digits)"
-                  className="w-full border border-gray-600 bg-gray-700/50 text-white placeholder-gray-400 rounded-lg p-2.5 sm:p-3 transition"
+                  className="w-full border border-gray-300 bg-white text-black placeholder-gray-500 rounded-lg p-2.5 sm:p-3 transition"
                 />
                 <input
                   name="addressLine"
                   value={formData.addressLine}
                   onChange={handleChange}
                   placeholder="Address Line"
-                  className="w-full border border-gray-600 bg-gray-700/50 text-white placeholder-gray-400 rounded-lg p-2.5 sm:p-3 transition"
+                  className="w-full border border-gray-300 bg-white text-black placeholder-gray-500 rounded-lg p-2.5 sm:p-3 transition"
                 />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <input
@@ -359,22 +386,23 @@ function Payment() {
                     value={formData.city}
                     onChange={handleChange}
                     placeholder="City"
-                    className="w-full border border-gray-600 bg-gray-700/50 text-white placeholder-gray-400 rounded-lg p-2.5 sm:p-3 transition"
+                    className="w-full border border-gray-300 bg-white text-black placeholder-gray-500 rounded-lg p-2.5 sm:p-3 transition"
                   />
                   <input
                     name="zipCode"
                     value={formData.zipCode}
                     onChange={handleChange}
                     placeholder="ZIP Code"
-                    className="w-full border border-gray-600 bg-gray-700/50 text-white placeholder-gray-400 rounded-lg p-2.5 sm:p-3 transition"
+                    className="w-full border border-gray-300 bg-white text-black placeholder-gray-500 rounded-lg p-2.5 sm:p-3 transition"
                   />
                 </div>
               </div>
             </div>
 
+
             {/* Payment Method */}
-            <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg sm:rounded-xl shadow-lg p-4 sm:p-6 border border-gray-700">
-              <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">
+            <div className="bg-white rounded-lg sm:rounded-xl shadow-md p-4 sm:p-6 border border-gray-200">
+              <h2 className="text-xl sm:text-2xl font-bold text-black mb-4 sm:mb-6">
                 💳 Payment Method
               </h2>
               <div className="space-y-3 mb-4 sm:mb-6">
@@ -384,19 +412,20 @@ function Payment() {
                   { value: "upi", label: "UPI" },
                   { value: "netbank", label: "Net Banking" },
                 ].map((method) => (
-                  <label key={method.value} className="flex items-center gap-3 cursor-pointer p-2 sm:p-3 hover:bg-gray-700/50 rounded-lg transition">
+                  <label key={method.value} className="flex items-center gap-3 cursor-pointer p-2 sm:p-3 hover:bg-gray-100 rounded-lg transition">
                     <input
                       type="radio"
                       name="paymentMethod"
                       value={method.value}
                       checked={formData.paymentMethod === method.value}
                       onChange={handleChange}
-                      className="w-4 h-4 cursor-pointer accent-yellow-400"
+                      className="w-4 h-4 cursor-pointer accent-yellow-500"
                     />
-                    <span className="font-medium text-gray-300 text-sm sm:text-base">{method.label}</span>
+                    <span className="font-medium text-gray-700 text-sm sm:text-base">{method.label}</span>
                   </label>
                 ))}
               </div>
+
 
               {/* Conditional Payment Inputs */}
               <div className="space-y-3 sm:space-y-4">
@@ -407,14 +436,14 @@ function Payment() {
                       value={formData.cardName}
                       onChange={handleChange}
                       placeholder="Cardholder Name"
-                      className="w-full border border-gray-600 bg-gray-700/50 text-white placeholder-gray-400 rounded-lg p-2.5 sm:p-3 transition"
+                      className="w-full border border-gray-300 bg-white text-black placeholder-gray-500 rounded-lg p-2.5 sm:p-3 transition"
                     />
                     <input
                       name="cardNumber"
                       value={formData.cardNumber}
                       onChange={handleChange}
                       placeholder="Card Number (16 digits)"
-                      className="w-full border border-gray-600 bg-gray-700/50 text-white placeholder-gray-400 rounded-lg p-2.5 sm:p-3 transition"
+                      className="w-full border border-gray-300 bg-white text-black placeholder-gray-500 rounded-lg p-2.5 sm:p-3 transition"
                     />
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       <input
@@ -422,18 +451,19 @@ function Payment() {
                         value={formData.expiryDate}
                         onChange={handleChange}
                         placeholder="Expiry (MM/YY)"
-                        className="w-full border border-gray-600 bg-gray-700/50 text-white placeholder-gray-400 rounded-lg p-2.5 sm:p-3 transition"
+                        className="w-full border border-gray-300 bg-white text-black placeholder-gray-500 rounded-lg p-2.5 sm:p-3 transition"
                       />
                       <input
                         name="cvv"
                         value={formData.cvv}
                         onChange={handleChange}
                         placeholder="CVV (3 digits)"
-                        className="w-full border border-gray-600 bg-gray-700/50 text-white placeholder-gray-400 rounded-lg p-2.5 sm:p-3 transition"
+                        className="w-full border border-gray-300 bg-white text-black placeholder-gray-500 rounded-lg p-2.5 sm:p-3 transition"
                       />
                     </div>
                   </>
                 )}
+
 
                 {formData.paymentMethod === "upi" && (
                   <input
@@ -441,9 +471,10 @@ function Payment() {
                     value={formData.upiId}
                     onChange={handleChange}
                     placeholder="Enter your UPI ID (e.g., yourname@upi)"
-                    className="w-full border border-gray-600 bg-gray-700/50 text-white placeholder-gray-400 rounded-lg p-2.5 sm:p-3 transition"
+                    className="w-full border border-gray-300 bg-white text-black placeholder-gray-500 rounded-lg p-2.5 sm:p-3 transition"
                   />
                 )}
+
 
                 {formData.paymentMethod === "netbank" && (
                   <>
@@ -452,25 +483,26 @@ function Payment() {
                       value={formData.bankName}
                       onChange={handleChange}
                       placeholder="Bank Name"
-                      className="w-full border border-gray-600 bg-gray-700/50 text-white placeholder-gray-400 rounded-lg p-2.5 sm:p-3 transition"
+                      className="w-full border border-gray-300 bg-white text-black placeholder-gray-500 rounded-lg p-2.5 sm:p-3 transition"
                     />
                     <input
                       name="accountNumber"
                       value={formData.accountNumber}
                       onChange={handleChange}
                       placeholder="Account Number"
-                      className="w-full border border-gray-600 bg-gray-700/50 text-white placeholder-gray-400 rounded-lg p-2.5 sm:p-3 transition"
+                      className="w-full border border-gray-300 bg-white text-black placeholder-gray-500 rounded-lg p-2.5 sm:p-3 transition"
                     />
                   </>
                 )}
               </div>
             </div>
 
+
             {/* Place Order Button */}
             <button
               type="submit"
               disabled={processing}
-              className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3 sm:py-4 rounded-lg transition shadow-lg hover:shadow-green-500/50 flex items-center justify-center gap-2 text-sm sm:text-base"
+              className="w-full bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3 sm:py-4 rounded-lg transition shadow-md flex items-center justify-center gap-2 text-sm sm:text-base"
             >
               {processing ? (
                 <>
@@ -486,49 +518,53 @@ function Payment() {
             </button>
           </div>
 
+
           {/* Right Section: Order Summary */}
-          <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg sm:rounded-xl shadow-lg p-4 sm:p-6 border border-gray-700 h-fit sticky top-4 sm:top-6">
-            <h3 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">
+          <div className="bg-white rounded-lg sm:rounded-xl shadow-md p-4 sm:p-6 border border-gray-200 h-fit sticky top-4 sm:top-6">
+            <h3 className="text-xl sm:text-2xl font-bold text-black mb-4 sm:mb-6">
               📦 Order Summary
             </h3>
 
+
             {/* Items List */}
-            <div className="space-y-2 mb-4 sm:mb-6 pb-4 sm:pb-6 border-b border-gray-600 max-h-48 sm:max-h-64 overflow-auto">
+            <div className="space-y-2 mb-4 sm:mb-6 pb-4 sm:pb-6 border-b border-gray-300 max-h-48 sm:max-h-64 overflow-auto">
               {itemsToOrder.map((item) => (
-                <div key={item.id} className="flex justify-between text-xs sm:text-sm text-gray-400">
+                <div key={item.id} className="flex justify-between text-xs sm:text-sm text-gray-700">
                   <span className="line-clamp-2">{item.name}</span>
-                  <span className="font-bold text-gray-300">
+                  <span className="font-bold text-gray-800">
                     ₹{((Number(item.price) || 0) * (item.quantity || 1)).toLocaleString()}
                   </span>
                 </div>
               ))}
             </div>
 
+
             {/* Pricing Breakdown */}
             <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm mb-4 sm:mb-6">
-              <div className="flex justify-between text-gray-400">
+              <div className="flex justify-between text-gray-700">
                 <span>Subtotal:</span>
-                <span className="text-white">₹{total.toLocaleString()}</span>
+                <span className="text-black">₹{total.toLocaleString()}</span>
               </div>
-              <div className="flex justify-between text-gray-400">
+              <div className="flex justify-between text-gray-700">
                 <span>Shipping:</span>
-                <span className="text-white">₹{shipping.toLocaleString()}</span>
+                <span className="text-black">₹{shipping.toLocaleString()}</span>
               </div>
-              <div className="flex justify-between text-gray-400">
+              <div className="flex justify-between text-gray-700">
                 <span>Tax (18%):</span>
-                <span className="text-white">₹{tax.toLocaleString()}</span>
+                <span className="text-black">₹{tax.toLocaleString()}</span>
               </div>
-              <div className="border-t border-gray-600 pt-3 sm:pt-4 flex justify-between">
-                <span className="font-bold text-gray-300">Total:</span>
-                <span className="text-xl sm:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">
+              <div className="border-t border-gray-300 pt-3 sm:pt-4 flex justify-between">
+                <span className="font-bold text-gray-800">Total:</span>
+                <span className="text-xl sm:text-2xl font-black text-yellow-600">
                   ₹{grandTotal.toLocaleString()}
                 </span>
               </div>
             </div>
 
+
             {/* Security Badge */}
-            <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-2 sm:p-3">
-              <p className="text-xs text-green-400 flex items-center gap-2">
+            <div className="bg-green-100 border border-green-300 rounded-lg p-2 sm:p-3">
+              <p className="text-xs text-green-700 flex items-center gap-2">
                 <Lock size={14} />
                 100% Secure Payment
               </p>
@@ -539,5 +575,6 @@ function Payment() {
     </div>
   );
 }
+
 
 export default Payment;
