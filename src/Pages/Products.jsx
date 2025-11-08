@@ -4,6 +4,7 @@ import { Heart, ShoppingCart, Zap, Star } from "lucide-react";
 import { useCart } from "../Context/CartContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 
 const ProductsPage = ({ searchTerm }) => {
@@ -109,12 +110,17 @@ const ProductsPage = ({ searchTerm }) => {
 
         {/* Product Grid - FULLY RESPONSIVE */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-          {paginatedProducts.map((product) => {
+          
+          {paginatedProducts.map((product, index) => {
             const wishlisted = isWishlisted(product.id);
             return (
-              <div
-                key={product.id}
-                className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm"
+              <motion.div
+                 key={product.id}
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.15, duration: 0.8, type: "spring", stiffness: 100 }}
+
+                    className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm"
               >
                 {/* Image Container */}
                 <div className="relative overflow-hidden h-48 sm:h-56 bg-gray-100">
@@ -162,12 +168,12 @@ const ProductsPage = ({ searchTerm }) => {
                   {/* Reviews & Price */}
                   <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-200">
                     <div className="flex items-center gap-1">
-                      <Star size={14} className="text-yellow-500 fill-yellow-500" />
+                      <Star size={14} className="text-green-600 fill-green-600" />
                       <span className="text-xs sm:text-sm text-gray-700 font-semibold">
                         {product.reviews.toFixed(1)}
                       </span>
                     </div>
-                    <p className="text-base sm:text-lg font-bold text-black">
+                    <p className="text-base sm:text-lg font-bold text-red-700">
                       ₹{product.price.toLocaleString()}
                     </p>
                   </div>
@@ -189,7 +195,7 @@ const ProductsPage = ({ searchTerm }) => {
                     </button>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>

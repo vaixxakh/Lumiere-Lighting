@@ -118,7 +118,7 @@ const Account = () => {
             Back to Home
           </button>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-2">
-            👤 My Account
+              My Account
           </h1>
           <p className="text-gray-600 text-sm sm:text-base">Manage your profile and settings</p>
         </div>
@@ -434,10 +434,7 @@ const Account = () => {
 
 
             {/* Danger Zone */}
-            <div className="bg-red-50 rounded-lg shadow-md p-6 sm:p-8 border border-red-300">
-              <h3 className="text-lg sm:text-xl font-bold text-red-600 mb-4">Danger Zone</h3>
-              <p className="text-sm text-gray-600 mb-4">Account deletion is permanent and cannot be undone.</p>
-              
+            <div >  
               {!showDeleteConfirm ? (
                 <button
                   onClick={() => setShowDeleteConfirm(true)}

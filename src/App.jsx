@@ -28,6 +28,9 @@ import AdminProducts from "./Pages/admin/AdminProducts";
 import AdminOrders from "./Pages/admin/AdminOrders";
 import AdminUsers from "./Pages/admin/AdminUsers";
 import AdminLogin from "./Pages/admin/AdminLogin";
+import AdminRoute from "./components/AdminRoute";
+
+
 
 // ✅ PROTECTED ROUTE COMPONENT
 const ProtectedRoute = ({ children }) => {
@@ -67,7 +70,9 @@ const Layout = ({ children }) => {
   const NO_LAYOUT_PAGES = [
     "/login",
     "/signup",
-    "/admin/login"
+    "/admin/login",
+    "/payment",
+    "/account"
   ];
   
   // ✅ Hide layout for admin routes
@@ -86,7 +91,7 @@ const Layout = ({ children }) => {
       </main>
 
       {/* Footer - Hide on login, signup, admin pages */}
-      {!shouldHideLayout && <Footer />}
+    
     </div>
   );
 };
@@ -94,6 +99,8 @@ const Layout = ({ children }) => {
 //  MAIN APP COMPONENT
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
+  const location = useLocation();
+
 
   const handleSearch = (term) => {
     setSearchTerm(term);
@@ -135,6 +142,7 @@ function App() {
           {/* ============================================
               PROTECTED USER ROUTES (Auth Required)
               ============================================ */}
+       
           <Route
             path="/cart"
             element={
@@ -179,7 +187,9 @@ function App() {
           {/* ============================================
               ADMIN ROUTES (Admin Auth Required)
               ============================================ */}
+                  {/* ============================================ */}
           <Route path="/admin/login" element={<AdminLogin />} />
+
           <Route
             path="/admin"
             element={
@@ -188,11 +198,44 @@ function App() {
               </AdminProtected>
             }
           >
-            <Route index element={<AdminDashboard />} />
-            <Route path="products" element={<AdminProducts />} />
-            <Route path="orders" element={<AdminOrders />} />
-            <Route path="users" element={<AdminUsers />} />
+            {/* Each admin page is now wrapped with AdminRoute */}
+            <Route
+              index
+              element={
+                <AdminRoute>
+                  <AdminDashboard />
+                </AdminRoute>
+              }
+            />
+
+            <Route
+              path="products"
+              element={
+                <AdminRoute>
+                  <AdminProducts />
+                </AdminRoute>
+              }
+            />
+
+            <Route
+              path="orders"
+              element={
+                <AdminRoute>
+                  <AdminOrders />
+                </AdminRoute>
+              }
+            />
+
+            <Route
+              path="users"
+              element={
+                <AdminRoute>
+                  <AdminUsers />
+                </AdminRoute>
+              }
+            />
           </Route>
+
 
           {/* CATCH-ALL (404 Not Found) */}
           <Route 
@@ -214,6 +257,7 @@ function App() {
           />
         </Routes>
       </Layout>
+      {location.pathname === "/" && <Footer />}
     </>
   );
 }

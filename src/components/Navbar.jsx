@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ShoppingCart, Heart, User, Search, Menu, X } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useLocation} from "react-router-dom";
 import { useCart } from "../Context/CartContext";
 
-
-
-
-function Navbar({ onSearch }) {
+function Navbar({ onSearch = () => {} }) {
+  const location = useLocation();
   const [showSearch, setShowSearch] = useState(false);
   const [searchItem, setSearchItem] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -14,24 +12,16 @@ function Navbar({ onSearch }) {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const userMenuRef = useRef(null);
-
-
-
+  const userMenuRefMobile = useRef(null);
 
   // Cart & wishlist counts
   const { cartCount, wishlistCount } = useCart();
-
-
-
 
   // Load user from localStorage
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser) setUser(storedUser);
   }, []);
-
-
-
 
   // Search submit handler
   const handleSearch = (e) => {
@@ -41,14 +31,20 @@ function Navbar({ onSearch }) {
     navigate("/products");
     setShowSearch(false);
   };
-
-
-
-
-  // Close user menu on outside click
+const handleHomeClick = () => {
+    if (location.pathname === "/") {
+      window.location.reload(); // Force full refresh if already in home
+    } else {
+      navigate("/"); // Normal navigate if not in home
+    }
+  };
+  // Close user menu on outside click (fixed condition)
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+      if (
+        (!userMenuRef.current || !userMenuRef.current.contains(event.target)) &&
+        (!userMenuRefMobile.current || !userMenuRefMobile.current.contains(event.target))
+      ) {
         setShowUserMenu(false);
       }
     };
@@ -56,10 +52,14 @@ function Navbar({ onSearch }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-
-
-
-  const handleLogout = () => {
+   const handleNavClick = (path) => {
+    if (location.pathname === path) {
+      window.location.reload(); // Refresh if same route
+    } else {
+      navigate(path); // Navigate if different
+    }
+  };
+   const handleLogout = () => {
     localStorage.removeItem("user");
     setUser(null);
     setShowUserMenu(false);
@@ -67,41 +67,28 @@ function Navbar({ onSearch }) {
   };
 
 
-
-
   return (
     <nav className="fixed top-0 left-0 w-full bg-white shadow-lg border-b border-gray-200 z-50">
       <div className="max-w-7xl mx-auto flex justify-between items-center px-5 py-3">
         {/* LOGO */}
-        <Link to="/" className="flex flex-col items-start leading-tight">
-          <span
-            className="text-2xl sm:text-3xl font-serif font-extrabold text-yellow-600 tracking-wide"
-            style={{ fontFamily: "sans-serif" }}
-          >
+        <Link to="/" onClick={() => handleNavClick("/")} className="flex flex-col items-start leading-tight">
+          <span className="text-2xl sm:text-3xl font-extrabold text-yellow-600 tracking-wide font-serif">
             Lumiere
           </span>
-          <span
-            className="text-xs sm:text-sm font-sans text-gray-600 uppercase tracking-widest"
-            style={{ fontFamily: "'Montserrat', sans-serif" }}
-          >
+          <span className="text-xs sm:text-sm text-gray-600 uppercase tracking-widest font-sans">
             L i g h t i n g
           </span>
         </Link>
 
-
-
-
         {/* DESKTOP MENU */}
         <div className="hidden md:flex space-x-6 items-center font-medium text-gray-700">
-          <Link to="/" className="hover:text-yellow-600 transition">HOME</Link>
-          <Link to="/luxuryabout" className="hover:text-yellow-600 transition">ABOUT</Link>
-          <Link to="/products" className="hover:text-yellow-600 transition">PRODUCTS</Link>
-          <Link to="/collections" className="hover:text-yellow-600 transition">CATEGORIES</Link>
-          <Link to="/footer" className="hover:text-yellow-600 transition">CONTACT US</Link>
+          <Link to="/" onClick={() => handleNavClick("/")} className="hover:text-yellow-600 transition">HOME</Link>
+          <Link to="/luxuryabout" onClick={() => handleNavClick("/luxuryabout")} className="hover:text-yellow-600 transition">ABOUT</Link>
+          <Link to="/products" onClick={() => handleNavClick("/products")} className="hover:text-yellow-600 transition">PRODUCTS</Link>
+          <Link to="/collections" onClick={() => handleNavClick("/collections")}  className="hover:text-yellow-600 transition">CATEGORIES</Link>
+          {/* ✅ Fixed contact link */}
+          <Link to="/contact" onClick={() => handleNavClick("/contact")} className="hover:text-yellow-600 transition">CONTACT US</Link>
         </div>
-
-
-
 
         {/* DESKTOP ICONS */}
         <div className="hidden md:flex items-center space-x-6 text-gray-700 relative">
@@ -119,9 +106,6 @@ function Navbar({ onSearch }) {
             />
           )}
 
-
-
-
           {/* Wishlist */}
           <Link to="/wishlist" className="relative">
             <Heart className="cursor-pointer hover:text-red-600 transition" />
@@ -131,9 +115,6 @@ function Navbar({ onSearch }) {
               </span>
             )}
           </Link>
-
-
-
 
           {/* Cart */}
           <Link to="/cart" className="relative">
@@ -145,22 +126,17 @@ function Navbar({ onSearch }) {
             )}
           </Link>
 
-
-
-
-          {/* ✅ FIXED: User dropdown - Desktop */}
-          <div ref={userMenuRef} className="relative flex items-center gap-2" onClick={() => setShowUserMenu(!showUserMenu)}>
+          {/* User dropdown - Desktop */}
+          <div ref={userMenuRef} className="relative flex items-center gap-2">
             <User
               className="cursor-pointer hover:text-yellow-600 transition"
+              onClick={() => setShowUserMenu(!showUserMenu)}
             />
             {user && (
               <span className="text-gray-700 font-medium hidden sm:inline">
                 Hey, <span className="text-yellow-600">{user.name.split(" ")[0]}</span>
               </span>
             )}
-
-
-
 
             {showUserMenu && (
               <div className="absolute right-0 top-8 w-36 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
@@ -208,9 +184,6 @@ function Navbar({ onSearch }) {
           </div>
         </div>
 
-
-
-
         {/* MOBILE MENU BUTTONS */}
         <div className="md:hidden flex items-center gap-3 text-gray-700">
           <Search
@@ -234,18 +207,12 @@ function Navbar({ onSearch }) {
             )}
           </Link>
 
-
-
-
-          {/* ✅ MOBILE USER ICON - Works with same ref */}
-          <div ref={userMenuRef} className="relative">
+          {/* MOBILE USER ICON */}
+          <div ref={userMenuRefMobile} className="relative">
             <User
               className="cursor-pointer hover:text-yellow-600 transition"
               onClick={() => setShowUserMenu(!showUserMenu)}
             />
-
-
-
 
             {showUserMenu && (
               <div className="absolute right-0 top-8 w-36 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
@@ -294,17 +261,11 @@ function Navbar({ onSearch }) {
             )}
           </div>
 
-
-
-
           <button onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <X size={26} /> : <Menu size={26} />}
           </button>
         </div>
       </div>
-
-
-
 
       {/* MOBILE NAV LINKS */}
       {isOpen && (
@@ -321,9 +282,6 @@ function Navbar({ onSearch }) {
           )}
         </div>
       )}
-
-
-
 
       {/* SEARCH BAR OVERLAY */}
       {showSearch && (
@@ -348,8 +306,5 @@ function Navbar({ onSearch }) {
     </nav>
   );
 }
-
-
-
 
 export default Navbar;

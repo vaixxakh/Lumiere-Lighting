@@ -171,20 +171,6 @@ const AdminLogin = () => {
               </div>
             </div>
 
-            {/* Credentials Box */}
-            {/* <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg p-4 space-y-2">
-              <p className="text-xs font-bold text-blue-900 uppercase tracking-wide">📋 Demo Credentials</p>
-              <div className="space-y-1">
-                <div className="flex items-center gap-2 text-sm">
-                  <Mail size={14} className="text-blue-600 flex-shrink-0" />
-                  <code className="font-mono bg-white px-2 py-1 rounded border border-blue-300 text-gray-800">admin@lumiere.com</code>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <Lock size={14} className="text-blue-600 flex-shrink-0" />
-                  <code className="font-mono bg-white px-2 py-1 rounded border border-blue-300 text-gray-800">admin@916</code>
-                </div>
-              </div>
-            </div> */}
           </div>
 
           {/* Footer */}

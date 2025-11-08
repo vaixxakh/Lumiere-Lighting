@@ -182,14 +182,7 @@
     }
   ],
   "users": [
-    {
-      "name": "admin",
-      "isAdmin": true,
-      "id": "b83d",
-      "blocked": false,
-      "blockedAt": "2025-11-06T05:36:42.823Z",
-      "unblockedAt": "2025-11-06T05:36:48.187Z"
-    },
+    {},
     {
       "id": "1762335515834",
       "name": "vaishak",
@@ -205,7 +198,7 @@
       "name": "admin",
       "email": "admin@lumiere.com",
       "password": "admin@916",
-      "isAdmin": false
+      "isAdmin": true
     },
     {
       "id": "1762352328420",
@@ -251,7 +244,7 @@
       "customerName": "vaishakh",
       "email": "vaishakhvinodnlr@gmail.com",
       "orderDate": "2025-10-28T14:30:00Z",
-      "status": "Delivered",
+      "status": "Pending",
       "items": [
         {
           "productId": "1",
@@ -273,7 +266,7 @@
       "tax": 8974.44,
       "total": 58932.43,
       "id": "9ee5",
-      "updatedAt": "2025-11-07T10:08:13.109Z"
+      "updatedAt": "2025-11-08T10:18:47.829Z"
     },
     {
       "orderId": "ORD-2025002",
@@ -357,7 +350,7 @@
       "customerName": "ashfak",
       "email": "ashfak@gmail.com",
       "orderDate": "2025-11-01T11:00:00Z",
-      "status": "Delivered",
+      "status": "Pending",
       "items": [
         {
           "productId": "5",
@@ -379,7 +372,7 @@
       "tax": 5759.82,
       "total": 37858.82,
       "id": "ee76",
-      "updatedAt": "2025-11-07T10:08:08.603Z"
+      "updatedAt": "2025-11-08T10:18:50.639Z"
     },
     {
       "id": "27c5",
@@ -616,7 +609,7 @@
       "subtotal": 37800,
       "tax": 6804,
       "total": 44704,
-      "status": "Processing",
+      "status": "Shipped",
       "orderDate": "2025-11-07T11:21:33.041Z",
       "totals": {
         "subtotal": 37800,
@@ -634,7 +627,8 @@
           "at": "2025-11-07T11:21:33.041Z"
         }
       ],
-      "createdAt": "2025-11-07T11:21:33.041Z"
+      "createdAt": "2025-11-07T11:21:33.041Z",
+      "updatedAt": "2025-11-08T10:24:50.966Z"
     }
   ]
 }
