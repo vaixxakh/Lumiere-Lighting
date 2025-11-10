@@ -10,7 +10,6 @@ import Footer from "./components/Footer";
 // Pages
 import Home from "./Pages/Home";
 import Products from "./Pages/Products";
-import LuxuryShop from "./components/products/LuxuryShop";
 import LuxuryProducts from "./components/products/LuxuryProducts";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";
@@ -20,7 +19,9 @@ import Payment from "./Pages/Payment";
 import OrderTrack from "./Pages/OrderTrack";
 import Orders from "./Pages/Orders";
 import Account from "./Pages/Account";
-
+import Contact from './Pages/Contact'
+import About from './Pages/About'
+import ProductDetailsPage from "./Pages/ProductDetailsPage";
 // Admin Pages
 import AdminLayout from "./Pages/admin/AdminLayout";
 import AdminDashboard from "./Pages/admin/AdminDashboard";
@@ -128,9 +129,11 @@ function App() {
               PUBLIC ROUTES (No Auth Required)
               ============================================ */}
           <Route path="/" element={<Home />} />
-          <Route path="/luxuryabout" element={<LuxuryShop />} />
+          <Route path="/about" element={<About />} />
           <Route path="/collections" element={<LuxuryProducts />} />
           <Route path="/products" element={<Products searchTerm={searchTerm} />} />
+           <Route path="/product/:id" element={<ProductDetailsPage />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/track/:orderId" element={<OrderTrack />} />
 
           {/* ============================================

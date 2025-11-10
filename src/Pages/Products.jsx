@@ -12,16 +12,13 @@ const ProductsPage = ({ searchTerm }) => {
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortOrder, setSortOrder] = useState("none");
-
-
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
-
-
+  const itemsPerPage = 8; 
   const navigate = useNavigate();
 
 
-  const handleAddToCart = (product) => {
+  const handleAddToCart = ( product) => {
+    
     addToCart(product);
     toast.success("🛒 Item added to cart!", {
       position: "top-center",
@@ -31,10 +28,32 @@ const ProductsPage = ({ searchTerm }) => {
   };
 
 
-  const handleBuyNow = (product) => {
+  const handleBuyNow = (e, product) => {
+    e.stopPropagation();
     setSingleBuy(product);
     navigate("/payment");
   };
+
+//  Wishlist - NO navigation, just toggles wishlist
+  const handleWishlistToggle = (e, product) => {
+    e.stopPropagation();
+    const wishlisted = isWishlisted(product.id);
+    if (wishlisted) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist(product);
+   
+    }
+  };
+
+
+
+
+  // ✅ Card Click - Navigates to product details
+  const handleProductClick = (productId) => {
+    navigate(`/product/${productId}`);
+  };
+
 
 
   useEffect(() => {
@@ -119,7 +138,7 @@ const ProductsPage = ({ searchTerm }) => {
                   initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.15, duration: 0.8, type: "spring", stiffness: 100 }}
-
+                    onClick={() => handleProductClick(product.id)}
                     className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm"
               >
                 {/* Image Container */}
@@ -132,11 +151,7 @@ const ProductsPage = ({ searchTerm }) => {
                   
                   {/* Wishlist Button */}
                   <button
-                    onClick={() =>
-                      wishlisted
-                        ? removeFromWishlist(product.id)
-                        : addToWishlist(product)
-                    }
+                    onClick={(e) => handleWishlistToggle(e, product)}
                     className="absolute top-3 right-3 z-10 bg-white rounded-full p-2 shadow-md hover:shadow-lg"
                   >
                     <Heart

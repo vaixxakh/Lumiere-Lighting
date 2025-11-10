@@ -72,7 +72,7 @@ const handleHomeClick = () => {
       <div className="max-w-7xl mx-auto flex justify-between items-center px-5 py-3">
         {/* LOGO */}
         <Link to="/" onClick={() => handleNavClick("/")} className="flex flex-col items-start leading-tight">
-          <span className="text-2xl sm:text-3xl font-extrabold text-yellow-600 tracking-wide font-serif">
+          <span className="text-2xl sm:text-3xl font-extrabold text-black  tracking-wide font-serif">
             Lumiere
           </span>
           <span className="text-xs sm:text-sm text-gray-600 uppercase tracking-widest font-sans">
@@ -83,7 +83,7 @@ const handleHomeClick = () => {
         {/* DESKTOP MENU */}
         <div className="hidden md:flex space-x-6 items-center font-medium text-gray-700">
           <Link to="/" onClick={() => handleNavClick("/")} className="hover:text-yellow-600 transition">HOME</Link>
-          <Link to="/luxuryabout" onClick={() => handleNavClick("/luxuryabout")} className="hover:text-yellow-600 transition">ABOUT</Link>
+          <Link to="/about" onClick={() => handleNavClick("/about")} className="hover:text-yellow-600 transition">ABOUT</Link>
           <Link to="/products" onClick={() => handleNavClick("/products")} className="hover:text-yellow-600 transition">PRODUCTS</Link>
           <Link to="/collections" onClick={() => handleNavClick("/collections")}  className="hover:text-yellow-600 transition">CATEGORIES</Link>
           {/* ✅ Fixed contact link */}
@@ -134,7 +134,7 @@ const handleHomeClick = () => {
             />
             {user && (
               <span className="text-gray-700 font-medium hidden sm:inline">
-                Hey, <span className="text-yellow-600">{user.name.split(" ")[0]}</span>
+                Hey, <span className="text-yellow-500">{user.name.split(" ")[0]}</span>
               </span>
             )}
 
@@ -271,15 +271,10 @@ const handleHomeClick = () => {
       {isOpen && (
         <div className="md:hidden flex flex-col items-center bg-white border-t border-gray-200 shadow-lg py-4 space-y-3 text-gray-700 font-medium">
           <Link to="/" onClick={() => setIsOpen(false)} className="hover:text-yellow-600">HOME</Link>
-          <Link to="/luxuryabout" onClick={() => setIsOpen(false)} className="hover:text-yellow-600">ABOUT</Link>
+          <Link to="/about" onClick={() => setIsOpen(false)} className="hover:text-yellow-600">ABOUT</Link>
           <Link to="/products" onClick={() => setIsOpen(false)} className="hover:text-yellow-600">PRODUCTS</Link>
           <Link to="/collections" onClick={() => setIsOpen(false)} className="hover:text-yellow-600">CATEGORIES</Link>
           <Link to="/contact" onClick={() => setIsOpen(false)} className="hover:text-yellow-600">CONTACT US</Link>
-          {user ? (
-            <button onClick={handleLogout} className="hover:text-yellow-600">Logout</button>
-          ) : (
-            <Link to="/login" onClick={() => setIsOpen(false)} className="hover:text-yellow-600">Login</Link>
-          )}
         </div>
       )}
 

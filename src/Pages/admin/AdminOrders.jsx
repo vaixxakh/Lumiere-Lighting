@@ -290,40 +290,40 @@ Thank you for your business! ✨
 
 
         {/* Orders Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 px-3 sm:px-6">
           {/* Orders List */}
           <div className="lg:col-span-2 bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
-            <div className="bg-gradient-to-r from-amber-500 to-amber-600 text-white p-6 flex items-center gap-3">
+            <div className="bg-gradient-to-r from-amber-500 to-amber-600 text-white p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-3">
               <ShoppingBag size={28} />
               <div>
-                <h2 className="text-2xl font-bold">All Orders</h2>
+                <h2 className="text-xl sm:text-2xl font-bold">All Orders</h2>
                 <p className="text-amber-50 text-sm">{filteredOrders.length} order(s)</p>
               </div>
             </div>
 
 
-            <div className="p-4 sm:p-6 space-y-3 max-h-96 overflow-y-auto">
+            <div className="p-3 sm:p-6 space-y-6 max-h-[28rem] overflow-y-auto">
               {filteredOrders.length > 0 ? (
                 filteredOrders.map(o => (
                   <div
                     key={o.orderId || o.id}
                     onClick={() => setSelected(o)}
-                    className={`p-4 rounded-lg cursor-pointer transition border-2 ${
+                    className={`p- rounded-lg cursor-pointer transition border-2 ${
                       (selected?.orderId === o.orderId || selected?.id === o.id)
                         ? 'bg-amber-50 border-amber-500 shadow-lg'
                         : 'bg-gray-50 border-gray-200 hover:border-amber-400'
                     }`}
                   >
-                    <div className="flex items-start justify-between">
+                    <div className="flex flex-col ml-2 sm:flex-row mt-2 mb-2 sm:items-start sm:justify-between gap-5">
                       <div className="flex-1">
-                        <p className="font-bold text-gray-800">{o.customerName || 'Unknown'}</p>
+                        <p className="font-bold text-gray-800 ">{o.customerName || 'Unknown'}</p>
                         <p className="text-sm text-gray-600 mt-1">{o.orderId || o.id}</p>
                         <p className="text-xs text-gray-500 mt-1 flex items-center gap-1">
                           <Mail size={12} />
                           {o.email || 'N/A'}
                         </p>
                       </div>
-                      <div className="text-right">
+                      <div className="text-left sm:text-rightt">
                         <p className="text-amber-600 font-bold text-lg">₹{formatPrice(o.total)}</p>
                         <span className={`inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full mt-2 border ${getStatusColor(o.status || 'Pending')}`}>
                           {getStatusIcon(o.status || 'Pending')}

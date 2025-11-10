@@ -182,7 +182,9 @@
     }
   ],
   "users": [
-    {},
+    {
+      "id": "7860"
+    },
     {
       "id": "1762335515834",
       "name": "vaishak",
@@ -225,10 +227,17 @@
       "isAdmin": false
     },
     {
-      "id": 1762511702217,
+      "id": "1762511702217",
       "name": "vismaya",
       "email": "vismaya@gmail.com",
       "password": "vismaya@123",
+      "isAdmin": false
+    },
+    {
+      "id": "1762657974185",
+      "name": "Rahul ",
+      "email": "rahul@gmail.com",
+      "password": "rahul@123",
       "isAdmin": false
     }
   ],
@@ -244,7 +253,7 @@
       "customerName": "vaishakh",
       "email": "vaishakhvinodnlr@gmail.com",
       "orderDate": "2025-10-28T14:30:00Z",
-      "status": "Pending",
+      "status": "Delivered",
       "items": [
         {
           "productId": "1",
@@ -266,7 +275,7 @@
       "tax": 8974.44,
       "total": 58932.43,
       "id": "9ee5",
-      "updatedAt": "2025-11-08T10:18:47.829Z"
+      "updatedAt": "2025-11-10T04:32:44.345Z"
     },
     {
       "orderId": "ORD-2025002",
@@ -609,7 +618,7 @@
       "subtotal": 37800,
       "tax": 6804,
       "total": 44704,
-      "status": "Shipped",
+      "status": "Delivered",
       "orderDate": "2025-11-07T11:21:33.041Z",
       "totals": {
         "subtotal": 37800,
@@ -628,7 +637,93 @@
         }
       ],
       "createdAt": "2025-11-07T11:21:33.041Z",
-      "updatedAt": "2025-11-08T10:24:50.966Z"
+      "updatedAt": "2025-11-10T04:11:19.167Z"
+    },
+    {
+      "id": "ORD-1762658050146-3510",
+      "orderId": "ORD-1762658050146-3510",
+      "email": "rahul@gmail.com",
+      "customerName": "rahul",
+      "phone": "6235689544",
+      "items": [
+        {
+          "id": "1",
+          "name": "Royal Crystal Chandelier Light",
+          "productName": "Royal Crystal Chandelier Light",
+          "price": 58200,
+          "quantity": 1,
+          "image": "https://assets.wfcdn.com/im/95743852/resize-h1200-w1200%5Ecompr-r85/3479/347998256/19+-+Light+Dimmable+Empire+Chandelier-433158536.jpg"
+        }
+      ],
+      "shipping": 100,
+      "shippingAddress": " asjbhhajk ajnajnas askjbasc  akjnsacjnn , kochi, 671314",
+      "paymentMethod": "cod",
+      "subtotal": 58200,
+      "tax": 10476,
+      "total": 68776,
+      "status": "Delivered",
+      "orderDate": "2025-11-09T03:14:10.146Z",
+      "totals": {
+        "subtotal": 58200,
+        "shipping": 100,
+        "tax": 10476,
+        "grandTotal": 68776
+      },
+      "statusHistory": [
+        {
+          "status": "Order Placed",
+          "at": "2025-11-09T03:14:10.146Z"
+        },
+        {
+          "status": "Processing",
+          "at": "2025-11-09T03:14:10.146Z"
+        }
+      ],
+      "createdAt": "2025-11-09T03:14:10.146Z",
+      "updatedAt": "2025-11-09T03:14:51.700Z"
+    },
+    {
+      "id": "ORD-1762757217831-6846",
+      "orderId": "ORD-1762757217831-6846",
+      "email": "vismaya@gmail.com",
+      "customerName": "vismsaya",
+      "phone": "9895379957",
+      "items": [
+        {
+          "id": "8",
+          "name": "Keep it Collected Clear Glass Pendant",
+          "productName": "Keep it Collected Clear Glass Pendant",
+          "price": 40490,
+          "quantity": 1,
+          "image": "https://assets.wfcdn.com/im/22003069/resize-h1200-w1200%5Ecompr-r85/3212/321264657/3+Light+Pendant+Light+Chandelier+With+Threaded+Clear+Glass+Globe+Shade.jpg"
+        }
+      ],
+      "shipping": 100,
+      "shippingAddress": "Gokulam milk, vaduthala, kochi, Kochi, 682025",
+      "paymentMethod": "upi",
+      "subtotal": 40490,
+      "tax": 7288,
+      "total": 47878,
+      "status": "Delivered",
+      "orderDate": "2025-11-10T06:46:57.831Z",
+      "totals": {
+        "subtotal": 40490,
+        "shipping": 100,
+        "tax": 7288,
+        "grandTotal": 47878
+      },
+      "statusHistory": [
+        {
+          "status": "Order Placed",
+          "at": "2025-11-10T06:46:57.831Z"
+        },
+        {
+          "status": "Processing",
+          "at": "2025-11-10T06:46:57.831Z"
+        }
+      ],
+      "createdAt": "2025-11-10T06:46:57.831Z",
+      "updatedAt": "2025-11-10T06:49:57.586Z"
     }
   ]
 }
