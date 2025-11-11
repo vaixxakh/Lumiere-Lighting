@@ -118,10 +118,10 @@ const AdminLayout = () => {
             {/* Right Actions */}
             <div className="flex items-center gap-4">
               {/* Notifications */}
-              <button className="relative p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition">
+              {/* <button className="relative p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition">
                 <Bell size={24} />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-              </button>
+              </button> */}
 
 
               {/* Profile Menu */}
@@ -148,15 +148,15 @@ const AdminLayout = () => {
                       <p className="text-xs opacity-80">admin@lumiere.com</p>
                     </div>
                     <div className="space-y-1 p-2">
-                      <button className="flex items-center gap-2 w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100 rounded-lg transition">
+                      {/* <button className="flex items-center gap-2 w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100 rounded-lg transition">
                         <UserIcon size={16} />
                         <span className="text-sm">Profile Settings</span>
                       </button>
                       <button className="flex items-center gap-2 w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100 rounded-lg transition">
                         <Settings size={16} />
                         <span className="text-sm">Preferences</span>
-                      </button>
-                      <hr className="my-1" />
+                      </button> */}
+                      {/* <hr className="my-1" /> */}
                       <button
                         onClick={logout}
                         className="flex items-center gap-2 w-full px-4 py-2 text-left text-red-600 hover:bg-red-50 rounded-lg transition"

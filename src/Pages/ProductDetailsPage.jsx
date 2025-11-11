@@ -55,7 +55,7 @@ const ProductDetailsPage = () => {
     //   toast.info('Removed from wishlist', { autoClose: 1500 });
     } else {
       addToWishlist(product);
-    //   toast.success('❤️ Added to wishlist!', { autoClose: 1500 });
+    //   toast.success(' Added to wishlist!', { autoClose: 1500 });
     }
   };
 

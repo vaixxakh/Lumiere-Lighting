@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 
 function Login() {
   const navigate = useNavigate();
@@ -30,9 +30,9 @@ function Login() {
 
         setTimeout(() => {
           if (user.isAdmin === true) {
-            navigate('/admin'); // ✅ Redirect admin
+            navigate('/admin'); //  Redirect admin
           } else {
-            navigate('/'); // ✅ Redirect normal user
+            navigate('/'); //  Redirect normal user
           }
           window.location.reload();
         }, 1200);
@@ -54,6 +54,16 @@ function Login() {
           Login to Your Account
         </h2>
 
+        <div className='mb-8'>
+           <button
+            onClick={() => navigate('/')}
+            className="flex items-center gap-2 text-yellow-600 hover:text-yellow-700 font-semibold mb-6 transition"
+          >
+            <ArrowLeft size={20} />
+            Back to Home
+          </button>
+
+        </div>
         {/* Message Box */}
         {message && (
           <div

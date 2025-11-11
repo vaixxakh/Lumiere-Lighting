@@ -33,14 +33,14 @@ const AdminOrders = () => {
   };
 
 
-  // ✅ FIX: Format price properly
+  //  Format price properly
   const formatPrice = (price) => {
     if (!price && price !== 0) return '0';
     return Number(price).toLocaleString('en-IN');
   };
 
 
-  // ✅ FIX: Safe string conversion for toLowerCase
+  //  Safe string conversion for toLowerCase
   const safeString = (str) => {
     return str ? String(str).toLowerCase() : '';
   };
@@ -54,11 +54,11 @@ const AdminOrders = () => {
 
 
     try {
-      // ✅ FIX: Look for both orderId and id
+      // Look for both orderId and id
       const order = orders.find((o) => o.orderId === orderId || o.id === orderId);
       if (!order) throw new Error('Order not found');
       
-      // ✅ FIX: Use correct ID field for database
+      // Use correct ID field for database
       const dbId = order.id || order.orderId;
       await updateOrder(dbId, { ...order, status });
       
@@ -84,7 +84,7 @@ const AdminOrders = () => {
   };
 
 
-  // ✅ FIX: Safe filter with null checks
+  // Safe filter with null checks
   const filteredOrders = orders.filter(o => {
     if (!o) return false;
     

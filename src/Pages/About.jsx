@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Award, Users, Lightbulb, Target,  } from 'lucide-react';
 import generatedVideo from "../assets/generated-video.mp4"
+import { Link } from 'react-router-dom';
 
 const AboutPage = () => {
   const videoRef = React.useRef(null);
+  const MotionLink = motion(Link);
 
 
   const stats = [
@@ -384,22 +386,22 @@ const AboutPage = () => {
               Discover our collection of luxury lighting solutions crafted just for you
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.a
-                href="/products"
+              <MotionLink
+                to="/products"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="bg-white text-amber-600 font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-full hover:shadow-2xl transition-all duration-300 text-sm sm:text-base"
               >
                 Explore Products
-              </motion.a>
-              <motion.a
-                href="/contact"
+              </MotionLink>
+              <MotionLink
+                to="/contact"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="bg-transparent border-2 border-white text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-full hover:bg-white hover:text-amber-600 transition-all duration-300 text-sm sm:text-base"
               >
                 Contact Us
-              </motion.a>
+              </MotionLink>
             </div>
           </motion.div>
         </div>

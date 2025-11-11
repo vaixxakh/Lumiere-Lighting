@@ -239,6 +239,20 @@
       "email": "rahul@gmail.com",
       "password": "rahul@123",
       "isAdmin": false
+    },
+    {
+      "id": "1762836453380",
+      "name": "Athulya M",
+      "email": "athulya@gmail.com",
+      "password": "athulya123",
+      "isAdmin": false
+    },
+    {
+      "id": 1762867809351,
+      "name": "Greeshma",
+      "email": "greeshmaramesh03@gmail.com",
+      "password": "ponnuyzz",
+      "isAdmin": false
     }
   ],
   "wishlis": [
@@ -283,7 +297,7 @@
       "customerName": "greeshma",
       "email": "greeshmaramesh03@gmail.com",
       "orderDate": "2025-10-29T10:15:00Z",
-      "status": "Pending",
+      "status": "Delivered",
       "items": [
         {
           "productId": "2",
@@ -299,7 +313,7 @@
       "tax": 4140,
       "total": 27239.99,
       "id": "efae",
-      "updatedAt": "2025-11-06T13:50:38.625Z"
+      "updatedAt": "2025-11-11T12:38:17.162Z"
     },
     {
       "orderId": "ORD-2025003",
@@ -359,7 +373,7 @@
       "customerName": "ashfak",
       "email": "ashfak@gmail.com",
       "orderDate": "2025-11-01T11:00:00Z",
-      "status": "Pending",
+      "status": "Shipped",
       "items": [
         {
           "productId": "5",
@@ -381,7 +395,7 @@
       "tax": 5759.82,
       "total": 37858.82,
       "id": "ee76",
-      "updatedAt": "2025-11-08T10:18:50.639Z"
+      "updatedAt": "2025-11-11T10:02:13.897Z"
     },
     {
       "id": "27c5",
@@ -724,6 +738,135 @@
       ],
       "createdAt": "2025-11-10T06:46:57.831Z",
       "updatedAt": "2025-11-10T06:49:57.586Z"
+    },
+    {
+      "id": "ORD-1762836731061-8929",
+      "orderId": "ORD-1762836731061-8929",
+      "email": "athulya@gmail.com",
+      "customerName": "Athulya M",
+      "phone": "9605938646",
+      "items": [
+        {
+          "id": "2",
+          "name": "Golden Luxe Chandelier Light",
+          "productName": "Golden Luxe Chandelier Light",
+          "price": 37800,
+          "quantity": 1,
+          "image": "https://assets.wfcdn.com/im/85633969/resize-h1200-w1200%5Ecompr-r85/2977/297764850/Bartho+13+-+Light+Dimmable+Empire+Chandelier.jpg"
+        }
+      ],
+      "shipping": 100,
+      "shippingAddress": "House No. 12, Rose Villa P.O. Kanhangad, Kasaragod Kerala – 671315, kasargod, 621317",
+      "paymentMethod": "cod",
+      "subtotal": 37800,
+      "tax": 6804,
+      "total": 44704,
+      "status": "Shipped",
+      "orderDate": "2025-11-11T04:52:11.061Z",
+      "totals": {
+        "subtotal": 37800,
+        "shipping": 100,
+        "tax": 6804,
+        "grandTotal": 44704
+      },
+      "statusHistory": [
+        {
+          "status": "Order Placed",
+          "at": "2025-11-11T04:52:11.061Z"
+        },
+        {
+          "status": "Processing",
+          "at": "2025-11-11T04:52:11.061Z"
+        }
+      ],
+      "createdAt": "2025-11-11T04:52:11.061Z",
+      "updatedAt": "2025-11-11T06:23:33.322Z"
+    },
+    {
+      "id": "ORD-1762837315710-5848",
+      "orderId": "ORD-1762837315710-5848",
+      "email": "athulya@gmail.com",
+      "customerName": "Athulya M",
+      "phone": "9895379957",
+      "items": [
+        {
+          "id": "4",
+          "name": "Three Rings Crystal LED Chandelier",
+          "productName": "Three Rings Crystal LED Chandelier",
+          "price": 19500,
+          "quantity": 1,
+          "image": "https://assets.wfcdn.com/im/32940442/resize-h1200-w1200%5Ecompr-r85/1706/170629138/Daveonte+3+-+Light+LED+Tiered+Chandelier-441781056.jpg"
+        }
+      ],
+      "shipping": 100,
+      "shippingAddress": "House No. 12, Rose Villa P.O. Kanhangad, Kasaragod Kerala – 671315, kasargod, 124250",
+      "paymentMethod": "cod",
+      "subtotal": 19500,
+      "tax": 3510,
+      "total": 23110,
+      "status": "Delivered",
+      "orderDate": "2025-11-11T05:01:55.710Z",
+      "totals": {
+        "subtotal": 19500,
+        "shipping": 100,
+        "tax": 3510,
+        "grandTotal": 23110
+      },
+      "statusHistory": [
+        {
+          "status": "Order Placed",
+          "at": "2025-11-11T05:01:55.710Z"
+        },
+        {
+          "status": "Processing",
+          "at": "2025-11-11T05:01:55.710Z"
+        }
+      ],
+      "createdAt": "2025-11-11T05:01:55.710Z",
+      "updatedAt": "2025-11-11T05:02:34.280Z"
+    },
+    {
+      "id": "ORD-1762866047099-8070",
+      "orderId": "ORD-1762866047099-8070",
+      "email": "rahul@gmail.com",
+      "customerName": "rahul",
+      "phone": "6238598557",
+      "items": [
+        {
+          "id": "13",
+          "name": "Rose Gold Lady Art Sculpture Floor Lamp",
+          "productName": "Rose Gold Lady Art Sculpture Floor Lamp",
+          "price": 95999,
+          "quantity": 1,
+          "image": "https://assets.wfcdn.com/im/03038410/resize-h1200-w1200%5Ecompr-r85/7241/72419891/Terrie+63.5%27%27+Gold+Leaf+Novelty+Floor+Lamp.jpg"
+        }
+      ],
+      "shipping": 100,
+      "shippingAddress": "House No. 12, Rose Villa P.O. Kanhangad, Kasaragod Kerala – 671315, kasargod, 124250",
+      "paymentMethod": "upi",
+      "subtotal": 95999,
+      "tax": 17280,
+      "total": 113379,
+      "status": "Delivered",
+      "orderDate": "2025-11-11T13:00:47.099Z",
+      "totals": {
+        "subtotal": 95999,
+        "shipping": 100,
+        "tax": 17280,
+        "grandTotal": 113379
+      },
+      "statusHistory": [
+        {
+          "status": "Order Placed",
+          "at": "2025-11-11T13:00:47.099Z"
+        },
+        {
+          "status": "Processing",
+          "at": "2025-11-11T13:00:47.099Z"
+        }
+      ],
+      "createdAt": "2025-11-11T13:00:47.099Z",
+      "updatedAt": "2025-11-11T13:01:27.813Z"
     }
   ]
 }

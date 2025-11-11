@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+
 import { useCart } from '../Context/CartContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { Trash2, ShoppingCart, Heart, ArrowLeft } from 'lucide-react';
@@ -7,22 +7,10 @@ import { Trash2, ShoppingCart, Heart, ArrowLeft } from 'lucide-react';
 function Wishlist() {
   const { wishlist, removeFromWishlist, addToCart } = useCart();
   const navigate = useNavigate();
-  const [alertShown, setAlertShown] = useState(false);
-
-
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user && !alertShown) {
-      alert('Please login to access the feature');
-      setAlertShown(true);
-      navigate('/login');
-    }
-  }, []);
-
 
   const handleAddToCart = (product) => {
     addToCart(product);
-    removeFromWishlist(product.id);
+    removeFromWishlist(product.id); 
   };
 
 

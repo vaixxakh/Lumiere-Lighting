@@ -170,7 +170,7 @@ const AdminProducts = () => {
       {showForm && (
         <div className="bg-white rounded-lg sm:rounded-xl shadow-lg p-4 sm:p-8 border-l-4 border-yellow-500">
           <div className="flex justify-between items-start mb-4 sm:mb-6">
-            <h2 className="text-lg sm:text-2xl font-bold">{editingId ? '✏️ Edit' : '➕ Add'}</h2>
+            <h2 className="text-lg sm:text-2xl font-bold">{editingId ? ' Edit' : 'Add'}</h2>
             <button onClick={handleCancel} className="p-2 hover:bg-gray-100 rounded-lg transition">
               <X size={20} className="text-gray-600" />
             </button>
@@ -240,9 +240,9 @@ const AdminProducts = () => {
                     className="flex-1 px-3 sm:px-4 py-2 sm:py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-yellow-400 transition text-sm"
                     required
                   />
-                  <button type="button" className="p-2 sm:p-3 bg-gray-100 hover:bg-gray-200 rounded-lg transition">
+                  {/* <button type="button" className="p-2 sm:p-3 bg-gray-100 hover:bg-gray-200 rounded-lg transition">
                     <Upload size={18} className="text-gray-600" />
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
@@ -275,7 +275,7 @@ const AdminProducts = () => {
                 disabled={submitting}
                 className="flex-1 bg-yellow-500 hover:bg-yellow-600 disabled:bg-gray-400 text-black font-bold py-2 sm:py-3 rounded-lg transition shadow-lg active:scale-95 text-sm"
               >
-                {submitting ? 'Saving...' : (editingId ? '💾 Update' : '✅ Create')}
+                {submitting ? 'Saving...' : (editingId ? ' Update' : 'Create')}
               </button>
               <button
                 type="button"

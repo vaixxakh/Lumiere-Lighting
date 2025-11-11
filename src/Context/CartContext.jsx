@@ -1,6 +1,6 @@
 // src/Context/CartContext.jsx
 import React, { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios"; // ✅ ADD THIS
+import axios from "axios"; //  ADD THIS
 
 const CartContext = createContext();
 
@@ -109,47 +109,47 @@ export const CartProvider = ({ children }) => {
     removeFromWishlist(product.id);
   };
 
-  // ✅ SAVE ORDER TO BACKEND
+  // SAVE ORDER TO BACKEND
   const saveOrderToBackend = async (order) => {
     try {
       await axios.post("http://localhost:3000/orders", order);
-      console.log("✅ Order saved to backend:", order.orderId);
+      console.log("Order saved to backend:", order.orderId);
     } catch (error) {
       console.error("⚠️ Error saving to backend (still saved locally):", error);
     }
   };
 
-  // CREATE ORDER (✅ UPDATED WITH USER EMAIL)
+  // CREATE ORDER (UPDATED WITH USER EMAIL)
   const createOrder = ({ items, shipping, paymentMethod, totals }) => {
     const orderId = `ORD-${Date.now()}-${Math.floor(Math.random() * 9000 + 1000)}`;
     const now = new Date().toISOString();
     
-    // ✅ GET USER EMAIL
+    //  GET USER EMAIL
     const user = JSON.parse(localStorage.getItem("user")) || {};
 
     const order = {
       id: orderId,
-      orderId: orderId, // ✅ For compatibility with Orders.jsx
-      email: user.email || "guest@example.com", // ✅ USER EMAIL
-      customerName: shipping.fullName || "Guest", // ✅ CUSTOMER NAME
-      phone: shipping.phone || "N/A", // ✅ PHONE
+      orderId: orderId, // For compatibility with Orders.jsx
+      email: user.email || "guest@example.com", // USER EMAIL
+      customerName: shipping.fullName || "Guest", //  CUSTOMER NAME
+      phone: shipping.phone || "N/A", //  PHONE
       items: items.map((it) => ({
         id: it.id,
         name: it.name,
-        productName: it.name, // ✅ For Orders.jsx compatibility
+        productName: it.name, //  For Orders.jsx compatibility
         price: normalizePrice(it.price),
         quantity: it.quantity || 1,
         image: it.image || null,
       })),
       shipping,
-      shippingAddress: `${shipping.addressLine}, ${shipping.city}, ${shipping.zipCode}`, // ✅ FOR ORDERS PAGE
+      shippingAddress: `${shipping.addressLine}, ${shipping.city}, ${shipping.zipCode}`, //  FOR ORDERS PAGE
       paymentMethod,
-      subtotal: totals.subtotal, // ✅ For Orders.jsx
-      shipping: totals.shipping, // ✅ For Orders.jsx
-      tax: totals.tax, // ✅ For Orders.jsx
-      total: totals.grandTotal, // ✅ For Orders.jsx
-      status: "Processing", // ✅ DEFAULT STATUS
-      orderDate: now, // ✅ For Orders.jsx
+      subtotal: totals.subtotal, //  For Orders.jsx
+      shipping: totals.shipping, //  For Orders.jsx
+      tax: totals.tax, //  For Orders.jsx
+      total: totals.grandTotal, //  For Orders.jsx
+      status: "Processing", //  DEFAULT STATUS
+      orderDate: now, //  For Orders.jsx
       totals,
       statusHistory: [
         { status: "Order Placed", at: now },
@@ -164,7 +164,7 @@ export const CartProvider = ({ children }) => {
       return next;
     });
 
-    // ✅ SAVE TO BACKEND
+    //  SAVE TO BACKEND
     saveOrderToBackend(order);
 
     // Clear cart after order
@@ -184,7 +184,7 @@ export const CartProvider = ({ children }) => {
         const now = new Date().toISOString();
         return {
           ...o,
-          status: newStatus, // ✅ UPDATE STATUS
+          status: newStatus, //UPDATE STATUS
           statusHistory: [...o.statusHistory, { status: newStatus, at: now }],
         };
       });

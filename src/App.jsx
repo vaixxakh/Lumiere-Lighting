@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 // Components
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
 
 // Pages
 import Home from "./Pages/Home";
@@ -33,7 +34,7 @@ import AdminRoute from "./components/AdminRoute";
 
 
 
-// ✅ PROTECTED ROUTE COMPONENT
+//  PROTECTED ROUTE COMPONENT
 const ProtectedRoute = ({ children }) => {
   const user = localStorage.getItem("user");
   
@@ -49,7 +50,7 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
-// ✅ ADMIN PROTECTED ROUTE COMPONENT
+//  ADMIN PROTECTED ROUTE COMPONENT
 const AdminProtected = ({ children }) => {
   const adminToken = localStorage.getItem("adminToken");
   if (!adminToken || adminToken !== "true") {
@@ -63,11 +64,11 @@ const AdminProtected = ({ children }) => {
   return children;
 };
 
-// ✅ LAYOUT WRAPPER COMPONENT
+//  LAYOUT WRAPPER COMPONENT
 const Layout = ({ children }) => {
   const location = useLocation();
   
-  // ✅ Pages where Navbar & Footer should NOT appear
+  //  Pages where Navbar & Footer should NOT appear
   const NO_LAYOUT_PAGES = [
     "/login",
     "/signup",
@@ -76,7 +77,7 @@ const Layout = ({ children }) => {
     "/account"
   ];
   
-  // ✅ Hide layout for admin routes
+  //  Hide layout for admin routes
   const isAdminRoute = location.pathname.startsWith("/admin");
   const isNoLayoutPage = NO_LAYOUT_PAGES.includes(location.pathname);
   const shouldHideLayout = isAdminRoute || isNoLayoutPage;
@@ -124,7 +125,9 @@ function App() {
 
       {/* App Layout with Routes */}
       <Layout>
+        <ScrollToTop/>
         <Routes>
+          
           {/* ============================================
               PUBLIC ROUTES (No Auth Required)
               ============================================ */}

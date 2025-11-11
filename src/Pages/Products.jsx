@@ -1,20 +1,31 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Heart, ShoppingCart, Zap, Star } from "lucide-react";
+import { Heart, Star } from "lucide-react";
 import { useCart } from "../Context/CartContext";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
-
 
 const ProductsPage = ({ searchTerm }) => {
   const { addToWishlist, removeFromWishlist, isWishlisted, addToCart, setSingleBuy } = useCart();
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortOrder, setSortOrder] = useState("none");
-  const [currentPage, setCurrentPage] = useState(1);
+
+  //  useSearchParams for page persistence
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialPage = Number(searchParams.get("page")) || 1;
+  const [currentPage, setCurrentPage] = useState(initialPage);
   const itemsPerPage = 8; 
   const navigate = useNavigate();
+
+
+  //  When page changes, update URL param
+  useEffect(() => {
+    setSearchParams({ page: currentPage });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage, setSearchParams]);
+
 
 
   const handleAddToCart = ( product) => {
@@ -46,10 +57,7 @@ const ProductsPage = ({ searchTerm }) => {
     }
   };
 
-
-
-
-  // ✅ Card Click - Navigates to product details
+  // Card Click - Navigates to product details
   const handleProductClick = (productId) => {
     navigate(`/product/${productId}`);
   };
@@ -87,6 +95,11 @@ const ProductsPage = ({ searchTerm }) => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentPage]);
+
+  
+  //  Pagination click functions (no change)
+  const handlePrev = () => setCurrentPage((p) => Math.max(p - 1, 1));
+  const handleNext = () => setCurrentPage((p) => Math.min(p + 1, totalPages));
 
 
   return (
@@ -227,11 +240,7 @@ const ProductsPage = ({ searchTerm }) => {
         {/* Pagination - RESPONSIVE */}
         {totalPages > 1 && (
           <div className="flex justify-center items-center mt-12 gap-2 flex-wrap">
-            <button
-              onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-              disabled={currentPage === 1}
-              className="px-4 py-2 bg-white text-black border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed font-semibold transition-colors text-sm"
-            >
+            <button onClick={handlePrev} disabled={currentPage === 1} className="px-4 py-2 bg-white text-black border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed font-semibold transition-colors text-sm">
               Prev
             </button>
 
@@ -251,11 +260,7 @@ const ProductsPage = ({ searchTerm }) => {
             ))}
 
 
-            <button
-              onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-              disabled={currentPage === totalPages}
-              className="px-4 py-2 bg-white text-black border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed font-semibold transition-colors text-sm"
-            >
+           <button onClick={handleNext} disabled={currentPage === totalPages} className="px-4 py-2 bg-white text-black border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed font-semibold transition-colors text-sm">
               Next
             </button>
           </div>

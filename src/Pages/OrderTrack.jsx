@@ -288,7 +288,7 @@ function OrderTrack() {
                   <div>
                     <p className="text-xs text-gray-600">Name</p>
                     <p className="text-black font-semibold text-sm sm:text-base">
-                      {order.shipping?.fullName}
+                      {order.shippingAddress?.fullName}
                     </p>
                   </div>
                 </div>
@@ -297,7 +297,7 @@ function OrderTrack() {
                   <div>
                     <p className="text-xs text-gray-600">Phone</p>
                     <p className="text-black font-semibold text-sm sm:text-base">
-                      {order.shipping?.phone}
+                      {order.shippingAddress?.phone}
                     </p>
                   </div>
                 </div>
@@ -306,10 +306,10 @@ function OrderTrack() {
                   <div>
                     <p className="text-xs text-gray-600">Address</p>
                     <p className="text-black font-semibold text-sm sm:text-base">
-                      {order.shipping?.addressLine}
+                      {order.shippingAddress?.addressLine}
                     </p>
                     <p className="text-gray-600 text-xs sm:text-sm">
-                      {order.shipping?.city}, {order.shipping?.zipCode}
+                      {order.shippingAddress?.city}, {order.shippingAddress?.zipCode}
                     </p>
                   </div>
                 </div>

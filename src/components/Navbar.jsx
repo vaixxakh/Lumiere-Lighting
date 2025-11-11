@@ -81,17 +81,16 @@ const handleHomeClick = () => {
         </Link>
 
         {/* DESKTOP MENU */}
-        <div className="hidden md:flex space-x-6 items-center font-medium text-gray-700">
+        <div className="hidden md:flex space-x-6 items-center mt-4 gap-4 font-small text-gray-700">
           <Link to="/" onClick={() => handleNavClick("/")} className="hover:text-yellow-600 transition">HOME</Link>
           <Link to="/about" onClick={() => handleNavClick("/about")} className="hover:text-yellow-600 transition">ABOUT</Link>
           <Link to="/products" onClick={() => handleNavClick("/products")} className="hover:text-yellow-600 transition">PRODUCTS</Link>
-          <Link to="/collections" onClick={() => handleNavClick("/collections")}  className="hover:text-yellow-600 transition">CATEGORIES</Link>
-          {/* ✅ Fixed contact link */}
+          {/* <Link to="/collections" onClick={() => handleNavClick("/collections")}  className="hover:text-yellow-600 transition">CATEGORIES</Link> */}
           <Link to="/contact" onClick={() => handleNavClick("/contact")} className="hover:text-yellow-600 transition">CONTACT US</Link>
         </div>
 
         {/* DESKTOP ICONS */}
-        <div className="hidden md:flex items-center space-x-6 text-gray-700 relative">
+        <div className="hidden md:flex items-center space-x-6 gap-3 text-gray-700 relative">
           {showSearch ? (
             <X
               onClick={() => setShowSearch(false)}
@@ -273,14 +272,13 @@ const handleHomeClick = () => {
           <Link to="/" onClick={() => setIsOpen(false)} className="hover:text-yellow-600">HOME</Link>
           <Link to="/about" onClick={() => setIsOpen(false)} className="hover:text-yellow-600">ABOUT</Link>
           <Link to="/products" onClick={() => setIsOpen(false)} className="hover:text-yellow-600">PRODUCTS</Link>
-          <Link to="/collections" onClick={() => setIsOpen(false)} className="hover:text-yellow-600">CATEGORIES</Link>
           <Link to="/contact" onClick={() => setIsOpen(false)} className="hover:text-yellow-600">CONTACT US</Link>
         </div>
       )}
 
       {/* SEARCH BAR OVERLAY */}
       {showSearch && (
-        <div className="fixed top-16 left-0 w-full bg-white px-4 py-2 flex justify-center z-40 shadow-lg border-b border-gray-200">
+        <div className="fixed top-16 left-0 w-full  bg-white px-4 py-2 flex justify-center z-40 shadow-lg border-b border-gray-200">
           <form
             onSubmit={handleSearch}
             className="w-full max-w-md flex items-center bg-gray-100 border border-gray-300 rounded-full shadow-sm px-4 py-2"

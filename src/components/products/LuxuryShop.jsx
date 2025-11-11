@@ -1,5 +1,6 @@
 import React from "react";
 import generatedVideo from "../../assets/generated-video.mp4";
+import { Link } from "react-router-dom";
 
 function LuxuryLightShop() {
   return (
@@ -32,9 +33,11 @@ function LuxuryLightShop() {
 
       {/* Explore More Button - Responsive */}
       <div className="flex justify-center mt-8 sm:mt-10 mb-12 sm:mb-16 px-4">
-        <button  className="bg-black text-white hover:bg-white hover:text-black font-semibold py-2 sm:py-3 px-6 sm:px-8 rounded-lg shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-yellow-400 text-sm sm:text-base">
+        <Link 
+        to="/products"
+          className="bg-black text-white hover:bg-white hover:text-black font-semibold py-2 sm:py-3 px-6 sm:px-8 rounded-lg shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-yellow-400 text-sm sm:text-base">
           Explore More
-        </button>
+        </Link>
       </div>
     </>
   );

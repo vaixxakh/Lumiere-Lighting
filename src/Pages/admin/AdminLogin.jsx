@@ -199,7 +199,7 @@ const AdminLogin = () => {
         }
         
         .animate-shake {
-          animation: shake 0.5s ease-in-out;
+          animation: shake 0.1s ease-in-out;
         }
 
         input:disabled {
