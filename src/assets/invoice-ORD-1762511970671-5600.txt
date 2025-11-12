@@ -1,0 +1,39 @@
+
+╔═══════════════════════════════════════════════════════════╗
+║                    LUMIERE - INVOICE                      ║
+╚═══════════════════════════════════════════════════════════╝
+
+
+ORDER DETAILS
+─────────────────────────────────────────────────────────────
+Order ID:        ORD-1762511970671-5600
+Date:            07/11/2025
+Status:          Shipped
+Payment Method:  cod
+
+
+CUSTOMER DETAILS:
+Name:            vismsaya
+Email:           vismaya@gmail.com
+Phone:           6282772869
+Address:         Gokulam milk, vaduthala, kochi, kochi, 682025
+
+
+ORDER ITEMS:
+─────────────────────────────────────────────────────────────
+Mother Of Pearl Crystal Chandelier
+  Quantity: 1 x Price: ₹23,999
+  Subtotal: ₹23,999
+
+
+PRICE SUMMARY
+─────────────────────────────────────────────────────────────
+Subtotal:        ₹23,999
+Shipping:        ₹100
+Tax (18%):       ₹4,320
+─────────────────────────────────────────────────────────────
+TOTAL:           ₹28,419
+
+
+Thank you for your business! ✨
+    

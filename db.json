@@ -179,6 +179,16 @@
       "image": "https://assets.wfcdn.com/im/26581734/resize-h1200-w1200%5Ecompr-r85/2494/249478665/Litherland+Table+Lamp-88694414.jpg",
       "price": 5999,
       "reviews": 4
+    },
+    {
+      "id": "1762926449103",
+      "name": "new addition ",
+      "price": "57000",
+      "category": "Chandeliers",
+      "image": "https://assets.wfcdn.com/im/85633969/resize-h1200-w1200%5Ecompr-r85/2977/297764850/Bartho+13+-+Light+Dimmable+Empire+Chandelier.jpg",
+      "description": "asjnajnjn",
+      "reviews": 4.5,
+      "createdAt": "2025-11-12T05:47:29.103Z"
     }
   ],
   "users": [
@@ -248,7 +258,7 @@
       "isAdmin": false
     },
     {
-      "id": 1762867809351,
+      "id": "1762867809351",
       "name": "Greeshma",
       "email": "greeshmaramesh03@gmail.com",
       "password": "ponnuyzz",
@@ -267,7 +277,7 @@
       "customerName": "vaishakh",
       "email": "vaishakhvinodnlr@gmail.com",
       "orderDate": "2025-10-28T14:30:00Z",
-      "status": "Delivered",
+      "status": "Pending",
       "items": [
         {
           "productId": "1",
@@ -289,7 +299,7 @@
       "tax": 8974.44,
       "total": 58932.43,
       "id": "9ee5",
-      "updatedAt": "2025-11-10T04:32:44.345Z"
+      "updatedAt": "2025-11-12T05:49:48.693Z"
     },
     {
       "orderId": "ORD-2025002",
@@ -321,7 +331,7 @@
       "customerName": "rashad",
       "email": "rashad@gmail.com",
       "orderDate": "2025-10-30T16:45:00Z",
-      "status": "Processing",
+      "status": "Shipped",
       "items": [
         {
           "productId": "4",
@@ -342,7 +352,8 @@
       "shipping": 100,
       "tax": 12023.64,
       "total": 78921.64,
-      "id": "7c34"
+      "id": "7c34",
+      "updatedAt": "2025-11-12T05:52:53.925Z"
     },
     {
       "orderId": "ORD-2025004",

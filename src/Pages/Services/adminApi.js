@@ -5,7 +5,7 @@ const API = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
-// ========== PRODUCTS ==========
+// PRODUCTS
 export const getProducts = () => API.get('/products');
 export const createProduct = (payload) => API.post('/products', {
   ...payload,
@@ -23,7 +23,7 @@ export const archiveProduct = (id) => API.patch(`/products/${id}`, {
   archivedAt: new Date().toISOString(),
 });
 
-// ========== ORDERS ==========
+// ORDERS 
 export const getOrders = async () => {
   try {
     return await API.get('/orders');
@@ -37,7 +37,7 @@ export const updateOrder = (id, payload) => API.patch(`/orders/${id}`, {
 });
 export const deleteOrder = (id) => API.delete(`/orders/${id}`);
 
-// ========== USERS ==========
+// USERS 
 export const getUsers = () => API.get('/users');
 export const blockUser = (id) => API.patch(`/users/${id}`, {
   blocked: true,
@@ -49,7 +49,7 @@ export const unblockUser = (id) => API.patch(`/users/${id}`, {
 });
 export const deleteUser = (id) => API.delete(`/users/${id}`);
 
-// ========== DASHBOARD STATS ==========
+// DASHBOARD STATS 
 export const getDashboardStats = async () => {
   try {
     const [productsRes, ordersRes, usersRes] = await Promise.all([
