@@ -29,7 +29,6 @@ import AdminDashboard from "./Pages/admin/AdminDashboard";
 import AdminProducts from "./Pages/admin/AdminProducts";
 import AdminOrders from "./Pages/admin/AdminOrders";
 import AdminUsers from "./Pages/admin/AdminUsers";
-import AdminLogin from "./Pages/admin/AdminLogin";
 import AdminRoute from "./components/AdminRoute";
 
 
@@ -194,7 +193,7 @@ function App() {
               ADMIN ROUTES (Admin Auth Required)
               ============================================ */}
                   {/* ============================================ */}
-          <Route path="/admin/login" element={<AdminLogin />} />
+          {/* <Route path="/admin/login" element={<AdminLogin />} /> */}
 
           <Route
             path="/admin"

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getProducts, createProduct, updateProduct, deleteProduct } from '../Services/adminApi';
-import { Edit, Trash2, Plus, Search, X, Upload, AlertCircle, ChevronDown } from 'lucide-react';
+import { Edit, Trash2, Plus, Search, X,  AlertCircle  } from 'lucide-react';
 
 const AdminProducts = () => {
   const [products, setProducts] = useState([]);
@@ -52,7 +52,9 @@ const AdminProducts = () => {
         await updateProduct(editingId, form);
         setSuccessMsg('Product updated successfully!');
       } else {
-        await createProduct(form);
+       const res = await createProduct(form);
+       const newProduct = res.data;
+       setProducts((prevProducts) => [newProduct,...prevProducts] )
         setSuccessMsg('Product created successfully!');
       }
       setTimeout(() => {
@@ -60,7 +62,6 @@ const AdminProducts = () => {
         setEditingId(null);
         setShowForm(false);
         setSuccessMsg('');
-        fetchProducts();
       }, 1500);
     } catch (err) {
       setError('Error saving product');

@@ -78,7 +78,7 @@ const AboutPage = () => {
   return (
     <div className="bg-white">
       {/* Hero Section with Video Background */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative h-[80vh] sm:h-screen flex items-center justify-center overflow-hidden">
         {/* Video Background */}
         <video
           ref={videoRef}

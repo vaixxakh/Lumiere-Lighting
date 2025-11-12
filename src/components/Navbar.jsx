@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { ShoppingCart, Heart, User, Search, Menu, X } from "lucide-react";
 import { Link, useNavigate,useLocation} from "react-router-dom";
 import { useCart } from "../Context/CartContext";
+import { motion } from 'framer-motion';
 
 function Navbar({ onSearch = () => {} }) {
   const location = useLocation();
@@ -13,6 +14,10 @@ function Navbar({ onSearch = () => {} }) {
   const navigate = useNavigate();
   const userMenuRef = useRef(null);
   const userMenuRefMobile = useRef(null);
+
+
+  const isProductsPage = location.pathname === "/products";
+
 
   // Cart & wishlist counts
   const { cartCount, wishlistCount } = useCart();
@@ -60,7 +65,7 @@ const handleHomeClick = () => {
     }
   };
    const handleLogout = () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem("user");  
     setUser(null);
     setShowUserMenu(false);
     navigate("/login");
@@ -91,19 +96,24 @@ const handleHomeClick = () => {
 
         {/* DESKTOP ICONS */}
         <div className="hidden md:flex items-center space-x-6 gap-3 text-gray-700 relative">
-          {showSearch ? (
-            <X
-              onClick={() => setShowSearch(false)}
-              size={22}
-              className="cursor-pointer hover:text-yellow-600 transition"
-            />
-          ) : (
-            <Search
-              onClick={() => setShowSearch(true)}
-              size={22}
-              className="cursor-pointer hover:text-yellow-600 transition"
-            />
+          {isProductsPage && (
+            <>
+              {showSearch ? (
+                <X
+                  onClick={() => setShowSearch(false)}
+                  size={22}
+                  className="cursor-pointer hover:text-yellow-600 transition"
+                />
+              ) : (
+                <Search
+                  onClick={() => setShowSearch(true)}
+                  size={22}
+                  className="cursor-pointer hover:text-yellow-600 transition"
+                />
+              )}
+            </>
           )}
+
 
           {/* Wishlist */}
           <Link to="/wishlist" className="relative">
@@ -138,7 +148,15 @@ const handleHomeClick = () => {
             )}
 
             {showUserMenu && (
-              <div className="absolute right-0 top-8 w-36 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+              <motion.div   
+              initial={{ opacity: 0, scale: 0.8, y: -10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: -10 }}
+              transition={{
+              duration: 0.4,
+              ease: [0.16, 1, 0.3, 1], 
+              }}
+              className="absolute right-0 top-8 w-36 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
                 <Link
                   to="/account"
                   onClick={() => setShowUserMenu(false)}
@@ -178,19 +196,32 @@ const handleHomeClick = () => {
                     </Link>
                   </>
                 )}
-              </div>
+              </motion.div>
             )}
           </div>
         </div>
 
         {/* MOBILE MENU BUTTONS */}
-        <div className="md:hidden flex items-center gap-3 text-gray-700">
-          <Search
-            onClick={() => setShowSearch(!showSearch)}
-            className="cursor-pointer hover:text-yellow-600 transition"
-          />
+        <div className="md:hidden flex items-center gap-5 ">
+          {isProductsPage && (
+          <>
+            {showSearch ? (
+              <X
+                onClick={() => setShowSearch(false)}
+                size={22}
+                className="cursor-pointer  hover:text-yellow-600 transition text-red-700"
+              />
+            ) : (
+              <Search
+                onClick={() => setShowSearch(true)}
+                size={22}
+                className="cursor-pointer hover:text-yellow-600 transition "
+              />
+            )}
+          </>
+        )}
           <Link to="/wishlist" className="relative">
-            <Heart className="cursor-pointer hover:text-yellow-600 transition" />
+            <Heart className="cursor-pointer   hover:text-yellow-600 transition" />
             {wishlistCount > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-semibold rounded-full px-1">
                 {wishlistCount}
@@ -198,7 +229,7 @@ const handleHomeClick = () => {
             )}
           </Link>
           <Link to="/cart" className="relative">
-            <ShoppingCart className="cursor-pointer hover:text-yellow-600 transition" />
+            <ShoppingCart className="cursor-pointer hover:text-yellow-600   transition" />
             {cartCount > 0 && (
               <span className="absolute -top-2 -right-2 bg-yellow-400 text-black text-xs font-semibold rounded-full px-1">
                 {cartCount}
@@ -209,12 +240,21 @@ const handleHomeClick = () => {
           {/* MOBILE USER ICON */}
           <div ref={userMenuRefMobile} className="relative">
             <User
-              className="cursor-pointer hover:text-yellow-600 transition"
+              className="cursor-pointer hover:text-yellow-600  transition"
               onClick={() => setShowUserMenu(!showUserMenu)}
             />
 
             {showUserMenu && (
-              <div className="absolute right-0 top-8 w-36 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+              <motion.div
+               initial={{ opacity: 0, scale: 0.8, y: -10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: -10 }}
+              transition={{
+              duration: 0.4,
+              ease: [0.16, 1, 0.3, 1], 
+              }}
+
+               className="absolute right-0 top-8 w-36 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
                 {user ? (
                   <>
                     <Link
@@ -256,29 +296,47 @@ const handleHomeClick = () => {
                     </Link>
                   </>
                 )}
-              </div>
+              </motion.div>
             )}
           </div>
 
           <button onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <X size={26} /> : <Menu size={26} />}
+            {isOpen ? <X className ="text-red-500" size={26} /> : <Menu  size={26} />}
           </button>
         </div>
       </div>
 
       {/* MOBILE NAV LINKS */}
       {isOpen && (
-        <div className="md:hidden flex flex-col items-center bg-white border-t border-gray-200 shadow-lg py-4 space-y-3 text-gray-700 font-medium">
+        <motion.div 
+        initial={{ opacity: 0, y: -50, scaleY: 0.9 }}
+        animate={{ opacity: 1, y: 0, scaleY: 1 }}
+        exit={{ opacity: 0, y: -30, scaleY: 0.9 }}
+        transition={{
+          type: "spring",
+          stiffness: 180,
+          damping: 18,
+          duration: 0.5,
+        }}
+        className="md:hidden flex flex-col items-center bg-white border-t border-gray-200 shadow-lg py-4 space-y-3 text-gray-700 font-medium">
           <Link to="/" onClick={() => setIsOpen(false)} className="hover:text-yellow-600">HOME</Link>
           <Link to="/about" onClick={() => setIsOpen(false)} className="hover:text-yellow-600">ABOUT</Link>
           <Link to="/products" onClick={() => setIsOpen(false)} className="hover:text-yellow-600">PRODUCTS</Link>
           <Link to="/contact" onClick={() => setIsOpen(false)} className="hover:text-yellow-600">CONTACT US</Link>
-        </div>
+        </motion.div>
       )}
 
       {/* SEARCH BAR OVERLAY */}
       {showSearch && (
-        <div className="fixed top-16 left-0 w-full  bg-white px-4 py-2 flex justify-center z-40 shadow-lg border-b border-gray-200">
+        <motion.div initial={{ opacity: 0, y: -20, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: -15, scale: 0.95 }}
+        transition={{
+          duration: 0.35,
+          ease: [0.25, 1, 0.5, 1], // smooth "easeOutBack" style
+        }}
+
+        className="fixed top-16 left-0 w-full  bg-white px-4 py-2 flex justify-center z-40 shadow-lg border-b border-gray-200">
           <form
             onSubmit={handleSearch}
             className="w-full max-w-md flex items-center bg-gray-100 border border-gray-300 rounded-full shadow-sm px-4 py-2"
@@ -294,7 +352,7 @@ const handleHomeClick = () => {
               <Search />
             </button>
           </form>
-        </div>
+        </motion.div>
       )}
     </nav>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { Home, Box, Users, List, LogOut, Menu, X, Settings, Bell, User as UserIcon } from 'lucide-react';
+import { Home, Box, Users, List, LogOut, Menu, X,   } from 'lucide-react';
 
 
 const AdminLayout = () => {
@@ -13,7 +13,7 @@ const AdminLayout = () => {
   const logout = () => {
     if (window.confirm('Are you sure you want to logout?')) {
       localStorage.removeItem('adminToken');
-      navigate('/admin/login');
+      navigate('/login');
     }
   };
 
@@ -117,11 +117,6 @@ const AdminLayout = () => {
 
             {/* Right Actions */}
             <div className="flex items-center gap-4">
-              {/* Notifications */}
-              {/* <button className="relative p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition">
-                <Bell size={24} />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-              </button> */}
 
 
               {/* Profile Menu */}

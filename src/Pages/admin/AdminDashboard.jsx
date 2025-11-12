@@ -9,9 +9,9 @@ const AdminDashboard = () => {
   useEffect(() => {
     getDashboardStats()
       .then(res => {
-        setStats(res.data);
-        setLoading(false);
-      })
+      setStats(res.data);
+      setLoading(false);
+    })
       .catch(err => {
         console.error('Error:', err);
         setLoading(false);
@@ -22,18 +22,18 @@ const AdminDashboard = () => {
     return (
       <div className="flex items-center justify-center h-96">
         <div className="animate-spin">
-          <div className="text-yellow-500 text-6xl">⊙</div>
+        <div className="text-yellow-500 text-6xl">⊙</div>
         </div>
       </div>
-    );
+      );
   }
 
   if (!stats) {
     return (
       <div className="flex items-center justify-center h-96 bg-red-50 rounded-xl">
         <div className="text-center">
-          <AlertCircle size={48} className="text-red-500 mx-auto mb-4" />
-          <p className="text-xl text-red-600 font-semibold">Error loading dashboard</p>
+        <AlertCircle size={48} className="text-red-500 mx-auto mb-4" />
+        <p className="text-xl text-red-600 font-semibold">Error loading dashboard</p>
         </div>
       </div>
     );
@@ -85,34 +85,15 @@ const AdminDashboard = () => {
 
       {/* Main Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <StatCard icon={Package} title="Products" value={stats.totalProducts} color="blue" 
+        bgGradient="bg-gradient-to-br from-blue-500 to-blue-600"/>
         <StatCard
-          icon={Package}
-          title="Products"
-          value={stats.totalProducts}
-          color="blue"
-          bgGradient="bg-gradient-to-br from-blue-500 to-blue-600"
-        />
-        <StatCard
-          icon={ShoppingBag}
-          title="Orders"
-          value={stats.totalOrders}
-          color="green"
-          bgGradient="bg-gradient-to-br from-green-500 to-green-600"
-        />
-        <StatCard
-          icon={Users}
-          title="Users"
-          value={stats.totalUsers}
-          color="purple"
-          bgGradient="bg-gradient-to-br from-purple-500 to-purple-600"
-        />
-        <StatCard
-          icon={DollarSign}
-          title="Revenue"
-          value={`₹${stats.totalRevenue.toLocaleString()}`}
-          color="yellow"
-          bgGradient="bg-gradient-to-br from-yellow-500 to-yellow-600"
-        />
+          icon={ShoppingBag} title="Orders" value={stats.totalOrders} color="green" 
+           bgGradient="bg-gradient-to-br from-green-500 to-green-600"/>
+        <StatCard icon={Users}  title="Users" value={stats.totalUsers} color="purple"
+          bgGradient="bg-gradient-to-br from-purple-500 to-purple-600"/>
+        <StatCard icon={DollarSign} title="Revenue" value={`₹${stats.totalRevenue.toLocaleString()}`} color="yellow"
+         bgGradient="bg-gradient-to-br from-yellow-500 to-yellow-600"/>
       </div>
 
       {/* Order Status Summary */}
