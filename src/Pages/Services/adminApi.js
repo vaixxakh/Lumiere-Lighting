@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: 'https://library-backend.onrender.com',
   headers: { 'Content-Type': 'application/json' },
 });
 
 // PRODUCTS
-export const getProducts = () => API.get('/products');
+export const getProducts = () => API.get('/products?page=1');
 export const createProduct = (payload) => API.post('/products', {
   ...payload,
   id: Date.now().toString(),
