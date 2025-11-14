@@ -16,7 +16,7 @@ function SignUp() {
       setMessage('⚠️ Please fill all fields');
       return;
     }
- // ✅ Email validation
+ // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setMsgType('error');
@@ -24,7 +24,7 @@ function SignUp() {
       return;
     }
 
-    // ✅ Password validation
+    //  Password validation
     if (password.length < 6) {
       setMsgType('error');
       setMessage('Password must be at least 6 characters');
@@ -32,7 +32,10 @@ function SignUp() {
     }
 
     try {
-      const res = await axios.get('http://localhost:3000/users');
+        const API_URL = "https://6916c7aba7a34288a27e5552.mockapi.io/users";
+
+      // Check existing users
+      const res = await axios.get(API_URL);
       const existingUsers = res.data;
 
       const userExists = existingUsers.find((user) => user.email === email);
@@ -44,7 +47,7 @@ function SignUp() {
       }
 
       const newUser = { id: Date.now(), name, email, password,isAdmin:false };
-      const postRes = await axios.post('http://localhost:3000/users', newUser);
+      const postRes = await axios.post(API_URL, newUser);
 
       localStorage.setItem('user', JSON.stringify(postRes.data));
 

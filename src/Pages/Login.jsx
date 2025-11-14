@@ -47,7 +47,7 @@ function Login() {
       }
 
       // Otherwise, check regular user login from database
-      const res = await axios.get('http://localhost:3000/users');
+      const res = await axios.get('https://6916c7aba7a34288a27e5552.mockapi.io/users');
       const users = res.data;
       const user = users.find((u) => u.email === email && u.password === password);
 

@@ -20,7 +20,7 @@ const ProductDetailsPage = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     
     axios
-      .get(`http://localhost:3000/products/${id}`)
+      .get(`https://6916c7aba7a34288a27e5552.mockapi.io/products/${id}`)
       .then((res) => {
         setProduct(res.data);
         setLoading(false);

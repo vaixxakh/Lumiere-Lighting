@@ -15,6 +15,7 @@ const Account = () => {
 
 
   useEffect(() => {
+  if (typeof window !== "undefined") {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     if (!storedUser) {
       navigate('/login');
@@ -23,8 +24,8 @@ const Account = () => {
     setUser(storedUser);
     setEditData(storedUser);
     setLoading(false);
-  }, [navigate]);
-
+  }
+}, [navigate]);
 
   const handleEditChange = (e) => {
     const { name, value } = e.target;

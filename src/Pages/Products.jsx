@@ -66,7 +66,7 @@ const ProductsPage = ({ searchTerm }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/products")
+      .get("https://6916c7aba7a34288a27e5552.mockapi.io/products")
       .then((res) => setProducts(res.data))
       .catch((err) => console.error("Error fetching products:", err));
   }, []);
@@ -216,7 +216,7 @@ const ProductsPage = ({ searchTerm }) => {
                       Add to Cart
                     </button>
                     <button
-                      onClick={() => handleBuyNow(product)}
+                      onClick={(e) => handleBuyNow(e,product)}
                       className="w-full bg-yellow-400 hover:bg-yellow-500 text-black  font-semibold py-2 rounded-lg text-xs sm:text-sm transition-colors"
                     >
                       Buy Now

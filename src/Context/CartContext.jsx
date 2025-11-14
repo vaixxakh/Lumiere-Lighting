@@ -7,6 +7,7 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   // CART STATE
   const [cart, setCart] = useState(() => {
+    if(typeof window === "undefined") return [];  
     try {
       const saved = localStorage.getItem("cart");
       return saved ? JSON.parse(saved) : [];
@@ -17,6 +18,7 @@ export const CartProvider = ({ children }) => {
 
   // WISHLIST STATE
   const [wishlist, setWishlist] = useState(() => {
+     if (typeof window === "undefined") return [];
     try {
       const saved = localStorage.getItem("wishlist");
       return saved ? JSON.parse(saved) : [];
@@ -30,6 +32,7 @@ export const CartProvider = ({ children }) => {
 
   // ORDERS STATE
   const [orders, setOrders] = useState(() => {
+     if (typeof window === "undefined") return [];
     try {
       const saved = localStorage.getItem("orders");
       return saved ? JSON.parse(saved) : [];
@@ -112,7 +115,7 @@ export const CartProvider = ({ children }) => {
   // SAVE ORDER TO BACKEND
   const saveOrderToBackend = async (order) => {
     try {
-      await axios.post("http://localhost:3000/orders", order);
+      await axios.post("https://6916c7aba7a34288a27e5552.mockapi.io/orders", order);
       console.log("Order saved to backend:", order.orderId);
     } catch (error) {
       console.error("⚠️ Error saving to backend (still saved locally):", error);

@@ -5,13 +5,21 @@ import { Trash2, Plus, Minus, ShoppingBag, ArrowLeft } from 'lucide-react';
 
 
 function Cart() {
-  const { cart, removeFromCart, updateQuantity } = useCart();
+   const { cart, removeFromCart, updateQuantity } = useCart();
   const navigate = useNavigate();
 
-
-  // Calculate total
-  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const [subtotal, setSubtotal] = useState(0);
   const shipping = 100;
+
+  useEffect(() => {
+    // Calculate subtotal safely
+    const sum = cart.reduce(
+      (total, item) => total + (Number(item.price) || 0) * (item.quantity || 1),
+      0
+    );
+    setSubtotal(sum);
+  }, [cart]);
+
   const tax = Math.round(subtotal * 0.18);
   const total = subtotal + shipping + tax;
 

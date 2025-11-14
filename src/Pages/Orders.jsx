@@ -11,58 +11,71 @@ function Orders() {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [filter, setFilter] = useState('all');
 
+useEffect(() => {
+  fetchUserOrders(); // initial load
 
-  useEffect(() => {
-    fetchUserOrders();
-    
-    const interval = setInterval(() => {
-      fetchUserOrders();
-    }, 5000);
+  const interval = setInterval(() => {
+    fetchUserOrders(); // refresh every 5 sec
+  }, 5000);
 
-
-    return () => clearInterval(interval);
-  }, []);
+  return () => clearInterval(interval); // cleanup
+}, []);
 
 
-  const fetchUserOrders = async () => {
+const fetchUserOrders = async () => {
   try {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
-      navigate('/login');
+    // ✅ Safe localStorage check (works in Vercel SSR)
+    if (typeof window === "undefined") return;
+
+    const storedUser = localStorage.getItem("user");
+    if (!storedUser) {
+      navigate("/login");
       return;
     }
 
+    const user = JSON.parse(storedUser);
+
+    let userOrders = [];
 
     try {
-      const res = await axios.get('http://localhost:3000/orders');
-      let userOrders = res.data.filter(order => order.email === user.email);
-      
+      // ✅ Try backend first
+      const res = await axios.get(
+        "https://6916c7aba7a34288a27e5552.mockapi.io/orders"
+      );
+
+      userOrders = res.data.filter((order) => order.email === user.email);
+
+      // If backend has no orders fallback to local state
       if (userOrders.length === 0) {
-        userOrders = orders.filter(order => order.email === user.email);
+        userOrders = orders.filter((order) => order.email === user.email);
       }
-      
-      setOrders(userOrders);
     } catch (backendError) {
-      console.log("Using local orders...");
-      const localOrders = orders.filter(order => order.email === user.email);
-      setOrders(localOrders);
+      console.log("Backend failed → using local orders...");
+      userOrders = orders.filter((order) => order.email === user.email);
     }
 
+    setOrders(userOrders);
 
+    // ✅ Update selectedOrder if it exists
     if (selectedOrder) {
-      const updatedSelected = orders.find(o => o.orderId === selectedOrder.orderId || o.id === selectedOrder.id);
+      const updatedSelected = userOrders.find(
+        (o) =>
+          o.orderId === selectedOrder.orderId ||
+          o.id === selectedOrder.id
+      );
       if (updatedSelected) {
         setSelectedOrder(updatedSelected);
       }
     }
 
-
     setLoading(false);
+
   } catch (error) {
-    console.error('Error fetching orders:', error);
+    console.error("Error fetching orders:", error);
     setLoading(false);
   }
 };
+
 
 
 
